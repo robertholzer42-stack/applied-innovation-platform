@@ -33,7 +33,7 @@
 - A client engagement needs to be structured end-to-end
 - Final synthesis or executive reporting is needed
 
-## Architecture: The 11-Agent System
+## Architecture: The 13-Agent System
 
 ### Tier 1: Client Interface
 | Agent | Codename | Role |
@@ -44,8 +44,8 @@
 ### Tier 2: Core Thinking Agents
 | Agent | Codename | Role | Key Framework |
 |-------|----------|------|---------------|
-| Future Thinking | **Scout** | Horizon scanning, trend analysis, scenario planning | Ride Two Curves |
-| Design Thinking | **Empathyy** | User research, journey mapping, prototyping briefs | Human-Centered Design |
+| Future Thinking | **Scout** | Horizon scanning, trend analysis, scenario planning | IFTF Prepare-Foresight-Insight |
+| Design Thinking | **Empathy** | User research, journey mapping, prototyping briefs | Human-Centered Design |
 | Systems Thinking | **Architect** | System maps, causal loops, stakeholder ecosystems | Draw Out Consequences |
 
 ### Tier 3: Intersection Agents
@@ -74,38 +74,38 @@ The Conductor manages the following sequential pipeline:
 
 ```
 STAGE 1: INTAKE (Navigator)
-  → Client context, challenge definition, maturity assessment
-  → Output: Engagement Brief (JSON + Markdown)
+  > Client context, challenge definition, maturity assessment
+  > Output: Engagement Brief (JSON + Markdown)
 
 STAGE 2: PARALLEL ANALYSIS (Scout + Empathy + Architect)
-  → Each core agent analyzes the challenge independently
-  → Scout: future scenarios, trends, S-curve position
-  → Empathy: user needs, pain points, adoption barriers
-  → Architect: system dependencies, feedback loops, leverage points
-  → Output: Three independent analysis reports
+  > Each core agent analyzes the challenge independently
+  > Scout: future scenarios, trends, signals and drivers
+  > Empathy: user needs, pain points, adoption barriers
+  > Architect: system dependencies, feedback loops, leverage points
+  > Output: Three independent analysis reports
 
 STAGE 3: INTERSECTION SYNTHESIS (Visionary + Integrator + Sentinel)
-  → Visionary: combines Scout + Empathy → future-ready solutions
-  → Integrator: combines Empathy + Architect → scalable implementations
-  → Sentinel: combines Scout + Architect → resilience assessment
-  → Output: Three intersection synthesis reports
+  > Visionary: combines Scout + Empathy > future-ready solutions
+  > Integrator: combines Empathy + Architect > scalable implementations
+  > Sentinel: combines Scout + Architect > resilience assessment
+  > Output: Three intersection synthesis reports
 
 STAGE 4: OPERATIONAL CONTEXT (Radar + Banker + Scorekeeper + Bridge)
-  → Radar: competitive landscape and external signals
-  → Banker: portfolio fit and resource implications
-  → Scorekeeper: scoring against DVFA criteria
-  → Bridge: change readiness and adoption pathway
-  → Output: Four operational assessments
+  > Radar: competitive landscape and external signals
+  > Banker: portfolio fit and resource implications
+  > Scorekeeper: scoring against DVFA criteria
+  > Bridge: change readiness and adoption pathway
+  > Output: Four operational assessments
 
 STAGE 5: ORCHESTRATION (Conductor)
-  → Cross-agent synthesis and conflict resolution
-  → Unified strategic recommendation
-  → Output: Integrated Strategy Report
+  > Cross-agent synthesis and conflict resolution
+  > Unified strategic recommendation
+  > Output: Integrated Strategy Report
 
 STAGE 6: DELIVERABLES (Publisher)
-  → Board-ready artifacts (decks, reports, one-pagers)
-  → Workshop materials if applicable
-  → Output: Client-facing deliverables
+  > Board-ready artifacts (decks, reports, one-pagers)
+  > Workshop materials if applicable
+  > Output: Client-facing deliverables
 ```
 
 ## How the Conductor Operates
@@ -132,7 +132,7 @@ When the user presents an innovation challenge, the Conductor first determines:
 | Challenge Type | Primary Agents | Supporting Agents |
 |---------------|----------------|-------------------|
 | New product/service idea | Empathy, Scout, Visionary | Radar, Scorekeeper |
-| Business model disruption | Scout (R2C), Architect, Integrator | Banker, Bridge |
+| Business model disruption | Scout, Architect, Integrator | Banker, Bridge |
 | Process redesign | Architect, Empathy, Sentinel | Scorekeeper, Bridge |
 | Strategic foresight | Scout, Sentinel, Architect (DOC) | Radar, Banker |
 | Innovation portfolio review | Banker, Scorekeeper, Scout | All others as needed |
@@ -146,10 +146,7 @@ The Conductor's most important job is integration. After agents complete their a
 
 1. **Identify agreements:** Where do multiple agents converge on the same insight?
 2. **Surface conflicts:** Where do agents disagree? (e.g., Scout sees opportunity, Architect sees systemic barriers, Empathy sees low user desirability)
-3. **Resolve conflicts:** Present the tension honestly, then recommend a path forward based on:
-   - Which dimension matters most for THIS specific challenge
-   - What evidence each agent provides
-   - What the organizational context demands
+3. **Resolve conflicts:** Present the tension honestly, then recommend a path forward based on which dimension matters most for THIS specific challenge, what evidence each agent provides, and what the organizational context demands.
 4. **Produce the integrated view:** A unified strategy that incorporates all dimensions
 
 ### Step 4: Generate the Unified Output
@@ -215,46 +212,6 @@ The Conductor's most important job is integration. After agents complete their a
 [Concrete actions, timeline, and responsibilities]
 ```
 
-## Innovation Maturity Assessment (Navigator Intake Tool)
-
-When starting a new engagement, the Navigator runs this assessment:
-
-### Maturity Dimensions (Score 1-5 each)
-
-1. **Foresight Capability:** Does the organization systematically scan for future trends and scenarios?
-2. **Human-Centered Design:** Does innovation start with deep empathy research?
-3. **Systems Awareness:** Does the organization map system dependencies and feedback loops?
-4. **Portfolio Management:** Is there a balanced innovation portfolio across horizons?
-5. **Measurement:** Are innovation efforts measured with appropriate metrics?
-6. **Change Capability:** Can the organization adopt and scale new ideas?
-7. **Competitive Awareness:** Is there systematic monitoring of competitors and market shifts?
-8. **Cross-Functional Integration:** Do different disciplines collaborate on innovation?
-
-### Maturity Levels
-- **Level 1 (Ad Hoc):** Innovation happens randomly, no systematic approach
-- **Level 2 (Emerging):** Some processes exist, usually one-dimensional
-- **Level 3 (Defined):** Multiple approaches used but not integrated
-- **Level 4 (Managed):** Integrated multi-dimensional innovation with measurement
-- **Level 5 (Resilient):** Full Resilient Innovation capability with adaptive portfolios
-
-### Assessment Output
-```markdown
-## Innovation Maturity Assessment: [Organization]
-
-Overall Maturity Level: [1-5]
-Strongest Dimension: [name] ([score])
-Weakest Dimension: [name] ([score])
-
-### Dimension Scores
-[Radar chart data]
-
-### Gap Analysis
-[Where the biggest gaps exist and which agents address them]
-
-### Recommended Engagement Scope
-[Based on maturity, which agents should be prioritized]
-```
-
 ## DVFA Scoring Framework (Scorekeeper)
 
 Every innovation opportunity is scored on four dimensions that map to the Resilient Innovation framework:
@@ -277,7 +234,7 @@ engagements/
       challenge-definition.md
     analysis/
       scout-future-thinking.md
-      empath-design-thinking.md
+      empathy-design-thinking.md
       architect-systems-thinking.md
     synthesis/
       visionary-future-design.md
@@ -300,7 +257,7 @@ knowledge-base/
 skills/
   conductor-SKILL.md (this file)
   scout-SKILL.md
-  empath-SKILL.md
+  empathy-SKILL.md
   architect-SKILL.md
   visionary-SKILL.md
   integrator-SKILL.md
@@ -318,7 +275,7 @@ skills/
 | Existing Asset | Integrated Into |
 |---------------|-----------------|
 | Draw Out Consequences SKILL.md | Architect agent's primary framework |
-| Ride Two Curves framework | Scout agent's S-curve analysis capability |
+| Ride Two Curves framework | Scout agent's S-curve analysis tool (Insight stage only) |
 | SynthData Sandbox pipeline architecture | Engineering pattern for sequential agent orchestration |
 | HCSC Tech Radar methodology | Scout agent's horizon scanning approach |
 | HCSC Innovation Pipeline management | Banker agent's portfolio management model |
@@ -330,14 +287,14 @@ skills/
 
 When the user wants to use this system:
 
-- **"Run a quick assessment on [topic]"** → Conductor selects 2-3 agents, runs quick analysis
-- **"Full resilient innovation analysis on [topic]"** → Complete 6-stage pipeline
-- **"Assess our innovation maturity"** → Navigator runs maturity assessment
-- **"Score this opportunity"** → Scorekeeper runs DVFA scoring
-- **"What does [agent codename] think about [topic]?"** → Run specific agent
-- **"Show me the conflicts"** → Conductor surfaces disagreements between agents
-- **"Generate deliverables for [engagement]"** → Publisher produces client artifacts
-- **"Review as [role]"** → Maps to existing CLAUDE.md reviewer roles AND agent perspectives
+- **"Run a quick assessment on [topic]"** - Conductor selects 2-3 agents, runs quick analysis
+- **"Full resilient innovation analysis on [topic]"** - Complete 6-stage pipeline
+- **"Assess our innovation maturity"** - Navigator runs maturity assessment
+- **"Score this opportunity"** - Scorekeeper runs DVFA scoring
+- **"What does [agent codename] think about [topic]?"** - Run specific agent
+- **"Show me the conflicts"** - Conductor surfaces disagreements between agents
+- **"Generate deliverables for [engagement]"** - Publisher produces client artifacts
+- **"Review as [role]"** - Maps to existing CLAUDE.md reviewer roles AND agent perspectives
 
 ## Quality Standards
 
@@ -360,4 +317,4 @@ After each engagement:
 
 ---
 
-**This skill is the brain of the NHI Resilient Innovation Platform. It coordinates 11 specialized agents to deliver multi-dimensional innovation analysis that no single-lens approach can match.**
+**This skill is the brain of the NHI Resilient Innovation Platform. It coordinates 13 specialized agents to deliver multi-dimensional innovation analysis that no single-lens approach can match.**
