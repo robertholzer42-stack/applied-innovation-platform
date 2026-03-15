@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NHI Resilient Innovation - Agent Architecture Diagram</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#1B3A5C;--teal:#0D8A8A;--coral:#D85A30;
+  --purple:#534AB7;--amber:#9E7C1D;--green:#1D9E75;
+  --light-navy:rgba(27,58,92,0.08);
+  --light-teal:rgba(13,138,138,0.08);
+  --light-coral:rgba(216,90,48,0.08);
+}
+body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#2C2C2A;display:flex;flex-direction:column;align-items:center;padding:40px 20px;min-height:100vh}
+
+.title{font-family:'DM Serif Display',serif;font-size:28px;color:var(--navy);text-align:center;margin-bottom:4px}
+.subtitle{font-size:14px;color:#888;text-align:center;margin-bottom:30px}
+
+.diagram-container{position:relative;width:700px;height:560px}
+
+/* Venn circles */
+.venn-circle{position:absolute;border-radius:50%;border:2px solid;transition:all .3s}
+.venn-circle.future{width:340px;height:340px;top:20px;left:40px;border-color:var(--navy);background:var(--light-navy)}
+.venn-circle.design{width:340px;height:340px;top:20px;right:40px;border-color:var(--teal);background:var(--light-teal)}
+.venn-circle.systems{width:340px;height:340px;bottom:20px;left:180px;border-color:var(--coral);background:var(--light-coral)}
+
+/* Circle labels */
+.circle-label{position:absolute;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;opacity:0.6}
+.circle-label.future{top:50px;left:80px;color:var(--navy)}
+.circle-label.design{top:50px;right:80px;color:var(--teal)}
+.circle-label.systems{bottom:55px;left:270px;color:var(--coral)}
+
+/* Agent nodes */
+.agent{position:absolute;padding:8px 14px;border-radius:8px;text-align:center;cursor:pointer;transition:all .25s;z-index:2}
+.agent:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.12);z-index:10}
+.agent .name{font-weight:700;font-size:13px;margin-bottom:1px}
+.agent .role{font-size:9.5px;text-transform:uppercase;letter-spacing:0.4px;opacity:0.7}
+
+/* Color schemes */
+.agent.core-future{background:#E6F1FB;border:1.5px solid #85B7EB}.agent.core-future .name{color:var(--navy)}
+.agent.core-design{background:#E1F5EE;border:1.5px solid #5DCAA5}.agent.core-design .name{color:var(--teal)}
+.agent.core-systems{background:#FAECE7;border:1.5px solid #F0997B}.agent.core-systems .name{color:var(--coral)}
+.agent.intersect{background:#EEEDFE;border:1.5px solid #AFA9EC}.agent.intersect .name{color:var(--purple)}
+.agent.center{background:var(--navy);border:2px solid var(--navy)}.agent.center .name{color:#fff}.agent.center .role{color:rgba(255,255,255,0.7)}
+.agent.ops{background:#fff;border:1.5px solid #ddd}.agent.ops .name{color:#555}
+.agent.client{background:#FFF9EE;border:1.5px solid #E8D8B0}.agent.client .name{color:var(--amber)}
+
+/* Detail panel */
+.detail-panel{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:16px 24px;box-shadow:0 8px 30px rgba(0,0,0,0.1);max-width:480px;width:90%;opacity:0;pointer-events:none;transition:all .3s;z-index:100}
+.detail-panel.visible{opacity:1;pointer-events:auto}
+.detail-panel .dp-name{font-weight:700;font-size:16px;margin-bottom:2px}
+.detail-panel .dp-role{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#888;margin-bottom:8px}
+.detail-panel .dp-desc{font-size:13px;color:#555;line-height:1.5}
+.detail-panel .dp-voice{font-size:12px;color:var(--teal);font-style:italic;margin-top:6px}
+.detail-panel .close-btn{position:absolute;top:10px;right:14px;background:none;border:none;font-size:18px;color:#aaa;cursor:pointer}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#777}
+.legend-dot{width:10px;height:10px;border-radius:3px}
+
+.footer-note{font-size:11px;color:#aaa;text-align:center;margin-top:16px}
+</style>
+</head>
+<body>
+
+<div class="title">Resilient Innovation Agent Architecture</div>
+<div class="subtitle">13 agents across 5 tiers, built on Future + Design + Systems Thinking</div>
+
+<div class="diagram-container">
+  <!-- Venn Circles -->
+  <div class="venn-circle future"></div>
+  <div class="venn-circle design"></div>
+  <div class="venn-circle systems"></div>
+
+  <span class="circle-label future">Future Thinking</span>
+  <span class="circle-label design">Design Thinking</span>
+  <span class="circle-label systems">Systems Thinking</span>
+
+  <!-- Core agents in their circles -->
+  <div class="agent core-future" style="top:105px;left:85px" onclick="showDetail('Scout','Future Thinking','IFTF-aligned foresight: Prepare-Foresight-Insight cycle with signal scanning, STEEP driver analysis, scenario building, and cross-impact mapping. Tiered toolkit from 15-minute quick scans to full-day deep dives.','Here is what is coming over the hill...')">
+    <div class="name">Scout</div>
+    <div class="role">Future Thinking</div>
+  </div>
+
+  <div class="agent core-design" style="top:105px;right:85px" onclick="showDetail('Empathy','Design Thinking','Human-centered design process: stakeholder identification, empathy research, personas, journey mapping, HMW questions, concept generation, desirability screening, prototyping briefs.','Have we actually talked to anyone who would use this?')">
+    <div class="name">Empathy</div>
+    <div class="role">Design Thinking</div>
+  </div>
+
+  <div class="agent core-systems" style="bottom:75px;left:280px" onclick="showDetail('Architect','Systems Thinking','System mapping, causal loop diagrams, Draw Out Consequences framework, leverage point identification, system archetypes, viability assessment, ripple effect forecasting.','Let me show you what this actually touches...')">
+    <div class="name">Architect</div>
+    <div class="role">Systems Thinking</div>
+  </div>
+
+  <!-- Intersection agents -->
+  <div class="agent intersect" style="top:150px;left:285px" onclick="showDetail('Visionary','Future + Design','Future persona evolution, scenario-based prototyping, speculative design artifacts, experience roadmapping across 1/3/5 year horizons.','In 2030, your customer will not care about this feature.')">
+    <div class="name">Visionary</div>
+    <div class="role">Future + Design</div>
+  </div>
+
+  <div class="agent intersect" style="top:315px;right:120px" onclick="showDetail('Integrator','Design + Systems','Journey-system overlay, scalability assessment, stakeholder alignment, policy-culture-infrastructure compatibility, implementation blueprints.','Great idea. Now let us make it survive the real world.')">
+    <div class="name">Integrator</div>
+    <div class="role">Design + Systems</div>
+  </div>
+
+  <div class="agent intersect" style="top:315px;left:120px" onclick="showDetail('Sentinel','Future + Systems','Resilience mapping across scenarios, assumption stress testing, adaptive strategy design, pre-mortem analysis, long-term capability building.','What breaks first when this assumption fails?')">
+    <div class="name">Sentinel</div>
+    <div class="role">Future + Systems</div>
+  </div>
+
+  <!-- Center: Conductor -->
+  <div class="agent center" style="top:235px;left:298px" onclick="showDetail('Conductor','Orchestrator','Routes challenges to agents, synthesizes cross-agent insights, surfaces conflicts, produces unified strategy. Owns the Action stage of the foresight cycle.','Here is where we stand across all dimensions...')">
+    <div class="name">Conductor</div>
+    <div class="role">Orchestrator</div>
+  </div>
+
+  <!-- Operational agents (outside the Venn, bottom row) -->
+  <div class="agent ops" style="bottom:-10px;left:0px" onclick="showDetail('Radar','Competitive Intel','Competitor profiling, market signal monitoring, patent scanning, M&A tracking, competitive positioning maps, threat/opportunity assessment.','Your competitor just filed a patent on...')">
+    <div class="name">Radar</div>
+    <div class="role">Competitive Intel</div>
+  </div>
+
+  <div class="agent ops" style="bottom:-10px;left:150px" onclick="showDetail('Banker','Portfolio Mgmt','Three Horizons classification, pipeline health assessment, resource allocation analysis, portfolio fit scoring.','We are overweight on incremental and starving transformational.')">
+    <div class="name">Banker</div>
+    <div class="role">Portfolio Mgmt</div>
+  </div>
+
+  <div class="agent ops" style="bottom:-10px;right:150px" onclick="showDetail('Scorekeeper','Metrics & Scoring','DVFA scoring (Desirability-Viability-Feasibility-Adaptability), innovation maturity assessment, KPI design.','Show me the evidence.')">
+    <div class="name">Scorekeeper</div>
+    <div class="role">Metrics</div>
+  </div>
+
+  <div class="agent ops" style="bottom:-10px;right:0px" onclick="showDetail('Bridge','Change Mgmt','Adoption readiness assessment, stakeholder resistance mapping, communication planning, transition design, change capacity analysis.','The technology is ready. Are the people?')">
+    <div class="name">Bridge</div>
+    <div class="role">Change Mgmt</div>
+  </div>
+
+  <!-- Client interface agents (top corners) -->
+  <div class="agent client" style="top:-5px;left:0px" onclick="showDetail('Navigator','Client Intake','Challenge discovery interview, innovation maturity assessment, engagement design (quick sprint / standard / deep), folder setup.','Before we start building, let me make sure we are solving the right problem.')">
+    <div class="name">Navigator</div>
+    <div class="role">Client Intake</div>
+  </div>
+
+  <div class="agent client" style="top:-5px;right:0px" onclick="showDetail('Publisher','Deliverables','Executive summaries, strategy reports, pitch decks, workshop facilitation guides, one-pagers, case studies.','Let me turn this into something you can actually present.')">
+    <div class="name">Publisher</div>
+    <div class="role">Deliverables</div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#E6F1FB;border:1px solid #85B7EB"></div> Core Thinking</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#EEEDFE;border:1px solid #AFA9EC"></div> Intersection</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fff;border:1px solid #ddd"></div> Operational</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#FFF9EE;border:1px solid #E8D8B0"></div> Client Interface</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--navy)"></div> Orchestrator</div>
+</div>
+
+<div class="footer-note">Next Horizon Innovations LLC | Click any agent for details</div>
+
+<!-- Detail Panel -->
+<div class="detail-panel" id="detailPanel">
+  <button class="close-btn" onclick="hideDetail()">&times;</button>
+  <div class="dp-name" id="dpName"></div>
+  <div class="dp-role" id="dpRole"></div>
+  <div class="dp-desc" id="dpDesc"></div>
+  <div class="dp-voice" id="dpVoice"></div>
+</div>
+
+<script>
+function showDetail(name, role, desc, voice) {
+  document.getElementById('dpName').textContent = name;
+  document.getElementById('dpRole').textContent = role;
+  document.getElementById('dpDesc').textContent = desc;
+  document.getElementById('dpVoice').textContent = '"' + voice + '"';
+  document.getElementById('detailPanel').classList.add('visible');
+}
+function hideDetail() {
+  document.getElementById('detailPanel').classList.remove('visible');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.agent') && !e.target.closest('.detail-panel')) {
+    hideDetail();
+  }
+});
+</script>
+
+</body>
+</html>

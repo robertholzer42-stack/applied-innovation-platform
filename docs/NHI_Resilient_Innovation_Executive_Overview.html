@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NHI Resilient Innovation Platform - Executive Overview</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#1B3A5C;--teal:#0D8A8A;--accent:#E87722;
+  --light:#F0F6FA;--med:#D5E8F0;
+  --coral:#D85A30;--purple:#534AB7;--green:#1D9E75;
+  --gold:#9E7C1D;
+}
+body{font-family:'DM Sans',sans-serif;color:#2C2C2A;background:#fff;max-width:850px;margin:0 auto;padding:40px 32px}
+
+.header{text-align:center;margin-bottom:32px;padding-bottom:20px;border-bottom:3px solid var(--teal)}
+.header h1{font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy);letter-spacing:-0.5px;margin-bottom:6px}
+.header .subtitle{font-size:15px;color:var(--teal);font-weight:500;margin-bottom:10px}
+.header .byline{font-size:12px;color:#888;letter-spacing:0.5px}
+
+.problem-solution{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.ps-card{padding:16px 18px;border-radius:10px}
+.ps-card.problem{background:linear-gradient(135deg,#FFF5F0,#FEE8DE);border-left:4px solid var(--coral)}
+.ps-card.solution{background:linear-gradient(135deg,#E8F8F5,#D1F0EA);border-left:4px solid var(--teal)}
+.ps-card h3{font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:600}
+.ps-card.problem h3{color:var(--coral)}
+.ps-card.solution h3{color:var(--teal)}
+.ps-card p{font-size:12.5px;line-height:1.55;color:#444}
+
+/* Tier sections */
+.tier{margin-bottom:20px}
+.tier-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.tier-header .tier-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border-radius:4px;color:#fff}
+.tier-header .tier-label{font-size:13px;font-weight:600;color:#555}
+.tier-badge.t1{background:var(--gold)}
+.tier-badge.t2{background:var(--navy)}
+.tier-badge.t3{background:var(--purple)}
+.tier-badge.t4{background:var(--green)}
+.tier-badge.t5{background:var(--coral)}
+
+.agent-row{display:flex;gap:8px;flex-wrap:wrap}
+.agent-card{flex:1;min-width:120px;padding:10px 8px;border-radius:8px;text-align:center;border:1px solid #e8e8e8;transition:transform .2s}
+.agent-card:hover{transform:translateY(-2px);box-shadow:0 3px 10px rgba(0,0,0,0.07)}
+.agent-card .codename{font-weight:700;font-size:12.5px;margin-bottom:1px}
+.agent-card .role{font-size:9.5px;color:#777;text-transform:uppercase;letter-spacing:0.4px}
+.agent-card .desc{font-size:10px;color:#555;line-height:1.35;margin-top:5px}
+
+.agent-card.client{background:linear-gradient(135deg,#FFF9EE,#FFF3DC);border-color:#E8D8B0}
+.agent-card.client .codename{color:var(--gold)}
+.agent-card.core{background:linear-gradient(135deg,var(--light),#E6F1FB);border-color:#B5D4F4}
+.agent-card.core .codename{color:var(--navy)}
+.agent-card.intersect{background:linear-gradient(135deg,#F3EDFE,#EEEDFE);border-color:#CECBF6}
+.agent-card.intersect .codename{color:var(--purple)}
+.agent-card.ops{background:linear-gradient(135deg,#E8F8F5,#E1F5EE);border-color:#9FE1CB}
+.agent-card.ops .codename{color:var(--green)}
+.agent-card.orch{background:linear-gradient(135deg,#FAECE7,#FEE8DE);border-color:#F0997B}
+.agent-card.orch .codename{color:var(--coral)}
+
+.section-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--navy);margin-bottom:12px;text-align:center}
+
+/* Coverage */
+.coverage{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:22px}
+.cov-card{padding:12px 10px;border-radius:8px;background:#FAFAF8;border:1px solid #E8E8E4}
+.cov-card h4{font-size:11px;color:var(--navy);margin-bottom:5px;font-weight:600}
+.cov-card p{font-size:10px;color:#666;line-height:1.45}
+
+/* Methodology */
+.method-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.method-card{padding:12px;border-radius:8px;border:1px solid #e8e8e8;text-align:center}
+.method-card h4{font-size:11px;color:var(--navy);margin-bottom:4px;font-weight:600}
+.method-card .source{font-size:9px;color:var(--teal);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;font-weight:600}
+.method-card p{font-size:10px;color:#666;line-height:1.4}
+
+/* Differentiators */
+.diff-strip{display:flex;gap:10px;margin-bottom:22px}
+.diff-item{flex:1;padding:12px;border-radius:8px;text-align:center}
+.diff-item:nth-child(1){background:#FFF8E1;border:1px solid #FFE082}
+.diff-item:nth-child(2){background:#E8F5E9;border:1px solid #A5D6A7}
+.diff-item:nth-child(3){background:#E3F2FD;border:1px solid #90CAF9}
+.diff-item:nth-child(4){background:#F3E5F5;border:1px solid #CE93D8}
+.diff-item .num{font-family:'DM Serif Display',serif;font-size:24px;color:var(--navy)}
+.diff-item .label{font-size:9.5px;color:#666;text-transform:uppercase;letter-spacing:0.4px;margin-top:2px}
+
+/* Credentials */
+.credentials{background:var(--navy);color:#fff;border-radius:12px;padding:18px 22px;display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.credentials h3{font-family:'DM Serif Display',serif;font-size:15px;margin-bottom:6px;grid-column:1/-1}
+.cred-col p{font-size:10.5px;line-height:1.65;color:rgba(255,255,255,0.85)}
+.cred-col strong{color:#fff}
+
+.footer{text-align:center;font-size:10px;color:#999;padding-top:10px;border-top:1px solid #eee}
+.footer a{color:var(--teal);text-decoration:none}
+
+@media print{
+  body{padding:20px;max-width:100%}
+  .agent-card:hover{transform:none;box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Resilient Innovation Agent Platform</h1>
+  <div class="subtitle">AI-Powered Multi-Dimensional Innovation for the Enterprise</div>
+  <div class="byline">Next Horizon Innovations LLC &nbsp;|&nbsp; Bob Holzer, Founder &nbsp;|&nbsp; March 2026</div>
+</div>
+
+<div class="problem-solution">
+  <div class="ps-card problem">
+    <h3>The Problem</h3>
+    <p>Most organizations innovate through a single lens. They run design thinking workshops but ignore the systems their ideas have to survive in. They do scenario planning but never test whether anyone wants what they're building. <strong>One-dimensional innovation fails.</strong></p>
+  </div>
+  <div class="ps-card solution">
+    <h3>The Solution</h3>
+    <p>An AI-powered platform with <strong>13 specialized agents</strong> that systematically apply Future Thinking, Design Thinking, and Systems Thinking together, producing innovations that are desirable, viable, and resilient across multiple futures.</p>
+  </div>
+</div>
+
+<!-- TIER 1: Client Interface -->
+<div class="tier">
+  <div class="tier-header">
+    <span class="tier-badge t1">Tier 1</span>
+    <span class="tier-label">Client Interface</span>
+  </div>
+  <div class="agent-row">
+    <div class="agent-card client">
+      <div class="codename">Navigator</div>
+      <div class="role">Client Intake</div>
+      <div class="desc">Challenge discovery, innovation maturity assessment, engagement scoping</div>
+    </div>
+    <div class="agent-card client">
+      <div class="codename">Publisher</div>
+      <div class="role">Deliverables</div>
+      <div class="desc">Board-ready decks, strategy reports, workshop guides, case studies</div>
+    </div>
+  </div>
+</div>
+
+<!-- TIER 2: Core Thinking -->
+<div class="tier">
+  <div class="tier-header">
+    <span class="tier-badge t2">Tier 2</span>
+    <span class="tier-label">Core Thinking Agents</span>
+  </div>
+  <div class="agent-row">
+    <div class="agent-card core">
+      <div class="codename">Scout</div>
+      <div class="role">Future Thinking</div>
+      <div class="desc">IFTF-aligned foresight: signal scanning, STEEP drivers, scenario building, cross-impact mapping</div>
+    </div>
+    <div class="agent-card core">
+      <div class="codename">Empathy</div>
+      <div class="role">Design Thinking</div>
+      <div class="desc">User research, personas, journey mapping, desirability testing, prototyping briefs</div>
+    </div>
+    <div class="agent-card core">
+      <div class="codename">Architect</div>
+      <div class="role">Systems Thinking</div>
+      <div class="desc">System maps, causal loops, Draw Out Consequences, leverage point analysis</div>
+    </div>
+  </div>
+</div>
+
+<!-- TIER 3: Intersection -->
+<div class="tier">
+  <div class="tier-header">
+    <span class="tier-badge t3">Tier 3</span>
+    <span class="tier-label">Intersection Agents</span>
+  </div>
+  <div class="agent-row">
+    <div class="agent-card intersect">
+      <div class="codename">Visionary</div>
+      <div class="role">Future + Design</div>
+      <div class="desc">Future personas, speculative design, scenario-based prototyping</div>
+    </div>
+    <div class="agent-card intersect">
+      <div class="codename">Integrator</div>
+      <div class="role">Design + Systems</div>
+      <div class="desc">Scalable solutions, pilot-to-production, adoption pathway design</div>
+    </div>
+    <div class="agent-card intersect">
+      <div class="codename">Sentinel</div>
+      <div class="role">Future + Systems</div>
+      <div class="desc">Resilience mapping, assumption stress testing, adaptive strategy</div>
+    </div>
+  </div>
+</div>
+
+<!-- TIER 4: Operational -->
+<div class="tier">
+  <div class="tier-header">
+    <span class="tier-badge t4">Tier 4</span>
+    <span class="tier-label">Operational Agents</span>
+  </div>
+  <div class="agent-row">
+    <div class="agent-card ops">
+      <div class="codename">Radar</div>
+      <div class="role">Competitive Intel</div>
+      <div class="desc">Market monitoring, patent scanning, positioning analysis</div>
+    </div>
+    <div class="agent-card ops">
+      <div class="codename">Banker</div>
+      <div class="role">Portfolio Mgmt</div>
+      <div class="desc">Horizon 1/2/3 balancing, pipeline health, resource allocation</div>
+    </div>
+    <div class="agent-card ops">
+      <div class="codename">Scorekeeper</div>
+      <div class="role">Metrics & Scoring</div>
+      <div class="desc">DVFA scoring, innovation maturity assessment, KPI design</div>
+    </div>
+    <div class="agent-card ops">
+      <div class="codename">Bridge</div>
+      <div class="role">Change Mgmt</div>
+      <div class="desc">Adoption readiness, stakeholder resistance, transition design</div>
+    </div>
+  </div>
+</div>
+
+<!-- TIER 5: Orchestration -->
+<div class="tier">
+  <div class="tier-header">
+    <span class="tier-badge t5">Tier 5</span>
+    <span class="tier-label">Orchestration</span>
+  </div>
+  <div class="agent-row">
+    <div class="agent-card orch" style="max-width:280px">
+      <div class="codename">Conductor</div>
+      <div class="role">Orchestrator</div>
+      <div class="desc">Cross-agent synthesis, conflict resolution, unified strategy, action planning</div>
+    </div>
+  </div>
+</div>
+
+<h2 class="section-title" style="margin-top:24px">Methodology Foundations</h2>
+<div class="method-strip">
+  <div class="method-card">
+    <div class="source">IFTF-Aligned</div>
+    <h4>Future Thinking</h4>
+    <p>Prepare-Foresight-Insight cycle with tiered toolkit: signal scanning, STEEP drivers, scenario building, cross-impact mapping</p>
+  </div>
+  <div class="method-card">
+    <div class="source">Human-Centered</div>
+    <h4>Design Thinking</h4>
+    <p>Empathize-Define-Ideate-Prototype with personas, journey maps, HMW questions, desirability screening</p>
+  </div>
+  <div class="method-card">
+    <div class="source">Complexity-Aware</div>
+    <h4>Systems Thinking</h4>
+    <p>Draw Out Consequences, causal loop diagrams, leverage point analysis, system archetypes</p>
+  </div>
+</div>
+
+<h2 class="section-title">Innovation Types Covered</h2>
+<div class="coverage">
+  <div class="cov-card">
+    <h4>Product & Service</h4>
+    <p>Scout + Empathy + Visionary identify future user needs and design concepts validated across scenarios</p>
+  </div>
+  <div class="cov-card">
+    <h4>Business Model</h4>
+    <p>Scout + Architect + Integrator map transitions with system-aware implementation paths</p>
+  </div>
+  <div class="cov-card">
+    <h4>Process & Ops</h4>
+    <p>Architect + Empathy + Sentinel redesign processes with human experience and resilience built in</p>
+  </div>
+  <div class="cov-card">
+    <h4>Strategic Foresight</h4>
+    <p>Scout + Sentinel + Architect deliver multi-scenario strategic resilience plans with DVFA scoring</p>
+  </div>
+</div>
+
+<div class="diff-strip">
+  <div class="diff-item">
+    <div class="num">3x</div>
+    <div class="label">Dimensional<br>Coverage</div>
+  </div>
+  <div class="diff-item">
+    <div class="num">Days</div>
+    <div class="label">Not Months<br>for Analysis</div>
+  </div>
+  <div class="diff-item">
+    <div class="num">13</div>
+    <div class="label">Specialized<br>Agents</div>
+  </div>
+  <div class="diff-item">
+    <div class="num">DVFA</div>
+    <div class="label">Scoring<br>Framework</div>
+  </div>
+</div>
+
+<div class="credentials">
+  <h3>Built by Someone Who's Done This at Scale</h3>
+  <div class="cred-col">
+    <p><strong>21 years at HCSC (Blue Cross Blue Shield).</strong> Enterprise Architecture to Innovation Leadership. Built and led innovation teams with innovation scientists and strategic designers. Created AI governance frameworks, technology radars, and managed innovation pipelines at the executive level.</p>
+  </div>
+  <div class="cred-col">
+    <p><strong>Builder, not just strategist.</strong> SynthData Sandbox (synthetic healthcare data platform), IFTF-aligned strategic foresight web apps, and this 13-agent platform, all engineered from scratch. Chicago Innovation Fellows certified. Advanced strategic foresight training.</p>
+  </div>
+</div>
+
+<div class="footer">
+  Next Horizon Innovations LLC &nbsp;|&nbsp; <a href="mailto:bob@nexthorizoninnovations.com">bob@nexthorizoninnovations.com</a> &nbsp;|&nbsp; Confidential
+</div>
+
+</body>
+</html>
