@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NHI Resilient Innovation - Engagement Cheat Sheet</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1B3A5C;--teal:#0D8A8A;--coral:#D85A30;--purple:#534AB7;--green:#1D9E75;--gold:#9E7C1D;--light:#F0F6FA}
+body{font-family:'DM Sans',sans-serif;color:#2C2C2A;background:#fff;max-width:850px;margin:0 auto;padding:30px 28px;font-size:12px;line-height:1.45}
+
+.header{text-align:center;margin-bottom:18px;padding-bottom:12px;border-bottom:3px solid var(--teal)}
+.header h1{font-family:'DM Serif Display',serif;font-size:24px;color:var(--navy);margin-bottom:2px}
+.header .sub{font-size:12px;color:var(--teal);font-weight:500}
+
+.stage{margin-bottom:14px;page-break-inside:avoid}
+.stage-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.stage-num{background:var(--navy);color:#fff;font-size:10px;font-weight:700;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stage-num.t1{background:var(--gold)}
+.stage-num.t2{background:var(--navy)}
+.stage-num.t3{background:var(--purple)}
+.stage-num.t4{background:var(--green)}
+.stage-num.t5{background:var(--coral)}
+.stage-num.t6{background:var(--teal)}
+.stage-title{font-weight:700;font-size:13px;color:var(--navy)}
+.stage-agents{font-size:10.5px;color:#777;margin-left:auto;font-weight:500}
+
+.stage-body{background:#FAFAF8;border:1px solid #E8E8E4;border-radius:8px;padding:10px 14px}
+.stage-body p{margin-bottom:4px;font-size:11.5px;color:#444}
+.prompt{background:#fff;border:1px solid #ddd;border-radius:6px;padding:8px 10px;margin:6px 0;font-family:'DM Sans',sans-serif;font-size:11px;color:#333;line-height:1.5}
+.prompt .label{font-size:9px;text-transform:uppercase;letter-spacing:0.8px;color:var(--teal);font-weight:600;margin-bottom:3px}
+.output{font-size:10.5px;color:var(--green);font-weight:600;margin-top:4px}
+
+.tips{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.tip-card{padding:10px 12px;border-radius:8px;border-left:3px solid}
+.tip-card.context{background:#FFF9EE;border-color:var(--gold)}
+.tip-card.skip{background:#F0F6FA;border-color:var(--navy)}
+.tip-card h4{font-size:11px;font-weight:700;margin-bottom:4px}
+.tip-card p{font-size:10.5px;color:#555;line-height:1.4}
+
+.agent-ref{margin-bottom:14px}
+.agent-ref h2{font-family:'DM Serif Display',serif;font-size:16px;color:var(--navy);margin-bottom:8px}
+.ref-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ref-card{padding:6px 8px;border-radius:6px;border:1px solid #e8e8e8;font-size:10px}
+.ref-card .name{font-weight:700;font-size:11px}
+.ref-card.core{border-left:3px solid var(--navy)}.ref-card.core .name{color:var(--navy)}
+.ref-card.inter{border-left:3px solid var(--purple)}.ref-card.inter .name{color:var(--purple)}
+.ref-card.ops{border-left:3px solid var(--green)}.ref-card.ops .name{color:var(--green)}
+.ref-card.client{border-left:3px solid var(--gold)}.ref-card.client .name{color:var(--gold)}
+.ref-card.orch{border-left:3px solid var(--coral)}.ref-card.orch .name{color:var(--coral)}
+
+.dvfa{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.dvfa-card{padding:8px;border-radius:6px;text-align:center}
+.dvfa-card:nth-child(1){background:#E8F8F5;border:1px solid #9FE1CB}
+.dvfa-card:nth-child(2){background:#F0F6FA;border:1px solid #B5D4F4}
+.dvfa-card:nth-child(3){background:#FFF9EE;border:1px solid #E8D8B0}
+.dvfa-card:nth-child(4){background:#F3EDFE;border:1px solid #CECBF6}
+.dvfa-card .letter{font-family:'DM Serif Display',serif;font-size:22px;color:var(--navy)}
+.dvfa-card .label{font-size:9px;text-transform:uppercase;letter-spacing:0.5px;color:#666;margin-top:1px}
+.dvfa-card .source{font-size:9px;color:var(--teal);font-weight:600;margin-top:2px}
+
+.footer{text-align:center;font-size:9px;color:#aaa;padding-top:8px;border-top:1px solid #eee}
+
+@media print{
+  body{padding:16px 20px}
+  .stage-body{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Coordinated Engagement Cheat Sheet</h1>
+  <div class="sub">NHI Resilient Innovation Platform - 6-Stage Pipeline</div>
+</div>
+
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-num t1">1</div>
+    <div class="stage-title">Intake</div>
+    <div class="stage-agents">Navigator</div>
+  </div>
+  <div class="stage-body">
+    <div class="prompt">
+      <div class="label">Say this</div>
+      "Navigator, run intake for a new engagement. Client: [name/industry]. Challenge: [what they're trying to solve]. Context: [why now, what's been tried, constraints]."
+    </div>
+    <p>Navigator will ask discovery questions, frame the focal question, and recommend Quick/Standard/Deep scope with agent priorities.</p>
+    <p>Optional: "Also run the innovation maturity assessment."</p>
+    <div class="output">Output: Engagement Brief + Focal Question + Recommended Agent Lineup</div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-num t2">2</div>
+    <div class="stage-title">Core Analysis (run each separately)</div>
+    <div class="stage-agents">Scout + Empathy + Architect</div>
+  </div>
+  <div class="stage-body">
+    <div class="prompt">
+      <div class="label">Scout (future thinking)</div>
+      "Scout, run a [standard/deep] foresight analysis on [focal question]. Time horizon: [X] years. Here's the engagement context: [paste brief]."
+    </div>
+    <div class="prompt">
+      <div class="label">Empathy (design thinking)</div>
+      "Empathy, map the human needs and user experience for [focal question]. Who are the key stakeholders? What are their pain points? Here's the context: [paste brief]."
+    </div>
+    <div class="prompt">
+      <div class="label">Architect (systems thinking)</div>
+      "Architect, map the system dependencies and dynamics for [focal question]. What are the feedback loops? Where are the leverage points? Context: [paste brief]."
+    </div>
+    <div class="output">Output: Three independent analysis briefs (foresight, human, systems)</div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-num t3">3</div>
+    <div class="stage-title">Intersection Synthesis (feed Stage 2 outputs in)</div>
+    <div class="stage-agents">Visionary + Integrator + Sentinel</div>
+  </div>
+  <div class="stage-body">
+    <div class="prompt">
+      <div class="label">Visionary (future + design)</div>
+      "Visionary, here are Scout's forecasts and Empathy's personas. How do these users evolve under these scenarios? What should we design for? [paste key findings]"
+    </div>
+    <div class="prompt">
+      <div class="label">Integrator (design + systems)</div>
+      "Integrator, here are Empathy's journey map and Architect's system analysis. Where does the experience break because of system constraints? What's the path to scale? [paste key findings]"
+    </div>
+    <div class="prompt">
+      <div class="label">Sentinel (future + systems)</div>
+      "Sentinel, here are Scout's scenarios and Architect's system map. Stress-test the strategy. What breaks first? What assumptions are load-bearing? [paste key findings]"
+    </div>
+    <div class="output">Output: Three intersection briefs (future-design, design-systems, future-systems)</div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-num t4">4</div>
+    <div class="stage-title">Operational Context (run as needed)</div>
+    <div class="stage-agents">Radar + Banker + Scorekeeper + Bridge</div>
+  </div>
+  <div class="stage-body">
+    <div class="prompt">
+      <div class="label">Run whichever Navigator recommended. Common prompts:</div>
+      "Radar, what's the competitive landscape for [domain]?"<br>
+      "Banker, how does this fit our innovation portfolio?"<br>
+      "Scorekeeper, score this opportunity using DVFA. Here are the inputs: [summary from each agent]."<br>
+      "Bridge, assess change readiness for [initiative]. Here's the org context: [details]."
+    </div>
+    <div class="output">Output: Competitive intel, portfolio fit, DVFA scores, change readiness</div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-num t5">5</div>
+    <div class="stage-title">Synthesis</div>
+    <div class="stage-agents">Conductor</div>
+  </div>
+  <div class="stage-body">
+    <div class="prompt">
+      <div class="label">Say this</div>
+      "Conductor, synthesize the full engagement. Here's what each agent found: [paste summaries of key findings from each agent]. Surface the conflicts, produce the integrated DVFA score, and give me strategic recommendations."
+    </div>
+    <p>Conductor identifies agreements, surfaces where agents disagree, produces the unified strategy with DVFA scoring.</p>
+    <div class="output">Output: Integrated Strategy Report with DVFA scores, conflicts, recommendations</div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-num t6">6</div>
+    <div class="stage-title">Deliverables</div>
+    <div class="stage-agents">Publisher</div>
+  </div>
+  <div class="stage-body">
+    <div class="prompt">
+      <div class="label">Say this</div>
+      "Publisher, create [executive summary deck / strategy report / one-pager / workshop guide] from the Conductor's synthesis. Audience: [C-suite / innovation team / board]."
+    </div>
+    <div class="output">Output: Board-ready artifacts (.pptx, .docx, .html, .pdf)</div>
+  </div>
+</div>
+
+<div class="tips">
+  <div class="tip-card context">
+    <h4>What to Paste Forward</h4>
+    <p>You don't need full outputs from every agent. Carry forward: the focal question, 3-5 key findings per agent, specific conflicts or surprises, and DVFA evidence. Skip the methodology walkthrough.</p>
+  </div>
+  <div class="tip-card skip">
+    <h4>When to Skip Agents</h4>
+    <p>Not every engagement needs all 13. Typical Standard engagement: Scout + Empathy + Architect (Stage 2), 1-2 intersection agents (Stage 3), Scorekeeper + 1 ops agent (Stage 4), then Conductor + Publisher.</p>
+  </div>
+</div>
+
+<h2 style="font-family:'DM Serif Display',serif;font-size:16px;color:var(--navy);margin-bottom:8px">DVFA Scoring (each 1-5 with confidence H/M/L)</h2>
+<div class="dvfa">
+  <div class="dvfa-card"><div class="letter">D</div><div class="label">Desirability</div><div class="source">From Empathy</div></div>
+  <div class="dvfa-card"><div class="letter">V</div><div class="label">Viability</div><div class="source">From Architect</div></div>
+  <div class="dvfa-card"><div class="letter">F</div><div class="label">Feasibility</div><div class="source">From Ops Reality</div></div>
+  <div class="dvfa-card"><div class="letter">A</div><div class="label">Adaptability</div><div class="source">From Scout/Sentinel</div></div>
+</div>
+
+<div class="agent-ref">
+  <h2>Agent Quick Reference</h2>
+  <div class="ref-grid">
+    <div class="ref-card client"><span class="name">Navigator</span> - Intake, scoping, maturity assessment</div>
+    <div class="ref-card client"><span class="name">Publisher</span> - Decks, reports, workshop materials</div>
+    <div class="ref-card core"><span class="name">Scout</span> - IFTF foresight: signals, drivers, scenarios</div>
+    <div class="ref-card core"><span class="name">Empathy</span> - Personas, journeys, desirability testing</div>
+    <div class="ref-card core"><span class="name">Architect</span> - System maps, DOC, leverage points</div>
+    <div class="ref-card inter"><span class="name">Visionary</span> - Future personas, speculative design</div>
+    <div class="ref-card inter"><span class="name">Integrator</span> - Pilot-to-production, scalability</div>
+    <div class="ref-card inter"><span class="name">Sentinel</span> - Stress testing, resilience mapping</div>
+    <div class="ref-card ops"><span class="name">Radar</span> - Competitive intel, patent scanning</div>
+    <div class="ref-card ops"><span class="name">Banker</span> - H1/H2/H3 portfolio balance</div>
+    <div class="ref-card ops"><span class="name">Scorekeeper</span> - DVFA scoring, maturity metrics</div>
+    <div class="ref-card ops"><span class="name">Bridge</span> - Change readiness, resistance mapping</div>
+    <div class="ref-card orch"><span class="name">Conductor</span> - Cross-agent synthesis, unified strategy</div>
+    <div class="ref-card" style="border-left:3px solid #ddd"><span class="name" style="color:#555">Tip</span> - Say "review as [codename]" for any agent's perspective</div>
+  </div>
+</div>
+
+<div class="footer">
+  Next Horizon Innovations LLC | Resilient Innovation Platform v1.0 | Print this page for quick reference
+</div>
+
+</body>
+</html>
