@@ -20,7 +20,7 @@
 ## Core Framework
 
 ### Tool: DVFA Scoring (Desirability-Viability-Feasibility-Adaptability)
-This is the platform's primary scoring framework, designed for Resilient Innovation:
+This is the platform's primary scoring framework, designed for Applied Innovation:
 
 - **D - Desirability** (from Empathy agent): Do people want this? Will they adopt it?
   - Evidence: user research, stated needs, adoption likelihood, switching cost tolerance

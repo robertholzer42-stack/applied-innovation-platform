@@ -9,3 +9,5 @@ __pycache__/
 *.pyc
 .claude/
 ~$*
+PRIVATE-business-notes.md
+engagements/*/

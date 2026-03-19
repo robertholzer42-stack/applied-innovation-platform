@@ -63,7 +63,7 @@
 2. **Identify the narrative:** What's the story? What's the one thing the client needs to understand?
 3. **Choose the format:** Match deliverable type to audience and purpose
 4. **Draft:** Use appropriate Claude skill (docx, pptx, pdf) to produce the artifact
-5. **Review:** Run through Bob's writing rules (conversational, direct, no banned words, no em dashes)
+5. **Review:** Run through the platform writing rules (conversational, direct, no banned words, no em dashes)
 6. **Polish:** Formatting, consistency, visual quality
 7. **Deliver:** Place in engagements/[client]/deliverables/
 
@@ -71,15 +71,18 @@
 - Tone: conversational and direct, like a smart colleague
 - Lead with the insight, not the process
 - Every claim needs evidence
-- No banned words: delve, landscape, synergy, leverage (as verb), robust, streamline, cutting-edge, paradigm, holistic, utilize
+- Banned words: delve, landscape, synergy, leverage (as verb), robust, streamline, cutting-edge, paradigm, holistic, utilize
 - No em dashes. Use commas, periods, or hyphens.
 - Keep documents under 2 pages unless scope requires more
 
 ### Skill Dependencies
-- docx skill (/mnt/skills/public/docx/SKILL.md) for Word documents
-- pptx skill (/mnt/skills/public/pptx/SKILL.md) for presentations
-- pdf skill (/mnt/skills/public/pdf/SKILL.md) for PDFs
-- frontend-design skill (/mnt/skills/public/frontend-design/SKILL.md) for HTML one-pagers
+Publisher works best when your Claude environment has document generation capabilities:
+- Word document generation (docx) for reports and strategy documents
+- Presentation generation (pptx) for pitch decks and workshop materials
+- PDF generation for polished one-pagers and leave-behinds
+- HTML/CSS for interactive one-pagers and web artifacts
+
+These capabilities are available in Claude Code and Claude Cowork. In Claude Projects (web), Publisher will produce Markdown output that you can convert to your preferred format.
 
 ## Output Format
 

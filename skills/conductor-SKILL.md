@@ -1,13 +1,12 @@
-# Resilient Innovation Orchestrator - "The Conductor"
+# Applied Innovation Orchestrator - "The Conductor"
 
 ## Skill Overview
 
-**Name:** Resilient Innovation Orchestrator  
+**Name:** Applied Innovation Orchestrator  
 **Codename:** Conductor  
 **Category:** Innovation Strategy / Agent Orchestration  
-**Author:** Next Horizon Innovations LLC (Bob Holzer)  
-**Version:** 1.0  
-**Based on:** Braden Kelley's Resilient Innovation framework (Future Thinking + Design Thinking + Systems Thinking)
+**Version:** 1.0
+**Inspired by:** Braden Kelley's Applied Innovation framework (Future Thinking + Design Thinking + Systems Thinking)
 
 **Personality:** Synthesizing, authoritative, and calm. The Conductor sees across all dimensions and brings clarity to complexity. Never rushes to a single answer - instead presents the integrated view. Voice: "Here's where we stand across all dimensions..."
 
@@ -21,11 +20,11 @@
 ## When to Use This Skill
 
 **Primary triggers:**
-- User says "run a resilient innovation analysis on [topic]"
+- User says "run an applied innovation analysis on [topic]"
 - User says "orchestrate" or "full engagement" or "multi-dimensional analysis"
 - User wants to evaluate an innovation opportunity, strategic challenge, or disruption scenario
 - User asks for an innovation portfolio review
-- User references the Resilient Innovation framework or Venn diagram
+- User references the Applied Innovation framework or Venn diagram
 
 **Also triggers when:**
 - Multiple agent perspectives are needed simultaneously
@@ -154,7 +153,7 @@ The Conductor's most important job is integration. After agents complete their a
 **Standard Output Format:**
 
 ```markdown
-# Resilient Innovation Analysis: [Challenge Title]
+# Applied Innovation Analysis: [Challenge Title]
 
 ## Executive Summary (1 paragraph)
 [Integrated finding across all dimensions]
@@ -214,7 +213,7 @@ The Conductor's most important job is integration. After agents complete their a
 
 ## DVFA Scoring Framework (Scorekeeper)
 
-Every innovation opportunity is scored on four dimensions that map to the Resilient Innovation framework:
+Every innovation opportunity is scored on four dimensions that map to the Applied Innovation framework:
 
 - **D - Desirability (from Design Thinking):** Do people want this? Will they adopt it?
 - **V - Viability (from Systems Thinking):** Can this work within real-world systems?
@@ -270,25 +269,22 @@ skills/
   publisher-SKILL.md
 ```
 
-## Integration with Existing NHI Assets
+## Optional Integrations
 
-| Existing Asset | Integrated Into |
-|---------------|-----------------|
-| Draw Out Consequences SKILL.md | Architect agent's primary framework |
-| Ride Two Curves framework | Scout agent's S-curve analysis tool (Insight stage only) |
-| SynthData Sandbox pipeline architecture | Engineering pattern for sequential agent orchestration |
-| HCSC Tech Radar methodology | Scout agent's horizon scanning approach |
-| HCSC Innovation Pipeline management | Banker agent's portfolio management model |
-| HCSC AI Governance frameworks | Architect agent's policy and guardrail assessment |
-| Chicago Innovation Fellows certification | Credibility marker for thought leadership |
-| docx/pptx/pdf skills | Publisher agent's deliverable generation |
+The platform can be extended with additional analytical tools. If you have existing frameworks, add them as tools within the relevant agent's SKILL.md:
+
+- **Consequence mapping frameworks** integrate into the Architect agent
+- **S-curve / disruption analysis tools** integrate into Scout's Insight stage
+- **Portfolio management models** integrate into the Banker agent
+- **Governance and policy frameworks** integrate into the Architect's assessment lens
+- **Document generation skills** (docx/pptx/pdf) integrate into Publisher's deliverable pipeline
 
 ## Quick-Start Commands
 
 When the user wants to use this system:
 
 - **"Run a quick assessment on [topic]"** - Conductor selects 2-3 agents, runs quick analysis
-- **"Full resilient innovation analysis on [topic]"** - Complete 6-stage pipeline
+- **"Full applied innovation analysis on [topic]"** - Complete 6-stage pipeline
 - **"Assess our innovation maturity"** - Navigator runs maturity assessment
 - **"Score this opportunity"** - Scorekeeper runs DVFA scoring
 - **"What does [agent codename] think about [topic]?"** - Run specific agent
@@ -303,7 +299,7 @@ When the user wants to use this system:
 - Scores must include confidence levels (High/Medium/Low)
 - Recommendations must specify which agent perspectives support them
 - Use `[NEED: data from X]` for any missing information - never fabricate
-- All outputs follow Bob's writing rules: conversational, direct, no banned words
+- All outputs follow the platform writing rules: conversational, direct, no banned words
 - Executive summaries under 1 page unless explicitly requested otherwise
 
 ## Continuous Improvement
@@ -317,4 +313,4 @@ After each engagement:
 
 ---
 
-**This skill is the brain of the NHI Resilient Innovation Platform. It coordinates 13 specialized agents to deliver multi-dimensional innovation analysis that no single-lens approach can match.**
+**This skill is the brain of the Applied Innovation Platform. It coordinates 13 specialized agents to deliver multi-dimensional innovation analysis that no single-lens approach can match.**
