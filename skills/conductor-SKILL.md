@@ -222,15 +222,19 @@ Every innovation opportunity is scored on four dimensions that map to the Applie
 
 Each scored 1-5 with evidence. Overall Resilience Score = weighted average (default equal weights, adjustable per engagement).
 
-## Engagement Folder Structure
+## Engagement Folder Structure and Output Routing
+
+All outputs go to `engagements/` at the repo root. When starting a new engagement, create the subfolder structure automatically (in Claude Code/Cowork) or label outputs with target paths (in Claude Projects).
+
+**Standard filenames by agent:**
 
 ```
 engagements/
-  [client-name]/
+  [challenge-name]/
     intake/
-      engagement-brief.md
-      maturity-assessment.md
-      challenge-definition.md
+      navigator-engagement-brief.md
+      navigator-maturity-assessment.md
+      navigator-challenge-definition.md
     analysis/
       scout-future-thinking.md
       empathy-design-thinking.md

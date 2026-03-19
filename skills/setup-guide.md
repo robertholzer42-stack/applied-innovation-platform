@@ -47,18 +47,28 @@ Best for document-heavy work, interactive sessions, and generating formatted del
 2. Claude will read the `CLAUDE.md` automatically
 3. Start conversing with agents directly
 
-### Step 3: Set Up Your First Engagement Folder
+### Step 3: Understand Where Outputs Go
 
-For each challenge or project, create this folder structure:
+All engagement work is saved to the `engagements/` folder at the root of this repo. Each engagement gets its own subfolder with a standard structure:
 
 ```
-engagements/[challenge-name]/
-  intake/
-  analysis/
-  synthesis/
-  operations/
-  deliverables/
+applied-innovation-platform/          <- repo root
+  engagements/
+    [challenge-name]/
+      intake/                         - Navigator outputs
+      analysis/                       - Scout, Empathy, Architect outputs
+      synthesis/                      - Visionary, Integrator, Sentinel outputs
+      operations/                     - Radar, Banker, Scorekeeper, Bridge outputs
+      deliverables/                   - Publisher: decks, reports, one-pagers
 ```
+
+**How this works in each environment:**
+
+- **Claude Code / Cowork:** Claude creates the engagement folder and writes output files automatically when you run an analysis from the repo directory. Each agent writes to its designated subfolder using standard filenames (e.g., `scout-future-thinking.md`, `empathy-design-thinking.md`).
+
+- **Claude Projects (Web/Desktop):** Claude cannot write to your local file system. It will produce each agent's output as a labeled message in conversation, prefixed with the target file path (e.g., `engagements/ai-strategy/analysis/scout-future-thinking.md`). You copy each output into the correct folder in your local clone.
+
+You don't need to create the folder structure manually - Claude Code and Cowork will create it for you when starting a new engagement. For Claude Projects, create the folders locally and save outputs as you go.
 
 ## How to Use the Platform
 

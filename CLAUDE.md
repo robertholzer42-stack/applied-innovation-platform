@@ -103,23 +103,42 @@ Each scored 1-5 with confidence level (H/M/L). Overall Resilience Score = weight
 - Banned words: delve, landscape, synergy, leverage (as verb), robust, streamline, cutting-edge, paradigm, holistic, utilize
 - No em dashes. Use commas, periods, or hyphens.
 
-## Workspace Structure
+## Workspace Structure and Output Routing
+
+All engagement outputs are saved to the `engagements/` folder at the root of this repository. When running an analysis, Claude should create the engagement subfolder and write each agent's output to the correct location automatically.
+
+### Folder layout
 
 ```
-skills/              - 13 agent SKILL.md files + orchestrator + setup guide
-docs/                - Example deliverables and reference materials
-engagements/         - Engagement workspaces (one folder per challenge)
-  [challenge-name]/
-    intake/          - Navigator outputs: engagement brief, maturity assessment
-    analysis/        - Core agent outputs: scout, empathy, architect
-    synthesis/       - Intersection outputs: visionary, integrator, sentinel
-    operations/      - Operational outputs: radar, banker, scorekeeper, bridge
-    deliverables/    - Publisher outputs: decks, reports, one-pagers
-knowledge-base/
-  patterns/          - Reusable patterns captured from engagements
-  case-studies/      - Documented engagement case studies
-  frameworks/        - Reference frameworks and templates
+applied-innovation-platform/     <- repo root (your working directory)
+  skills/                        - 13 agent SKILL.md files + setup guide
+  docs/                          - Example deliverables and reference materials
+  engagements/                   - ALL engagement outputs go here
+    [challenge-name]/
+      intake/                    - Navigator: engagement brief, maturity assessment
+      analysis/                  - Scout, Empathy, Architect outputs
+      synthesis/                 - Visionary, Integrator, Sentinel outputs
+      operations/                - Radar, Banker, Scorekeeper, Bridge outputs
+      deliverables/              - Publisher: decks, reports, one-pagers
+  knowledge-base/
+    patterns/                    - Reusable patterns captured from engagements
+    case-studies/                - Documented engagement case studies
+    frameworks/                  - Reference frameworks and templates
 ```
+
+### How output routing works by environment
+
+**Claude Code / Claude Cowork:** When the repo folder is your working directory (or selected workspace), write all outputs directly to `engagements/[challenge-name]/` using relative paths. Create the subfolder structure automatically when starting a new engagement. Example: a Scout analysis for "ai-strategy" goes to `engagements/ai-strategy/analysis/scout-future-thinking.md`.
+
+**Claude Projects (Web/Desktop):** Claude Projects cannot write to your local file system. Instead, produce each agent's output as a clearly labeled message in the conversation. Use the standard filenames (e.g., `scout-future-thinking.md`, `empathy-design-thinking.md`) in the output header so the user can save them to the correct engagement subfolder manually.
+
+### Output routing rules for agents
+
+When producing output, every agent must:
+1. Use the engagement name provided by the user (or ask for one if not given)
+2. Write to the correct subfolder for its tier (intake/, analysis/, synthesis/, operations/, deliverables/)
+3. Use the standard filename convention: `[agent-codename]-[descriptor].md` (e.g., `scout-future-thinking.md`, `bridge-change-readiness.md`)
+4. In Claude Projects (where file writing is unavailable), prefix the output with the target path: `## Output: engagements/[name]/analysis/scout-future-thinking.md`
 
 ## Quick Start Commands
 
