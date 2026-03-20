@@ -462,6 +462,119 @@ When the user wants to use this system:
 - All outputs follow the platform writing rules: conversational, direct, no banned words
 - Executive summaries under 1 page unless explicitly requested otherwise
 
+## Stage Gate Verification Protocol
+
+Before advancing from one stage to the next, the Conductor runs a verification pass. This catches problems before they cascade downstream. The verifier checks against the engagement brief (the living spec), not against its own reasoning.
+
+### Verification Checklist (run after each stage)
+
+**After Stage 2 (Core Analysis), before Stage 2.5:**
+1. Did each agent stay within its scope? (Scout on foresight, Empathy on humans, Architect on systems)
+2. Does each output reference the focal question from the engagement brief?
+3. Are findings supported by evidence (signals, data, research) or flagged as assumptions?
+4. Are there internal contradictions within any single agent's output?
+5. Did any agent silently expand into another agent's territory?
+
+**After Stage 3 (Intersection Synthesis), before Stage 4:**
+1. Did each intersection agent use BOTH of its parent agent outputs as inputs?
+2. Are the intersection insights genuinely different from the parent outputs? (not just summaries)
+3. Do the intersection outputs surface new tensions or just repeat what was already known?
+4. Has the living engagement brief been updated with any new findings?
+
+**After Stage 4 (Operational Context), before Stage 5:**
+1. Do operational assessments reference evidence from Stages 2-3?
+2. Is the final DVFA scoring based on evidence from ALL agents, not just the last stage?
+3. Are there conflicts between operational findings and earlier analysis?
+4. Has the living engagement brief been updated with competitive and portfolio context?
+
+### Verification Actions
+- **PASS:** Advance to next stage
+- **FLAG:** Note the issue in the checkpoint file, advance but address in synthesis
+- **BLOCK:** Stop and fix before advancing. Only use for: agent operated outside scope, output contradicts the focal question, evidence was fabricated
+
+### Verification Output Format
+Add to the checkpoint file after each stage:
+
+```
+## Stage [N] Verification
+- Scope compliance: [PASS/FLAG/BLOCK] - [notes]
+- Focal question alignment: [PASS/FLAG/BLOCK] - [notes]
+- Evidence quality: [PASS/FLAG/BLOCK] - [notes]
+- Cross-agent consistency: [PASS/FLAG/BLOCK] - [notes]
+- Living spec updated: [Yes/No] - [what changed]
+```
+
+## Living Engagement Brief Protocol
+
+The engagement brief is not a static document. It's a living spec that the Conductor updates after each stage as new information changes the picture. This prevents downstream agents from working on stale assumptions.
+
+### How It Works
+
+1. **Navigator creates the initial brief** (Stage 1) with focal question, context, constraints, and recommended agent lineup
+2. **After each stage,** the Conductor reviews whether any findings change the focal question, constraints, or priorities
+3. **If something changed,** the Conductor appends an update to the engagement brief with a timestamp and reason
+4. **Downstream agents always read the latest version** of the brief, not the original
+
+### What Triggers an Update
+
+- Scout discovers a trend that reframes the challenge entirely
+- Empathy finds that the assumed user population doesn't exist or has different needs than expected
+- Architect reveals a system constraint that makes the original framing impossible
+- Radar finds a competitor already solved the problem, shifting the challenge to differentiation
+- Any agent finding that makes the original focal question the wrong question
+
+### Update Format
+
+Append to the engagement brief (don't overwrite the original):
+
+```
+---
+## Brief Update [n] - After Stage [X]
+**Date:** [timestamp]
+**Triggered by:** [agent codename] finding that [what changed]
+**Original focal question:** [unchanged or revised]
+**Revised focal question:** [new question, if changed]
+**Impact on remaining agents:** [which agents need to adjust, and how]
+**Constraints added/removed:** [any changes to constraints]
+---
+```
+
+### Rules
+- The original brief is never deleted. Updates are appended so you can see how understanding evolved.
+- If the focal question changes, the Conductor must announce it before launching the next stage.
+- Downstream agents must acknowledge the update in their output: "Note: focal question was revised after Stage [X] based on [agent]'s finding."
+
+## Agent Scope Boundaries
+
+Each agent has explicit boundaries defining what it MUST NOT do. This prevents scope creep where one agent silently expands into another agent's territory, which is the most common failure mode in multi-agent systems.
+
+### Scope Boundary Rules
+
+The Conductor enforces these boundaries during stage gate verification. If an agent produces output that crosses into another agent's scope, the Conductor flags it and routes the relevant finding to the correct agent.
+
+| Agent | MUST NOT |
+|-------|----------|
+| **Scout** | Make design recommendations (Empathy's job), map system dependencies (Architect's job), recommend specific actions (Conductor's job), score ideas (Scorekeeper's job) |
+| **Empathy** | Predict future trends (Scout's job), map system feedback loops (Architect's job), assess competitive positioning (Radar's job), design change management plans (Bridge's job) |
+| **Architect** | Design user experiences (Empathy's job), build future scenarios (Scout's job), assess market competition (Radar's job), produce client deliverables (Publisher's job) |
+| **Visionary** | Do original signal scanning (Scout did this), do original system mapping (Architect did this), score ideas (Scorekeeper's job) |
+| **Integrator** | Do original user research (Empathy did this), do original system analysis (Architect did this), assess change readiness (Bridge's job) |
+| **Sentinel** | Do original foresight work (Scout did this), do original system mapping (Architect did this), recommend portfolio allocation (Banker's job) |
+| **Radar** | Predict future scenarios (Scout's job), assess user needs (Empathy's job), score ideas (Scorekeeper's job) |
+| **Banker** | Do competitive analysis (Radar's job), assess user desirability (Empathy's job), design implementation plans (Integrator's job) |
+| **Scorekeeper** | Generate new analysis (all other agents do this), make strategic recommendations (Conductor's job), produce deliverables (Publisher's job) |
+| **Bridge** | Design the solution itself (Integrator's job), assess system viability (Architect's job), build future scenarios (Scout's job) |
+| **Navigator** | Run analysis (Tier 2-4 agents do this), synthesize findings (Conductor's job), produce final deliverables (Publisher's job) |
+| **Publisher** | Generate new analysis or recommendations (all other agents do this), change findings from other agents |
+| **Conductor** | Skip stage gate verification, suppress conflicts between agents, advance past a BLOCK without resolution |
+
+### What Happens When an Agent Crosses Scope
+
+1. The Conductor notes it in the stage gate verification
+2. The relevant finding is extracted and routed to the correct agent
+3. The offending agent's output is trimmed to its proper scope
+4. The engagement brief is not updated based on out-of-scope findings until the correct agent validates them
+
 ## Continuous Improvement
 
 After each engagement:

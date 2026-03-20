@@ -83,6 +83,16 @@ Every innovation opportunity is scored on four dimensions:
 
 Each scored 1-5 with confidence level (H/M/L). Overall Resilience Score = weighted average.
 
+### Multi-Agent Coordination Patterns
+
+Three coordination patterns prevent the most common multi-agent failure modes:
+
+1. **Stage Gate Verification:** The Conductor runs a verification pass after each stage before advancing. Checks scope compliance, focal question alignment, evidence quality, and cross-agent consistency. Actions: PASS (advance), FLAG (note and advance), BLOCK (stop and fix).
+
+2. **Living Engagement Brief:** The engagement brief is a living document, not static. The Conductor appends updates after each stage when findings change the focal question, constraints, or priorities. Downstream agents always read the latest version. Original brief is never deleted, updates are appended.
+
+3. **Agent Scope Boundaries:** Each agent has explicit MUST NOT rules defining what it cannot do. The Conductor enforces these during stage gate verification. If an agent crosses scope, the finding is routed to the correct agent. See the scope boundary table in conductor-SKILL.md.
+
 ### Challenge-to-Agent Routing (Conductor)
 | Challenge Type | Primary Agents | Supporting |
 |---------------|----------------|------------|

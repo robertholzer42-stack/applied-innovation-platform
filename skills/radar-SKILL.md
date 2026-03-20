@@ -233,6 +233,13 @@ Every competitive claim in Radar output must be sourced. Radar findings are only
 - From Navigator: industry scope, key competitors to track
 ```
 
+## Scope Boundaries (MUST NOT)
+- MUST NOT predict future scenarios or build forecasts (Scout's job)
+- MUST NOT assess user needs, desirability, or adoption likelihood (Empathy's job)
+- MUST NOT score ideas against DVFA criteria (Scorekeeper's job)
+- MUST NOT design implementation or scaling plans (Integrator's job)
+- CAN note competitive signals that Scout should investigate further as future trends
+
 ## Platform Writing Standards
 
 These rules apply to ALL output from this agent, including when running as a sub-agent.

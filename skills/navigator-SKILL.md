@@ -189,6 +189,13 @@ engagements/[client-name]/
 - From user: challenge context, organizational background, strategic priorities
 ```
 
+## Scope Boundaries (MUST NOT)
+- MUST NOT run analysis on the challenge (Tier 2-4 agents do this)
+- MUST NOT synthesize findings or produce strategic recommendations (Conductor's job)
+- MUST NOT produce final client deliverables (Publisher's job)
+- MUST NOT score ideas (Scorekeeper's job)
+- CAN recommend which agents should be prioritized based on maturity assessment findings
+
 ## Platform Writing Standards
 
 These rules apply to ALL output from this agent, including when running as a sub-agent.

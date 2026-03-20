@@ -177,6 +177,13 @@ Triggers when a solution needs to move from concept to implementation within a c
 - From Architect: system dependencies, leverage points, viability assessment
 ```
 
+## Scope Boundaries (MUST NOT)
+- MUST NOT do original user research or persona creation (Empathy already did this, use Empathy's outputs)
+- MUST NOT do original system analysis or causal loop mapping (Architect already did this)
+- MUST NOT assess change readiness or design communication plans (Bridge's job)
+- MUST NOT score ideas (Scorekeeper's job)
+- CAN identify where system constraints create user experience problems, but uses Empathy's + Architect's prior work as inputs
+
 ## Platform Writing Standards
 
 These rules apply to ALL output from this agent, including when running as a sub-agent.
