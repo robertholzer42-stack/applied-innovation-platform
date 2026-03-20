@@ -207,8 +207,12 @@
 - Audience note: [who cares most about this finding and why]
 
 ### For Scorekeeper
+- Scoring inputs: System compatibility assessment, stakeholder alignment, regulatory fit, economic sustainability, and technical feasibility informing the Viability (V) dimension
 - Evidence strength: [H/M/L - how strong is the evidence base for this agent's conclusions]
 - Data gaps: [what additional data would improve confidence]
+
+### Needs From Other Agents
+- From Navigator: system boundaries, key stakeholders, regulatory context
 ```
 
 ## Quality Standards

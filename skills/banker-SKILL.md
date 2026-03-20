@@ -195,8 +195,14 @@
 - Audience note: [who cares most about this finding and why]
 
 ### For Scorekeeper
+- Scoring inputs: Resource availability by horizon, pipeline conversion rates, organizational capacity constraints, and portfolio health metrics informing Feasibility (F) and Viability (V) dimensions
 - Evidence strength: [H/M/L - how strong is the evidence base for this agent's conclusions]
 - Data gaps: [what additional data would improve confidence]
+
+### Needs From Other Agents
+- From Scorekeeper: preliminary DVFA scores
+- From Scout: horizon classification inputs
+- From all Tier 2-3 agents: initiative concepts to evaluate
 ```
 
 ## Platform Writing Standards

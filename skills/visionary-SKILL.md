@@ -148,8 +148,13 @@ Triggers when a challenge needs BOTH future context AND human-centered design co
 - Audience note: [who cares most about this finding and why]
 
 ### For Scorekeeper
+- Scoring inputs: Future persona acceptance, scenario resilience ratings, and design coherence informing Desirability (D) and Adaptability (A) dimensions
 - Evidence strength: [H/M/L - how strong is the evidence base for this agent's conclusions]
 - Data gaps: [what additional data would improve confidence]
+
+### Needs From Other Agents
+- From Scout: signals, forecasts, scenarios
+- From Empathy: personas, journey maps, desirability findings
 ```
 
 ## Platform Writing Standards

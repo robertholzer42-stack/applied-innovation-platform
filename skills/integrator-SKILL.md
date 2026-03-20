@@ -168,8 +168,13 @@ Triggers when a solution needs to move from concept to implementation within a c
 - Audience note: [who cares most about this finding and why]
 
 ### For Scorekeeper
+- Scoring inputs: Scalability assessment, system-fit analysis, adoption architecture feasibility, and implementation blueprint viability informing Viability (V) and Feasibility (F) dimensions
 - Evidence strength: [H/M/L - how strong is the evidence base for this agent's conclusions]
 - Data gaps: [what additional data would improve confidence]
+
+### Needs From Other Agents
+- From Empathy: user needs, adoption barriers, desirability findings
+- From Architect: system dependencies, leverage points, viability assessment
 ```
 
 ## Platform Writing Standards

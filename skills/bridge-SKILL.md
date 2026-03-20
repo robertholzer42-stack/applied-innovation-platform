@@ -192,6 +192,20 @@
 ## Change Capacity
 [Current load, fatigue level, recommendation on timing]
 
+## Readiness Checklist
+
+| Prerequisite | Status | Evidence | Action Needed |
+|-------------|--------|----------|---------------|
+| Executive sponsor identified | YES/NO/PARTIAL | [specific evidence] | [if not YES] |
+| Change capacity available | YES/NO/PARTIAL | [current load assessment] | [if not YES] |
+| Stakeholder engagement plan | YES/NO/PARTIAL | [plan status] | [if not YES] |
+| Training infrastructure ready | YES/NO/PARTIAL | [assessment] | [if not YES] |
+| Communication channels established | YES/NO/PARTIAL | [channel audit] | [if not YES] |
+| Success metrics defined | YES/NO/PARTIAL | [KPI status] | [if not YES] |
+| Rollback plan documented | YES/NO/PARTIAL | [plan status] | [if not YES] |
+
+Use this checklist for standard and deep engagements. For quick scans, a narrative assessment is sufficient.
+
 ## Handoff
 
 ### For Conductor
@@ -205,8 +219,14 @@
 - Audience note: [who cares most about this finding and why]
 
 ### For Scorekeeper
+- Scoring inputs: Organizational readiness dimensions, stakeholder resistance severity, adoption barrier severity, and organizational change capacity informing Feasibility (F) and Adaptability (A) dimensions
 - Evidence strength: [H/M/L - how strong is the evidence base for this agent's conclusions]
 - Data gaps: [what additional data would improve confidence]
+
+### Needs From Other Agents
+- From Empathy: adoption barriers, user readiness
+- From Architect: system dependencies affecting change
+- From Integrator: implementation pathway and scaling plan
 ```
 
 ## Platform Writing Standards

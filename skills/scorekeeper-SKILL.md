@@ -187,8 +187,12 @@ Used by Navigator during intake to baseline the client's current capability:
 - Audience note: [who cares most about this finding and why]
 
 ### For Other Agents
+- Scoring inputs: Not applicable (Scorekeeper synthesizes inputs from all other agents)
 - Scoring methodology: [how the score was calculated]
 - Confidence notes: [which dimensions are strongly evidenced vs. require further input]
+
+### Needs From Other Agents
+- From all agents: Handoff sections with DVFA dimension contributions and evidence strength
 ```
 
 ## Platform Writing Standards

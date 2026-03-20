@@ -86,6 +86,8 @@ Each scored 1-5 with confidence level (H/M/L). Overall Resilience Score = weight
 ### Challenge-to-Agent Routing (Conductor)
 | Challenge Type | Primary Agents | Supporting |
 |---------------|----------------|------------|
+| **Full applied innovation analysis** | **All 13 agents, all tiers** | Standard or deep depth |
+| **Quick scan** | **Navigator + 2-3 agents + Conductor** | Based on challenge type |
 | New product/service | Empathy, Scout, Visionary | Radar, Scorekeeper |
 | Business model disruption | Scout, Architect, Integrator | Banker, Bridge |
 | Process redesign | Architect, Empathy, Sentinel | Scorekeeper, Bridge |

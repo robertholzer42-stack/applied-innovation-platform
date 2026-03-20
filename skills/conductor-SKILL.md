@@ -89,17 +89,26 @@ STAGE 1: INTAKE (Navigator or Auto-Intake)
   > Client context, challenge definition, maturity assessment
   > Output: Engagement Brief
 
+STAGE 2.0: RESEARCH FOUNDATION (Conductor)
+  > Web research on the topic to build a shared fact base
+  > Output: research-foundation.md (market data, key players, regulatory context, recent developments)
+  > Skip for quick scans; required for standard and deep engagements
+
 STAGE 2: CORE ANALYSIS (Scout + Empathy + Architect, in parallel)
   > Each core agent analyzes the challenge independently
+  > All agents receive the research foundation as common input
   > Scout: future scenarios, trends, signals and drivers
   > Empathy: user needs, pain points, adoption barriers
   > Architect: system dependencies, feedback loops, leverage points
   > Output: Three independent analysis reports
 
-STAGE 2.5: PRELIMINARY SCORING (Scorekeeper - first pass)
+STAGE 2.5: PRELIMINARY SCORING (Scorekeeper - first pass, REQUIRED)
+  > Conductor reads all Stage 2 output files, then triggers Scorekeeper
   > Score D, V, F, A based on Tier 2 evidence only
   > Flag any dimension below 2.0 for extra attention in Stages 3-4
-  > Output: Preliminary DVFA scorecard (marked as PRELIMINARY)
+  > Generate "evidence requests" for Tier 3/4 agents: what data would raise confidence?
+  > Output: Preliminary DVFA scorecard (marked as PRELIMINARY) + evidence request list
+  > IMPORTANT: This stage must run BEFORE Stage 3. Tier 3 agents receive the preliminary scores.
 
 STAGE 3: INTERSECTION SYNTHESIS (Visionary + Integrator + Sentinel, in parallel)
   > Visionary: combines Scout + Empathy > future-ready solutions
@@ -108,12 +117,15 @@ STAGE 3: INTERSECTION SYNTHESIS (Visionary + Integrator + Sentinel, in parallel)
   > Each receives the preliminary DVFA scores for context
   > Output: Three intersection synthesis reports
 
-STAGE 4: OPERATIONAL CONTEXT (Radar + Banker + Bridge, in parallel; then Scorekeeper final)
+STAGE 4: OPERATIONAL CONTEXT (Radar + Banker + Bridge in parallel, then Scorekeeper final)
+  > Conductor reads all Stage 3 files, then launches Stage 4 agents
   > Radar: competitive context and external signals
   > Banker: portfolio fit and resource implications
   > Bridge: change readiness and adoption pathway
-  > Scorekeeper (final pass): revise DVFA with full evidence from all agents
-  > Output: Three operational assessments + final DVFA scorecard
+  > After Radar/Banker/Bridge complete: Conductor reads their outputs
+  > Scorekeeper (FINAL pass): revise DVFA with full evidence from ALL agents (Tiers 2-4)
+  > Show preliminary-to-final delta with explanation for every score that changed
+  > Output: Three operational assessments + final DVFA scorecard with delta tracking
 
 STAGE 5: ORCHESTRATION (Conductor)
   > Cross-agent synthesis and conflict resolution
@@ -181,16 +193,66 @@ After Stage 5 synthesis, the Conductor can run an optional stress test:
 
 Trigger: include "with Devil's Advocate" in the engagement request, or the Conductor suggests it when confidence is mixed (multiple M/L ratings in DVFA).
 
+## Inter-Tier Context Passing Protocol
+
+This is the single most important orchestration rule. Summaries lose nuance. Agents must work from actual data, not compressed handoffs.
+
+**After each tier completes, the Conductor MUST:**
+
+1. Read all output files from the completed tier (not just summaries)
+2. Extract the Handoff sections from each agent's output
+3. Construct the next tier's prompts using BOTH the handoff data AND specific evidence, tables, and data points from the full outputs
+4. Never compress an agent's detailed table (e.g., Scout's 15-signal table) into "key signals." Pass the actual table.
+5. When an agent produces a specific data point (e.g., "99% are 510(k) pathway"), that exact figure must appear in downstream prompts, not a paraphrase.
+
+**File reading sequence:**
+```
+After Stage 2 completes:
+  Read: analysis/scout-future-thinking.md
+  Read: analysis/empathy-design-thinking.md
+  Read: analysis/architect-systems-thinking.md
+  Extract: all Handoff sections + any tables, signal lists, persona details, system maps
+  Build: Tier 3 prompts with full upstream evidence
+
+After Stage 3 completes:
+  Read: synthesis/visionary-future-design.md
+  Read: synthesis/integrator-design-systems.md
+  Read: synthesis/sentinel-future-systems.md
+  Extract: Handoff sections + intersection insights, concept screens, fragility findings
+  Build: Tier 4 prompts with full upstream evidence
+
+After Stage 4 completes:
+  Read: operations/radar-competitive-intel.md
+  Read: operations/banker-portfolio-fit.md
+  Read: operations/bridge-change-readiness.md
+  Read: operations/scorekeeper-dvfa-scoring.md
+  Build: Stage 5 synthesis from ALL agent files, not summaries
+```
+
+## Shared Research Foundation (Stage 2.0)
+
+Before launching Tier 2 agents in parallel, the Conductor performs a research phase to prevent duplicate web searches and ensure all agents work from the same facts.
+
+**Stage 2.0: Research Foundation**
+1. Conductor (or Navigator) performs web research on the engagement topic
+2. Produces a shared fact base covering: market size and growth data, key players and recent moves, regulatory context, recent developments (last 12 months), technology state of the art
+3. Writes the fact base to `engagements/[name]/analysis/research-foundation.md`
+4. All Tier 2 agents receive this file as input alongside their specific prompts
+5. Agents still apply their own analytical frameworks, but work from common data rather than running independent searches
+
+**When to skip Stage 2.0:** Quick scans (2-3 agents) can skip this step. Standard and deep engagements should always include it.
+
 ## Parallel Execution Patterns
 
 When agents within a stage have no dependencies on each other, run them in parallel.
 
 **Zero-dependency groups (can run simultaneously):**
-- Stage 2: Scout, Empathy, Architect (all independent, all read from intake only)
+- Stage 2: Scout, Empathy, Architect (all independent, all read from intake + research foundation)
 - Stage 3: Visionary, Integrator, Sentinel (each reads different pairs from Stage 2)
 - Stage 4: Radar, Banker, Bridge (each reads from different upstream agents)
 
 **Sequential dependencies:**
+- Stage 2.0 (Research Foundation) must complete before Stage 2 agents launch
 - Scorekeeper preliminary (Stage 2.5) must wait for all Stage 2 agents
 - Scorekeeper final must wait for all Stage 3-4 agents
 - Conductor synthesis (Stage 5) must wait for all prior stages
@@ -222,6 +284,8 @@ When the user presents an innovation challenge, the Conductor:
 
 | Challenge Type | Primary Agents | Supporting Agents |
 |---------------|----------------|-------------------|
+| **Full applied innovation analysis** | **All 13 agents, all tiers, Conductor-led** | Standard or deep depth |
+| **Quick scan** | **Navigator + 2-3 agents + Conductor** | Based on challenge type below |
 | New product/service idea | Empathy, Scout, Visionary | Radar, Scorekeeper |
 | Business model disruption | Scout, Architect, Integrator | Banker, Bridge |
 | Process redesign | Architect, Empathy, Sentinel | Scorekeeper, Bridge |

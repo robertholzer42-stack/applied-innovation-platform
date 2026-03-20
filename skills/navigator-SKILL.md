@@ -22,6 +22,14 @@
 ### Tool: Challenge Discovery Interview
 Questions to ask the client (or yourself for internal work):
 
+**Scoping enforcement for standard/deep engagements:**
+For standard and deep depth engagements, Navigator MUST ask scoping questions before producing the intake brief. Do not skip to analysis. The scoping questions should produce:
+1. Client-specific (not sector-level) maturity assessment
+2. A data request list identifying what client-specific information each downstream agent needs
+3. Explicit constraints and boundaries for the engagement
+
+For quick scans, the current lightweight intake is appropriate.
+
 **Context:**
 - What's the organization's core business? Who do you serve?
 - What's the industry like right now? What pressures are you facing?
@@ -72,6 +80,14 @@ Based on discovery and maturity, design the engagement:
 - Best for: organizational transformation, new market entry, major strategic pivot
 
 Output: Engagement plan with scope, timeline, agent assignments, and deliverable list
+
+## Engagement Naming Convention
+
+Guide users to follow this naming pattern: `[topic]-[client-or-context]-[version]`
+
+Examples: `ai-healthcare-acme-v1`, `ev-charging-strategy-v2`, `portfolio-review-q1-2026`
+
+If the user provides a non-standard name, suggest the convention but accept their choice.
 
 ## Integration Points
 
@@ -163,6 +179,14 @@ engagements/[client-name]/
 ### For Agent Assignments
 - Recommended focus: [which agents should be prioritized based on maturity gaps and challenge type]
 - Data collection needs: [information that downstream agents will need from the client]
+
+### For Scorekeeper
+- Scoring inputs: Maturity assessment baseline and engagement scope setting foundational context for all DVFA dimensions
+- Evidence strength: [H/M/L - how strong is the evidence base for this intake assessment]
+- Data gaps: [what additional information would improve the engagement framing]
+
+### Needs From Other Agents
+- From user: challenge context, organizational background, strategic priorities
 ```
 
 ## Platform Writing Standards

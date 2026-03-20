@@ -192,8 +192,12 @@
 - Audience note: [who cares most about this finding and why]
 
 ### For Scorekeeper
+- Scoring inputs: User research findings, adoption likelihood, pain point severity, and willingness to switch informing the Desirability (D) dimension
 - Evidence strength: [H/M/L - how strong is the evidence base for this agent's conclusions]
 - Data gaps: [what additional data would improve confidence]
+
+### Needs From Other Agents
+- From Navigator: target user segments, organizational context
 ```
 
 ## Quality Standards

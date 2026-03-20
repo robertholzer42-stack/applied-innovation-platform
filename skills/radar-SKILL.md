@@ -224,8 +224,13 @@ Every competitive claim in Radar output must be sourced. Radar findings are only
 - Audience note: [who cares most about this finding and why]
 
 ### For Scorekeeper
+- Scoring inputs: Competitive threat level, market consolidation signals, positioning sustainability, and emerging player emergence probability informing Viability (V) and Adaptability (A) dimensions
 - Evidence strength: [H/M/L - how strong is the evidence base for this agent's conclusions]
 - Data gaps: [what additional data would improve confidence]
+
+### Needs From Other Agents
+- From Scout: signals and trends for competitive context
+- From Navigator: industry scope, key competitors to track
 ```
 
 ## Platform Writing Standards

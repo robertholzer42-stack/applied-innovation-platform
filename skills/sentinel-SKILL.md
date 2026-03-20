@@ -178,8 +178,13 @@ Triggers when strategies, innovations, or systems need to be tested against futu
 - Audience note: [who cares most about this finding and why]
 
 ### For Scorekeeper
+- Scoring inputs: Assumption fragility ratings, scenario resilience scores, failure mode severity, and adaptive strategy robustness informing Adaptability (A) and Viability (V) dimensions
 - Evidence strength: [H/M/L - how strong is the evidence base for this agent's conclusions]
 - Data gaps: [what additional data would improve confidence]
+
+### Needs From Other Agents
+- From Scout: signals, forecasts, scenarios
+- From Architect: system dependencies, feedback loops, fragility points
 ```
 
 ## Platform Writing Standards

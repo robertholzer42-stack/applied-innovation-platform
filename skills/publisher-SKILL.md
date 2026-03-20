@@ -164,26 +164,59 @@ Publisher's behavior changes based on the Claude environment:
 
 ### Claude Code / Claude Cowork (can create files)
 
-**Before creating any file, read the appropriate document skill:**
+**PPTX creation: Use the reusable template script.**
+
+Before building any .pptx deck from scratch, read `docs/publisher-deck-template.js` in the platform repository. This file contains:
+- Pre-built slide functions for all 12 slide types in the board-ready deck template
+- The platform's color palette, typography, and layout dimensions as reusable constants
+- Helper functions for cards with accent bars, big stat callouts, and section labels
+- PptxGenJS pitfall avoidance (no # in colors, no object reuse, no unicode bullets)
+
+**Preferred workflow for PPTX:**
+1. Read `docs/publisher-deck-template.js` to understand the design system and available functions
+2. Read the pptx SKILL.md in your environment's skills folder for PptxGenJS construction methods
+3. Adapt the template functions to the engagement's content (don't rebuild from zero)
+4. Use the COLORS, FONTS, and LAYOUT constants from the template
+5. Run a single QA pass. The template handles layout, so you're checking content, not design.
+
+**For other file types, read the appropriate document skill:**
 
 | File Type | Skill to Read | What It Provides |
 |-----------|--------------|-----------------|
-| .pptx | Read the pptx SKILL.md in your environment's skills folder | Design principles, color palettes, slide construction via pptxgenjs, layout patterns, visual motifs |
+| .pptx | docs/publisher-deck-template.js + pptx SKILL.md | Reusable template + PptxGenJS construction methods |
 | .docx | Read the docx SKILL.md in your environment's skills folder | Document structure, heading styles, table formatting, page layout |
 | .pdf | Read the pdf SKILL.md in your environment's skills folder | PDF creation methods, form handling, merge/split |
 | .png diagrams | Read the matplotlib-architecture-diagrams or canvas-design SKILL.md | Architecture diagrams, system maps, infographics |
 | .html | Use standard HTML/CSS/JS | Interactive one-pagers, web artifacts |
 
+### Canva Integration (Optional, Higher Quality)
+
+If the Canva MCP connector is available in your environment, use it instead of PptxGenJS for presentation creation. Canva handles layout, typography, and visual hierarchy natively, producing more polished results with fewer QA cycles.
+
+**Canva workflow:**
+1. Search Canva templates for "business presentation" or "strategy deck"
+2. Select a template that matches the platform's visual tone (professional, clean, data-driven)
+3. Autofill template sections using the bridge template content mapping below
+4. Export as .pptx for client delivery
+5. If Canva is not connected, fall back to the PptxGenJS template workflow above
+
+**When to use Canva vs. PptxGenJS:**
+- Canva: Client-facing decks where visual polish matters, external presentations, board meetings
+- PptxGenJS: Internal analysis decks, rapid iteration, environments without Canva access
+
 **Design system for platform deliverables:**
 
-All platform deliverables should use a consistent visual identity:
+All platform deliverables should use a consistent visual identity (defined in `docs/publisher-deck-template.js`):
 
 - **Primary color:** Deep navy (#1B3A5C) - headers, titles, emphasis
 - **Accent color:** Teal (#0D8A8A) - highlights, callouts, data points
 - **Secondary accents:** Coral (#D85A30) for warnings/tensions, Purple (#534AB7) for intersection insights, Green (#1D9E75) for operational items
 - **Background:** White or very light gray (#F0F6FA) for content areas
-- **Typography:** Clean sans-serif (system fonts are fine). Titles: bold. Body: regular weight.
-- **Visual motif:** Rounded cards for grouped items. Colored left-border for callout boxes. Icon circles for agent identification.
+- **Typography:** Georgia for titles (bold), Calibri for body text
+- **Card dimensions:** Minimum 2.2" wide, 0.3" internal padding
+- **Title maximum:** 40 characters at 28pt for guaranteed single-line rendering
+- **Accent bar:** 0.12" left-edge bar in tier color
+- **Visual motif:** Cards with colored left-border for grouped items. Icon circles for agent identification.
 
 ### Claude Projects (web - cannot create files)
 

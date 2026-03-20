@@ -219,8 +219,12 @@ Best for: major strategic decisions, multi-year planning, disruption preparednes
 - Audience note: [who cares most about this finding and why]
 
 ### For Scorekeeper
+- Scoring inputs: Future scenarios, driver-signal relationships, and adaptability signals informing the Adaptability (A) dimension
 - Evidence strength: [H/M/L - how strong is the evidence base for this agent's conclusions]
 - Data gaps: [what additional data would improve confidence]
+
+### Needs From Other Agents
+- From Navigator: time horizon, industry context, strategic priorities
 ```
 
 ## Quality Standards
