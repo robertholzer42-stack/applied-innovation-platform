@@ -82,7 +82,7 @@ The answers to these questions shape agent routing, depth tier selection, and se
 
 ## Engagement Pipeline
 
-The Conductor manages a 7-stage pipeline (note: Scorekeeper now runs twice):
+The Conductor manages an 8-stage pipeline:
 
 ```
 STAGE 1: INTAKE (Navigator or Auto-Intake)
@@ -276,7 +276,7 @@ When the user presents an innovation challenge, the Conductor:
 - Run them sequentially in a single session, synthesize at the end
 
 **For full engagements:**
-- Run the complete 7-stage pipeline across the planned number of sessions
+- Run the complete 8-stage pipeline across the planned number of sessions
 - Write checkpoints at session boundaries
 - Use parallel execution within stages where possible
 

@@ -107,6 +107,18 @@ Start with: **"Quick scan on [topic]"**
 
 The Conductor will select 2-3 agents, run their quick-tier toolkits (15-30 min), and give you a focused brief.
 
+### Understanding Depth Tiers
+
+Every engagement runs at one of three depth levels. You set the depth in your prompt, or the Conductor will ask during intake.
+
+**Quick scan** (1 session, 15-30 min): 2-3 agents at their lightest toolkit. Skips the research foundation and preliminary scoring. Best for initial exploration or when you need a single analytical lens. Example: *"Quick scan on whether we should enter the EV charging market."*
+
+**Standard** (2 sessions, 2-4 hours): 6-8 agents across the full 8-stage pipeline. Includes the shared research foundation, two-pass DVFA scoring with delta tracking, and intersection synthesis. Session 1 covers Stages 1 through 4, Session 2 covers Stages 5 through 8 with a checkpoint file bridging them. Produces an integrated strategy and board-ready deck. This is the right depth for most real decisions. Example: *"Run a standard analysis on AI in Healthcare. Engagement name: ai-healthcare-v1."*
+
+**Deep dive** (3 sessions, full day+): All 13 agents at maximum toolkit depth. Every agent runs its most thorough analysis. Scout builds full scenarios with cross-impact matrices. Empathy creates detailed validated personas. Architect runs complete causal loop analysis. The Devil's Advocate pass is recommended at this level. Session 1 covers Stages 1 through 2.5, Session 2 covers Stages 3 and 4, Session 3 covers Stages 5 through 8 plus QA. Reserve this for high-stakes strategic decisions where the investment is justified. Example: *"Run a deep dive on our 5-year portfolio strategy, with Devil's Advocate."*
+
+Each agent SKILL.md file has a "Tiered Toolkit" section showing exactly what that agent does at each depth level.
+
 ### Option D: Workshop Prep
 
 Start with: **"Prepare a workshop on [topic] for [audience]"**

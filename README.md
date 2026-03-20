@@ -99,6 +99,24 @@ The Conductor manages an 8-stage pipeline:
 
 You can run the full pipeline, use individual agents directly, or ask for a quick 2-3 agent assessment.
 
+### Engagement Depth Tiers
+
+Every engagement runs at one of three depth levels. Each level controls how many agents participate, how deeply each agent digs, and how many sessions the analysis spans.
+
+| Depth | Agents | Sessions | Time | When to Use |
+|-------|--------|----------|------|-------------|
+| **Quick scan** | 2-3 agents + Conductor | 1 session | 15-30 min | Initial exploration, gut-checking an idea, single-lens question |
+| **Standard** | 6-8 agents + Conductor + Publisher | 2 sessions | 2-4 hours | Most real decisions, product strategy, market entry, process redesign |
+| **Deep dive** | All 13 agents + Publisher + QA | 3 sessions | Full day+ | High-stakes strategy, portfolio transformation, board-level decisions |
+
+**Quick scan** skips the research foundation, runs 2-3 agents at their lightest toolkit, and produces a focused brief in a single conversation. Good for: "Should we even look at this?"
+
+**Standard** includes the shared research foundation, two-pass DVFA scoring, and the full intersection layer. Agents run their mid-depth toolkits with proper evidence chains. Produces an integrated strategy and board-ready deck. This is the right choice for most real work.
+
+**Deep dive** runs every agent at maximum depth. Scout builds full scenarios with cross-impact analysis. Empathy creates detailed validated personas. Architect runs complete causal loop analysis. The Devil's Advocate pass is recommended. Produces the full deliverable suite. Reserve this for decisions where the stakes justify a full day of analysis.
+
+To set depth, include it in your prompt: *"Run a standard analysis on [topic]"* or *"Deep dive on [topic], with Devil's Advocate."*
+
 ## DVFA Scoring Framework
 
 Every innovation opportunity is scored across four dimensions:
