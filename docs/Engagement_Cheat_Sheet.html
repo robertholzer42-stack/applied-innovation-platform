@@ -76,7 +76,7 @@ body{font-family:'DM Sans',sans-serif;color:#2C2C2A;background:#fff;max-width:85
 
 <div class="header">
   <h1>Coordinated Engagement Cheat Sheet</h1>
-  <div class="sub">Applied Innovation Platform - 6-Stage Pipeline</div>
+  <div class="sub">Applied Innovation Platform - 8-Stage Pipeline</div>
 </div>
 
 <!-- STAGE 1 -->
@@ -97,17 +97,34 @@ body{font-family:'DM Sans',sans-serif;color:#2C2C2A;background:#fff;max-width:85
   </div>
 </div>
 
+<!-- STAGE 2.0 -->
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-num t2">2.0</div>
+    <div class="stage-title">Research Foundation</div>
+    <div class="stage-agents">Conductor</div>
+  </div>
+  <div class="stage-body">
+    <p>Conductor builds a shared fact base so all Tier 2 agents work from the same data. Skip for quick scans.</p>
+    <div class="prompt">
+      <div class="label">Automatic (Conductor handles this)</div>
+      The Conductor researches: market size, key players, regulatory context, recent developments (last 12 months), technology state of the art.
+    </div>
+    <div class="output">Output: research-foundation.md (shared by all downstream agents)</div>
+  </div>
+</div>
+
 <!-- STAGE 2 -->
 <div class="stage">
   <div class="stage-header">
     <div class="stage-num t2">2</div>
-    <div class="stage-title">Core Analysis (run each separately)</div>
+    <div class="stage-title">Core Analysis (run in parallel on shared data)</div>
     <div class="stage-agents">Scout + Empathy + Architect</div>
   </div>
   <div class="stage-body">
     <div class="prompt">
       <div class="label">Scout (future thinking)</div>
-      "Scout, run a [standard/deep] foresight analysis on [focal question]. Time horizon: [X] years. Here's the engagement context: [paste brief]."
+      "Scout, run a [standard/deep] foresight analysis on [focal question]. Time horizon: [X] years. Here's the engagement context: [paste brief]. Use the research foundation."
     </div>
     <div class="prompt">
       <div class="label">Empathy (design thinking)</div>
@@ -121,11 +138,28 @@ body{font-family:'DM Sans',sans-serif;color:#2C2C2A;background:#fff;max-width:85
   </div>
 </div>
 
+<!-- STAGE 2.5 -->
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-num t2">2.5</div>
+    <div class="stage-title">Preliminary Scoring</div>
+    <div class="stage-agents">Scorekeeper (first pass)</div>
+  </div>
+  <div class="stage-body">
+    <p>Scorekeeper produces early DVFA scores based on Tier 2 evidence. Flags dimensions below 2.0 for extra attention.</p>
+    <div class="prompt">
+      <div class="label">Automatic (Conductor triggers this)</div>
+      "Scorekeeper, run preliminary DVFA scoring based on Scout, Empathy, and Architect outputs. Flag any dimension with low confidence and generate evidence requests for downstream agents."
+    </div>
+    <div class="output">Output: Preliminary DVFA scorecard (marked PRELIMINARY) + evidence request list</div>
+  </div>
+</div>
+
 <!-- STAGE 3 -->
 <div class="stage">
   <div class="stage-header">
     <div class="stage-num t3">3</div>
-    <div class="stage-title">Intersection Synthesis (feed Stage 2 outputs in)</div>
+    <div class="stage-title">Intersection Synthesis (receives Stage 2 outputs + preliminary DVFA)</div>
     <div class="stage-agents">Visionary + Integrator + Sentinel</div>
   </div>
   <div class="stage-body">
@@ -160,7 +194,8 @@ body{font-family:'DM Sans',sans-serif;color:#2C2C2A;background:#fff;max-width:85
       "Scorekeeper, score this opportunity using DVFA. Here are the inputs: [summary from each agent]."<br>
       "Bridge, assess change readiness for [initiative]. Here's the org context: [details]."
     </div>
-    <div class="output">Output: Competitive intel, portfolio fit, DVFA scores, change readiness</div>
+    <p style="margin-top:6px;font-size:10.5px;color:#444">After Radar/Banker/Bridge complete, Scorekeeper runs the <strong>final DVFA pass</strong> with evidence from all agents. Shows preliminary-to-final delta with explanations.</p>
+    <div class="output">Output: Competitive intel, portfolio fit, change readiness, final DVFA scorecard with delta tracking</div>
   </div>
 </div>
 

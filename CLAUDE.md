@@ -144,7 +144,7 @@ When producing output, every agent must:
 
 ## Quick Start Commands
 
-- "Run a full applied innovation analysis on [topic]" - Complete 6-stage pipeline
+- "Run a full applied innovation analysis on [topic]" - Complete 8-stage pipeline
 - "Quick scan on [topic]" - Conductor picks 2-3 agents, quick tier
 - "Scout, scan the horizon for [domain]" - Single agent, foresight
 - "Empathy, map the user journey for [persona]" - Single agent, design
@@ -184,7 +184,9 @@ Additionally, "review as [agent codename]" triggers that specific innovation age
 | `skills/bridge-SKILL.md` | Change Management |
 | `skills/navigator-SKILL.md` | Client Intake & Discovery |
 | `skills/publisher-SKILL.md` | Deliverable Generation |
+| `skills/publisher-design-system.md` | Visual identity spec: colors, typography, layout rules, QA checklist |
 | `skills/setup-guide.md` | Complete setup and usage instructions |
+| `docs/publisher-deck-template.js` | Reusable PptxGenJS template with design system and validation functions |
 
 ## Continuous Improvement
 After every engagement:

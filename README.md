@@ -86,14 +86,16 @@ See the [Setup Guide](skills/setup-guide.md) for detailed instructions, alternat
 
 ## How It Works
 
-The Conductor manages a 6-stage pipeline:
+The Conductor manages an 8-stage pipeline:
 
 1. **Intake** (Navigator) - Scope the challenge, assess innovation maturity
-2. **Core Analysis** (Scout + Empathy + Architect) - Three independent analytical lenses
-3. **Intersection Synthesis** (Visionary + Integrator + Sentinel) - Where the lenses overlap
-4. **Operational Context** (Radar + Banker + Scorekeeper + Bridge) - Real-world grounding
-5. **Orchestration** (Conductor) - Cross-agent synthesis, conflict resolution
-6. **Deliverables** (Publisher) - Board-ready artifacts
+2. **Research Foundation** (Conductor) - Shared fact base so all agents work from the same data
+3. **Core Analysis** (Scout + Empathy + Architect) - Three independent analytical lenses, run in parallel
+4. **Preliminary Scoring** (Scorekeeper) - Early DVFA scores to guide downstream agents
+5. **Intersection Synthesis** (Visionary + Integrator + Sentinel) - Where the lenses overlap
+6. **Operational Context** (Radar + Banker + Bridge, then Scorekeeper final) - Real-world grounding + final DVFA with delta tracking
+7. **Orchestration** (Conductor) - Cross-agent synthesis, conflict resolution
+8. **Deliverables** (Publisher) - Board-ready artifacts with reusable design system
 
 You can run the full pipeline, use individual agents directly, or ask for a quick 2-3 agent assessment.
 
@@ -111,8 +113,8 @@ Each dimension scored 1-5 with confidence levels. The result: an Innovation Scor
 ## Repository Structure
 
 ```
-skills/              - 13 agent SKILL.md files + orchestrator + setup guide
-docs/                - Example deliverables (architecture diagram, executive overview)
+skills/              - 13 agent SKILL.md files + design system + setup guide
+docs/                - Example deliverables, architecture diagram, PPTX template
 engagements/         - Your engagement workspaces (one folder per challenge)
 knowledge-base/      - Reusable patterns, case studies, frameworks
   patterns/
@@ -120,6 +122,15 @@ knowledge-base/      - Reusable patterns, case studies, frameworks
   frameworks/
 CLAUDE.md            - Project instructions (paste into your Claude Project)
 ```
+
+### Key Reference Files
+
+| File | Purpose |
+|------|---------|
+| `docs/publisher-deck-template.js` | Reusable PptxGenJS template with design system, slide builders, and validation functions |
+| `skills/publisher-design-system.md` | Visual identity spec: colors, typography, layout rules, QA checklist |
+| `knowledge-base/patterns/TEMPLATE.md` | Template for capturing reusable patterns from engagements |
+| `knowledge-base/case-studies/TEMPLATE.md` | Template for documenting completed engagements |
 
 ## Customization
 

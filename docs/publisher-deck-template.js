@@ -585,4 +585,105 @@ const data = {
 buildDeck(data, "Applied_Innovation_Deck.pptx");
 */
 
-module.exports = { buildDeck, addTitleSlide, addVerdictSlide, addDVFASlide, addKeyFindingSlide, addCompetitiveSlide, addPortfolioSlide, addActionsSlide, addMonitoringSlide, addAskSlide, addCloseSlide, addCard, addBigStat, addSectionLabel, COLORS, FONTS, LAYOUT };
+// ============================================================
+// VALIDATION: Pre-flight checks before writing the file
+// ============================================================
+
+// Font height reference (approximate, in inches)
+const FONT_HEIGHTS = {
+  48: 0.70, 40: 0.60, 36: 0.55, 28: 0.45, 24: 0.40,
+  18: 0.30, 14: 0.25, 12: 0.22, 11: 0.20, 10: 0.18, 9: 0.16,
+};
+
+function estimateFontHeight(fontSize) {
+  return FONT_HEIGHTS[fontSize] || (fontSize * 0.015);
+}
+
+/**
+ * Validate that text fits inside its container.
+ * Call after building each slide to catch overflow before writing.
+ *
+ * @param {string} label - Slide identifier for warning messages
+ * @param {object} container - { y, h } of the parent shape
+ * @param {object} text - { y, fontSize } of the text element
+ * @param {number} safetyMargin - minimum gap from container bottom (default 0.15")
+ */
+function validateBoundingBox(label, container, text, safetyMargin = 0.15) {
+  const containerBottom = container.y + container.h;
+  const textBottom = text.y + estimateFontHeight(text.fontSize);
+  const gap = containerBottom - textBottom;
+  if (gap < safetyMargin) {
+    console.warn(`[QA] ${label}: Text (${text.fontSize}pt at y=${text.y}) overflows container (bottom=${containerBottom.toFixed(2)}). Gap=${gap.toFixed(2)}", need >=${safetyMargin}"`);
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Validate bullet count and word length per slide.
+ *
+ * @param {Array<string>} bullets - Array of bullet text strings
+ * @param {string} slideLabel - Slide identifier for warning messages
+ * @param {number} maxBullets - Maximum bullets allowed (default 6)
+ * @param {number} maxWords - Maximum words per bullet (default 12)
+ */
+function validateBullets(bullets, slideLabel, maxBullets = 6, maxWords = 12) {
+  const warnings = [];
+  if (bullets.length > maxBullets) {
+    warnings.push(`${slideLabel}: ${bullets.length} bullets (max ${maxBullets})`);
+  }
+  bullets.forEach((b, i) => {
+    const words = b.trim().split(/\s+/).length;
+    if (words > maxWords) {
+      warnings.push(`${slideLabel}, bullet ${i + 1}: ${words} words (max ${maxWords})`);
+    }
+  });
+  if (warnings.length > 0) {
+    warnings.forEach(w => console.warn(`[QA] ${w}`));
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Validate title length won't wrap at the given font size.
+ *
+ * @param {string} title - Title text
+ * @param {number} fontSize - Font size in pt
+ * @param {string} slideLabel - Slide identifier for warning messages
+ */
+function validateTitleLength(title, fontSize, slideLabel) {
+  const maxChars = fontSize >= 36 ? 30 : fontSize >= 28 ? 40 : 60;
+  if (title.length > maxChars) {
+    console.warn(`[QA] ${slideLabel}: Title "${title.slice(0, 30)}..." is ${title.length} chars (max ${maxChars} at ${fontSize}pt)`);
+    return false;
+  }
+  return true;
+}
+
+// ============================================================
+// STRUCTURAL COLOR RULES (use these, not agent colors, for
+// recurring design elements)
+// ============================================================
+const STRUCTURAL_COLORS = {
+  theFix:         COLORS.coral,     // "The Fix" / recommendation callouts
+  sectionHeader:  COLORS.navy,      // Section headers and labels
+  confidenceHigh: COLORS.green,     // High confidence
+  confidenceMed:  "D4A030",         // Medium confidence (amber)
+  confidenceLow:  "C0392B",         // Low confidence (red)
+  footer:         COLORS.navy,      // Footer bars
+  agentAttrib:    COLORS.mutedText, // Agent attribution (small, muted)
+};
+
+module.exports = {
+  // Slide builders
+  buildDeck, addTitleSlide, addVerdictSlide, addDVFASlide, addKeyFindingSlide,
+  addCompetitiveSlide, addPortfolioSlide, addActionsSlide, addMonitoringSlide,
+  addAskSlide, addCloseSlide,
+  // Helpers
+  addCard, addBigStat, addSectionLabel, cardShadow,
+  // Validation
+  validateBoundingBox, validateBullets, validateTitleLength, estimateFontHeight,
+  // Design tokens
+  COLORS, FONTS, LAYOUT, STRUCTURAL_COLORS,
+};

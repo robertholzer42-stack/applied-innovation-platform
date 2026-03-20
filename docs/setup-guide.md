@@ -74,14 +74,19 @@ You don't need to create the folder structure manually - Claude Code and Cowork 
 
 ### Option A: Full Engagement (Conductor-Led)
 
-Start with: **"Run a full applied innovation analysis on [challenge]"**
+Start with: **"Run a full applied innovation analysis on [challenge]. Engagement name: [topic-context-version]."**
+
+Name your engagement using the convention: `[topic]-[client-or-context]-[version]` (e.g., `ai-healthcare-acme-v1`, `ev-charging-strategy-v2`, `portfolio-review-q1-2026`).
 
 The Conductor will:
 1. Ask Navigator-style intake questions to scope the challenge
-2. Route to the appropriate core agents (Scout, Empathy, Architect)
-3. Run intersection agents where relevant
-4. Synthesize findings and surface conflicts
-5. Produce integrated strategy with DVFA scoring
+2. Build a shared research foundation (market data, key players, regulatory context)
+3. Route to core agents (Scout, Empathy, Architect) running in parallel on the shared data
+4. Run preliminary DVFA scoring to guide downstream agents
+5. Run intersection agents with full upstream evidence (not summaries)
+6. Run operational agents, then final DVFA scoring with delta tracking
+7. Synthesize findings and surface conflicts (optional Devil's Advocate pass)
+8. Produce board-ready deliverables using the platform's design system
 
 ### Option B: Single Agent Mode
 
@@ -131,26 +136,32 @@ Navigator, run intake for this challenge:
 - Constraints: Budget pressure, limited AI talent, risk-averse culture
 ```
 
-**Step 2: Core Agent Analysis**
+**Step 2: Research Foundation**
+The Conductor builds a shared fact base (market data, key players, recent developments) so all agents work from the same information.
+
+**Step 3: Core Agent Analysis** (run in parallel on the shared data)
 - Scout: What's coming in enterprise AI over the next 3-5 years?
 - Empathy: What do employees and customers actually need from AI?
 - Architect: What are the system dependencies blocking AI at scale?
 
-**Step 3: Intersection Synthesis**
+**Step 4: Preliminary DVFA Scoring**
+Scorekeeper produces early scores to guide downstream agents. Flags dimensions with low confidence.
+
+**Step 5: Intersection Synthesis** (receives full upstream evidence, not summaries)
 - Visionary: What does the AI-enabled organization look like in 2030?
 - Integrator: How do you get from pilot to production in this system?
 - Sentinel: What happens if the competitive window closes?
 
-**Step 4: Operational Context**
+**Step 6: Operational Context**
 - Radar: What are competitors doing with AI?
 - Banker: Where should AI investment be allocated across H1/H2/H3?
-- Scorekeeper: Score the top 3 AI use cases using DVFA
 - Bridge: Is this organization ready for the change AI requires?
+- Scorekeeper (final pass): Revised DVFA scores with delta tracking
 
-**Step 5: Conductor Synthesis + Publisher Deliverables**
-- Integrated strategy report
+**Step 7: Conductor Synthesis + Publisher Deliverables**
+- Integrated strategy report with conflict resolution
+- Board-ready deck using the platform's design system template
 - Executive summary
-- Implementation roadmap
 
 Save everything in `engagements/ai-strategy-sample/` as your first reference engagement.
 
@@ -206,7 +217,29 @@ After every engagement:
 | bridge-SKILL.md | Change Management |
 | navigator-SKILL.md | Client Intake & Discovery |
 | publisher-SKILL.md | Deliverable Generation |
+| publisher-design-system.md | Visual identity spec: colors, typography, layout rules |
 | setup-guide.md | This file |
+
+**In the `docs/` folder:**
+
+| File | Purpose |
+|------|---------|
+| publisher-deck-template.js | Reusable PptxGenJS template with design system and validation |
+| setup-guide.md | Duplicate of skills/setup-guide.md for easy access |
+
+## Tips for Getting the Best Results
+
+**Use standard depth for most analyses.** Quick scans (2-3 agents) are good for initial exploration. Standard depth (6-8 agents, 2 sessions) hits the sweet spot for most real decisions. Deep dives (all 13, 3 sessions) are for high-stakes strategic choices.
+
+**Let the Conductor build the research foundation.** For standard and deep engagements, the Conductor runs a research phase before launching Tier 2 agents. This prevents agents from doing duplicate web searches and ensures everyone works from the same facts.
+
+**Watch the preliminary DVFA scores.** After Tier 2, the Scorekeeper produces early scores. If any dimension is below 2.0, the Conductor flags it for extra attention in the remaining stages. The final scores include a delta showing what changed and why.
+
+**Use the "with Devil's Advocate" option for high-stakes decisions.** Add this to your engagement request and the Conductor will run an extra stress test after synthesis, identifying the single assumption that would invalidate the most recommendations.
+
+**Connect Canva for polished decks.** If you're running in Cowork and have a Canva account, connecting the Canva MCP gives Publisher access to professional templates. Without Canva, Publisher uses a built-in PptxGenJS template (`docs/publisher-deck-template.js`) that produces clean, consistent decks.
+
+**Name engagements consistently.** Use the format `[topic]-[client-or-context]-[version]`. Examples: `ai-healthcare-acme-v1`, `ev-charging-strategy-v2`, `portfolio-review-q1-2026`. This keeps the `engagements/` folder organized as you run more analyses.
 
 ## Troubleshooting
 

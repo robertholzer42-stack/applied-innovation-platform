@@ -444,7 +444,7 @@ The platform can be extended with additional analytical tools. If you have exist
 When the user wants to use this system:
 
 - **"Run a quick assessment on [topic]"** - Conductor selects 2-3 agents, runs quick analysis
-- **"Full applied innovation analysis on [topic]"** - Complete 6-stage pipeline
+- **"Full applied innovation analysis on [topic]"** - Complete 8-stage pipeline
 - **"Assess our innovation maturity"** - Navigator runs maturity assessment
 - **"Score this opportunity"** - Scorekeeper runs DVFA scoring
 - **"What does [agent codename] think about [topic]?"** - Run specific agent

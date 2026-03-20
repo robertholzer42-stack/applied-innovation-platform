@@ -62,12 +62,13 @@ Each deliverable type below includes a bridge template that maps platform analys
 | 11. The Ask | Conductor's recommended next steps | Numbered items, bold verbs, specific deadlines |
 | 12. Close | Contact, engagement name | Clean close with single key stat repeated |
 
-**Content limits per slide:**
+**Content limits per slide (hard rules, not suggestions):**
 - Maximum 6 bullet points per slide, each under 12 words
 - One key stat callout per slide (large number + label)
 - If content exceeds limits, split into multiple slides
 - No paragraphs on slides. Sentence fragments are fine.
 - Every slide must pass the "6-second test": can you grasp the point in 6 seconds?
+- Every slide must use at least 75% of its vertical space. No dead zones (1"+ of empty space)
 
 ### Executive Summary (1-2 pages, .docx or .pdf)
 
@@ -217,6 +218,58 @@ All platform deliverables should use a consistent visual identity (defined in `d
 - **Title maximum:** 40 characters at 28pt for guaranteed single-line rendering
 - **Accent bar:** 0.12" left-edge bar in tier color
 - **Visual motif:** Cards with colored left-border for grouped items. Icon circles for agent identification.
+
+### PptxGenJS Layout Safety Rules
+
+PptxGenJS does not clip text to containers, warn about overflow, or detect element collisions. These rules prevent the visual bugs that require QA rework.
+
+**Bounding box safety:**
+- When placing text inside a shape/rectangle, calculate the shape's bottom edge (y + h)
+- Every text element's visual bottom must sit at least 0.15" inside its container
+- Font height reference: 48pt needs ~0.7" height, 36pt needs ~0.55", 24pt needs ~0.4", 14pt needs ~0.25", 11pt needs ~0.2"
+- Never place large text (>24pt) in the bottom 20% of a container
+- Title maximum: 40 characters at 28pt, 30 characters at 36pt, for guaranteed single-line rendering
+
+**Structural vs. agent color rules:**
+- Recurring structural elements use FIXED colors regardless of which agent sourced the content:
+  - "The Fix" / recommendation callouts: always coral (#D85A30)
+  - Section headers / labels: always navy (#1B3A5C)
+  - Confidence labels: green (#1D9E75) for High, amber/coral (#D85A30) for Medium, red for Low
+  - Footer bars: always navy
+- Agent-specific colors are ONLY used for attribution labels (muted gray, in footer or small tag)
+- Agent identity influences content, not recurring design patterns
+
+**Bar chart and data visualization rules:**
+- For bar charts with partial fills, always use dark text (navy/black) that reads against BOTH the bar color AND the background
+- Never use white text on bars that don't span the full width
+- Alternative: place percentage labels above or below the bar, not inside it
+- For stacked/grouped bars, place labels outside the bar segments
+
+**Spacing rules:**
+- DVFA mini-indicators: minimum 2.2" horizontal spacing between items
+- Card grids: minimum 0.3" gap between cards
+- Content boxes: 0.3" internal padding minimum
+
+### Mandatory Visual QA Pipeline
+
+Publisher must ALWAYS complete this QA cycle before delivering any .pptx file. Never deliver a deck without at least one full pass.
+
+**QA steps (required, not optional):**
+1. Generate the .pptx file
+2. Convert to PDF: `libreoffice --headless --convert-to pdf deck.pptx`
+3. Convert to slide images: `pdftoppm -jpeg -r 150 deck.pdf slide`
+4. Visually inspect EVERY slide image against this checklist:
+   - [ ] All titles render on a single line (no wrapping)
+   - [ ] No text overflows its container
+   - [ ] Text contrast is readable against every background it touches
+   - [ ] No dead zones (>1" empty space with no purpose)
+   - [ ] Structural elements (section headers, "The Fix" boxes) use consistent colors
+   - [ ] Maximum 6 bullets per slide, each under 12 words
+   - [ ] Every number/claim traces to a specific agent
+5. Fix any issues found and re-run steps 1-4
+6. Deliver only after a clean pass
+
+**Target: 1 QA cycle.** If the template and safety rules are followed, the first pass should be clean or require only minor fixes. Two cycles is acceptable. Three cycles means the build script needs structural fixes.
 
 ### Claude Projects (web - cannot create files)
 
