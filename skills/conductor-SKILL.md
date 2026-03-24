@@ -32,7 +32,7 @@
 - A client engagement needs to be structured end-to-end
 - Final synthesis or executive reporting is needed
 
-## Architecture: The 13-Agent System
+## Architecture: The 14-Agent System
 
 ### Tier 1: Client Interface
 | Agent | Codename | Role |
@@ -61,6 +61,11 @@
 | Portfolio Manager | **Banker** | Horizon 1/2/3 balancing, pipeline health, resource allocation |
 | Metrics & Scoring | **Scorekeeper** | Idea scoring (DVFA), KPIs, innovation maturity measurement |
 | Change Management | **Bridge** | Adoption readiness, stakeholder resistance, change capacity |
+
+### Tier 4.5: Quality Assurance
+| Agent | Codename | Role |
+|-------|----------|------|
+| Quality Evaluator | **Critic** | Independent quality review, four-criterion evaluation, PASS/REVISE/FLAG verdicts |
 
 ### Tier 5: Orchestration
 | Agent | Codename | Role |
@@ -139,59 +144,84 @@ STAGE 6: DELIVERABLES (Publisher)
   > Output: Client-facing deliverables
 ```
 
-## Context Management and Session Planning
+## Session Management & Checkpoints
 
-Running all agents in a single conversation can exhaust the context window. The Conductor must estimate session requirements upfront and plan accordingly.
+### Session Count Determination
 
-### Session sizing rules
+The Conductor determines at intake how many sessions the engagement requires:
 
-| Depth | Agents | Sessions | Session boundaries |
-|-------|--------|----------|--------------------|
-| Quick scan | 2-3 agents + Conductor | 1 session | Everything fits in one conversation |
-| Standard | 6-8 agents + Conductor + Publisher | 2 sessions | Session 1: Stages 1-3. Session 2: Stages 4-6 |
-| Deep dive | All 13 agents + Publisher + QA | 3 sessions | Session 1: Stages 1-2.5. Session 2: Stages 3-4. Session 3: Stages 5-6 + QA |
+| Engagement Type | Agents | Sessions | Rationale |
+|----------------|--------|----------|-----------|
+| Quick scan | 2-3 agents | 1 session | Fits comfortably in one context window |
+| Standard | 6-8 agents + Critic | 2 sessions | Core + intersection in session 1, operational + deliverables in session 2 |
+| Deep dive | All 14 agents + Critic | 4 sessions | One session per tier pair, prevents context exhaustion |
 
-### Checkpoint protocol
+### Updated Pipeline with Critic and Checkpoints
 
-At every session boundary, the Conductor writes a checkpoint file:
+```
+Session 1:
+  STAGE 1: INTAKE (Navigator)
+  STAGE 2: CORE ANALYSIS (Scout + Empathy + Architect, parallel)
+  STAGE 2.5: PRELIMINARY SCORING (Scorekeeper, preliminary pass)
+  -> Write checkpoint-tier2.md to engagements/[name]/checkpoints/
 
-**File:** `engagements/[name]/checkpoint-[n].md`
+Session 2:
+  STAGE 2.9: QUALITY REVIEW (Critic reviews Tier 2 outputs)
+  STAGE 3: INTERSECTION SYNTHESIS (Visionary + Integrator + Sentinel)
+  -> Write checkpoint-tier3.md
 
-**Contents:**
-```markdown
-# Checkpoint [n]: [Stage completed]
+Session 3:
+  STAGE 3.9: QUALITY REVIEW (Critic reviews Tier 3 outputs)
+  STAGE 4: OPERATIONAL CONTEXT (Radar + Banker + Scorekeeper-final + Bridge)
+  -> Write checkpoint-tier4.md
 
-## Agents completed this session
-[List with one-sentence summary of each agent's key finding]
-
-## DVFA scores so far
-| D | V | F | A | Overall | Status |
-[Current scores, marked PRELIMINARY or FINAL]
-
-## Unresolved tensions
-[List of conflicts between agents not yet resolved]
-
-## Next session should
-1. [First agent to run]
-2. [Second agent to run]
-3. [Instructions for Publisher or Conductor synthesis]
-
-## Files written this session
-[List of output files with paths]
+Session 4:
+  STAGE 4.9: QUALITY REVIEW (Critic reviews Tier 4 outputs)
+  STAGE 5: ORCHESTRATION (Conductor synthesis)
+  STAGE 6: DELIVERABLES (Publisher)
 ```
 
-**Starting a new session:** Instruct the user: "Start a new conversation. Tell Claude to read the checkpoint file at `engagements/[name]/checkpoint-[n].md` plus any agent output files listed there, then continue from Stage [X]."
+### Checkpoint File Format
 
-### Devil's Advocate Pass (Optional)
+Checkpoints are saved to `engagements/[name]/checkpoints/` and contain everything needed for a fresh session to continue:
 
-After Stage 5 synthesis, the Conductor can run an optional stress test:
+```markdown
+## Checkpoint: [Engagement Name] -- After Tier [N]
 
-1. Identify the single assumption that, if wrong, invalidates the most recommendations
-2. Assign one agent perspective to argue FOR the assumption and one to argue AGAINST
-3. Synthesize the debate into a confidence-adjusted finding
-4. Add the result to the Conflicts & Tensions section of the integrated strategy
+### Engagement Context
+- Challenge: [from Navigator brief]
+- Depth: [Quick/Standard/Deep]
+- Session: [N of M]
 
-Trigger: include "with Devil's Advocate" in the engagement request, or the Conductor suggests it when confidence is mixed (multiple M/L ratings in DVFA).
+### Completed Agents
+| Agent | File | Key Finding |
+|-------|------|-------------|
+| [name] | [relative path] | [one sentence from handoff block] |
+
+### Critic Review Summary
+| Agent | Verdict | Key Issue |
+|-------|---------|-----------|
+| [name] | [PASS/REVISE/FLAG] | [one-line] |
+
+### DVFA Snapshot
+| Dimension | Score | Confidence | Source |
+|-----------|-------|------------|--------|
+| Desirability | [1-5] | [H/M/L] | Empathy |
+| Viability | [1-5] | [H/M/L] | Architect |
+| Feasibility | [1-5] | [H/M/L] | [pending/Bridge+Banker] |
+| Adaptability | [1-5] | [H/M/L] | Scout |
+
+### Tensions Surfaced So Far
+- [Tension 1: description]
+
+### Next Session Instructions
+1. Start a new conversation
+2. Load the Applied Innovation Platform (paste CLAUDE.md or select the Project)
+3. Read this checkpoint file and all files listed in the Completed Agents table
+4. Continue the pipeline from [next stage]
+5. Agents to run: [list]
+6. Key questions for this tier: [list]
+```
 
 ## Inter-Tier Context Passing Protocol
 
@@ -259,6 +289,17 @@ When agents within a stage have no dependencies on each other, run them in paral
 - Publisher (Stage 6) must wait for Conductor
 
 **Merging parallel outputs:** When parallel agents produce conflicting findings, do NOT resolve silently. Surface the conflict in the Conductor's synthesis with evidence from both sides.
+
+### Devil's Advocate Pass (Optional)
+
+After Stage 5 synthesis, the Conductor can run an optional stress test:
+
+1. Identify the single assumption that, if wrong, invalidates the most recommendations
+2. Assign one agent perspective to argue FOR the assumption and one to argue AGAINST
+3. Synthesize the debate into a confidence-adjusted finding
+4. Add the result to the Conflicts & Tensions section of the integrated strategy
+
+Trigger: include "with Devil's Advocate" in the engagement request, or the Conductor suggests it when confidence is mixed (multiple M/L ratings in DVFA).
 
 ## How the Conductor Operates
 
@@ -409,6 +450,14 @@ engagements/
       executive-summary.pptx
       workshop-guide.md
       one-pager.pdf
+    checkpoints/               - Checkpoint files for multi-session runs
+      checkpoint-tier2.md
+      checkpoint-tier3.md
+      checkpoint-tier4.md
+    reviews/                   - Critic quality reviews
+      critic-tier2-review.md
+      critic-tier3-review.md
+      critic-tier4-review.md
 knowledge-base/
   patterns/
   case-studies/
@@ -427,6 +476,7 @@ skills/
   bridge-SKILL.md
   navigator-SKILL.md
   publisher-SKILL.md
+  critic-SKILL.md
 ```
 
 ## Optional Integrations
@@ -598,4 +648,4 @@ These rules apply to ALL output from this agent, including when running as a sub
 
 ---
 
-**This skill is the brain of the Applied Innovation Platform. It coordinates 13 specialized agents to deliver multi-dimensional innovation analysis that no single-lens approach can match.**
+**This skill is the brain of the Applied Innovation Platform. It coordinates 14 specialized agents to deliver multi-dimensional innovation analysis that no single-lens approach can match.**
