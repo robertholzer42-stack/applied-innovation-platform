@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A system of 13 AI agent skills orchestrated by a Conductor that together run multi-dimensional innovation analysis. Each agent has a distinct personality, framework, and output format. The Conductor orchestrates them into a repeatable engagement pipeline.
+A system of 14 AI agent skills orchestrated by a Conductor that together run multi-dimensional innovation analysis. Each agent has a distinct personality, framework, and output format. The Conductor orchestrates them into a repeatable engagement pipeline.
 
 The whole thing runs inside Claude. No separate infrastructure needed. The skills are Markdown files that Claude reads and follows. The "agents" are Claude operating in different modes with different analytical frameworks.
 
@@ -25,7 +25,7 @@ Best for interactive analysis, back-and-forth with individual agents, and iterat
 
 1. Go to claude.ai and create a new Project
 2. Name it "Applied Innovation Platform" (or whatever you prefer)
-3. Upload all 13 SKILL.md files from the `skills/` folder as project knowledge
+3. Upload all 14 SKILL.md files from the `skills/` folder as project knowledge
 4. Copy the contents of `CLAUDE.md` into the project's custom instructions field
 5. Start a conversation
 
@@ -60,6 +60,8 @@ applied-innovation-platform/          <- repo root
       synthesis/                      - Visionary, Integrator, Sentinel outputs
       operations/                     - Radar, Banker, Scorekeeper, Bridge outputs
       deliverables/                   - Publisher: decks, reports, one-pagers
+      reviews/                        - Critic: quality review verdicts per tier
+      checkpoints/                    - Conductor: session checkpoint files
 ```
 
 **How this works in each environment:**
@@ -82,11 +84,14 @@ The Conductor will:
 1. Ask Navigator-style intake questions to scope the challenge
 2. Build a shared research foundation (market data, key players, regulatory context)
 3. Route to core agents (Scout, Empathy, Architect) running in parallel on the shared data
-4. Run preliminary DVFA scoring to guide downstream agents
-5. Run intersection agents with full upstream evidence (not summaries)
-6. Run operational agents, then final DVFA scoring with delta tracking
-7. Synthesize findings and surface conflicts (optional Devil's Advocate pass)
-8. Produce board-ready deliverables using the platform's design system
+4. Run Critic review on core agent outputs (PASS/REVISE/FLAG)
+5. Run preliminary DVFA scoring to guide downstream agents
+6. Run intersection agents with full upstream evidence (not summaries)
+7. Run Critic review on intersection outputs
+8. Run operational agents, then final DVFA scoring with delta tracking
+9. Run Critic review on operational outputs
+10. Synthesize findings and surface conflicts (optional Devil's Advocate pass)
+11. Produce board-ready deliverables using the platform's design system
 
 ### Option B: Single Agent Mode
 
@@ -100,6 +105,7 @@ Talk directly to one agent:
 - "Scorekeeper, score this opportunity using DVFA"
 - "Radar, what are our competitors doing in [space]?"
 - "Bridge, assess adoption readiness for [change]"
+- "Critic, review the Scout and Empathy outputs for quality"
 
 ### Option C: Quick Assessment
 
@@ -156,26 +162,99 @@ The Conductor builds a shared fact base (market data, key players, recent develo
 - Empathy: What do employees and customers actually need from AI?
 - Architect: What are the system dependencies blocking AI at scale?
 
-**Step 4: Preliminary DVFA Scoring**
+**Step 2b: Critic Review (Core)**
+- Critic reviews Scout, Empathy, and Architect outputs for Completeness, Evidence Quality, Writing Standards, and Integration Readiness
+- Issues PASS/REVISE/FLAG verdict per agent. REVISE triggers rework before proceeding.
+
+**Step 3: Preliminary DVFA Scoring**
 Scorekeeper produces early scores to guide downstream agents. Flags dimensions with low confidence.
 
-**Step 5: Intersection Synthesis** (receives full upstream evidence, not summaries)
+**Step 4: Intersection Synthesis** (receives full upstream evidence, not summaries)
 - Visionary: What does the AI-enabled organization look like in 2030?
 - Integrator: How do you get from pilot to production in this system?
 - Sentinel: What happens if the competitive window closes?
 
-**Step 6: Operational Context**
+**Step 4b: Critic Review (Intersection)**
+- Critic reviews Visionary, Integrator, and Sentinel outputs using the same four criteria
+
+**Step 5: Operational Context**
 - Radar: What are competitors doing with AI?
 - Banker: Where should AI investment be allocated across H1/H2/H3?
 - Bridge: Is this organization ready for the change AI requires?
 - Scorekeeper (final pass): Revised DVFA scores with delta tracking
 
-**Step 7: Conductor Synthesis + Publisher Deliverables**
+**Step 5b: Critic Review (Operational)**
+- Critic reviews operational agent outputs. Scorekeeper refines scores based on full operational context.
+
+**Step 6: Conductor Synthesis + Publisher Deliverables**
 - Integrated strategy report with conflict resolution
 - Board-ready deck using the platform's design system template
 - Executive summary
 
 Save everything in `engagements/ai-strategy-sample/` as your first reference engagement.
+
+## Multi-Session Engagement Workflow
+
+Engagements can span multiple Claude sessions using a checkpoint system. The Conductor writes checkpoint files so you can pick up where you left off without losing progress.
+
+### Session Counts by Depth
+
+| Engagement Depth | Typical Sessions | Description |
+|-----------------|-----------------|-------------|
+| **Quick** | 1 session | 2-3 agents, quick-tier toolkits, focused brief |
+| **Standard** | 2 sessions | Full pipeline, all tiers, integrated strategy |
+| **Deep** | 4 sessions | Complete cycle with scenarios, deep-dive analysis, multiple revision passes |
+
+### How Checkpoints Work
+
+At the end of each session (or at natural breakpoints), the Conductor writes a checkpoint file to `engagements/[name]/checkpoints/`. The checkpoint captures:
+
+- **Completed agents** - which agents have run and where their outputs are saved
+- **Critic reviews** - PASS/REVISE/FLAG verdicts for each reviewed tier
+- **DVFA snapshot** - current scores if Scorekeeper has run (even preliminary)
+- **Next steps** - which agents still need to run, any REVISE items pending
+
+Checkpoint files follow the naming convention: `checkpoint-session-[N].md`
+
+### How to Resume an Engagement
+
+1. Start a new Claude conversation
+2. Load the platform (read CLAUDE.md and relevant SKILL.md files)
+3. Tell Claude: "Resume engagement [name]. Read the latest checkpoint file."
+4. Claude reads `engagements/[name]/checkpoints/checkpoint-session-[N].md`
+5. The Conductor picks up the pipeline from where it left off
+
+Example resume prompt:
+```
+Resume the "ai-strategy" engagement. Read the checkpoint at
+engagements/ai-strategy/checkpoints/checkpoint-session-1.md
+and continue the pipeline from where we stopped.
+```
+
+### Checkpoint File Structure
+
+```markdown
+# Checkpoint: [engagement-name] - Session [N]
+Date: [timestamp]
+
+## Completed Agents
+- Navigator: intake/navigator-intake.md (COMPLETE)
+- Scout: analysis/scout-future-thinking.md (COMPLETE)
+- Empathy: analysis/empathy-design-thinking.md (COMPLETE)
+- Architect: analysis/architect-systems-map.md (COMPLETE)
+
+## Critic Reviews
+- Tier 2 (Core): PASS (Scout), PASS (Empathy), REVISE (Architect - missing feedback loops)
+
+## DVFA Snapshot
+- Preliminary scores not yet generated (Scorekeeper pending)
+
+## Next Steps
+1. Architect revision (address Critic feedback on feedback loops)
+2. Tier 3 intersection agents: Visionary, Integrator, Sentinel
+3. Critic review of intersection outputs
+4. Tier 4 operational agents
+```
 
 ## Customization Guide
 
@@ -230,6 +309,7 @@ After every engagement:
 | navigator-SKILL.md | Client Intake & Discovery |
 | publisher-SKILL.md | Deliverable Generation |
 | publisher-design-system.md | Visual identity spec: colors, typography, layout rules |
+| critic-SKILL.md | Independent Quality Review (PASS/REVISE/FLAG) |
 | setup-guide.md | This file |
 
 **In the `docs/` folder:**
@@ -256,7 +336,7 @@ After every engagement:
 ## Troubleshooting
 
 **"Claude doesn't seem to know about the agents"**
-Make sure all 13 SKILL.md files are uploaded as project knowledge (in Claude Projects) or that you've told Claude to read them (in Claude Code/Cowork).
+Make sure all 14 SKILL.md files are uploaded as project knowledge (in Claude Projects) or that you've told Claude to read them (in Claude Code/Cowork).
 
 **"The analysis is too generic"**
 Add industry-specific context to the relevant agent skills. The more specific the context, the better the output.
