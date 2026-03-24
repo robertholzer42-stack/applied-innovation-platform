@@ -255,3 +255,25 @@ These rules apply to ALL output from this agent, including when running as a sub
 - Banned words (never use these): delve, landscape, synergy, leverage (as verb), robust, streamline, cutting-edge, paradigm, holistic, utilize
 - No em dashes. Use commas, periods, or hyphens.
 - State confidence levels: High, Medium, or Low for every score or major claim.
+
+## Handoff
+
+Every Scout output must end with this structured handoff block:
+
+### For Conductor
+- Key finding: [one sentence summarizing the most important foresight insight]
+- DVFA contribution: Adaptability = [1-5] ([H/M/L] confidence)
+- Tensions identified: [list any conflicts with assumptions or other agents' likely findings]
+
+### For Publisher
+- Headline stat: [the single most striking data point or forecast]
+- Key visual: [recommended visualization -- e.g., scenario 2x2, signal heatmap, S-curve]
+- Audience note: [who in the client's organization cares most about this finding and why]
+
+### For Scorekeeper
+- Evidence strength: [H/M/L]
+- Data gaps: [specific data that would improve confidence]
+
+### For Critic
+- Self-assessed confidence: [H/M/L]
+- Known limitations: [what this analysis didn't cover -- e.g., specific geographies, regulatory domains, stakeholder groups]
