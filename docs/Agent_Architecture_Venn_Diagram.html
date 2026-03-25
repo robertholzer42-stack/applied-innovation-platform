@@ -48,6 +48,7 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#2C2C2A;display:f
 .agent.center{background:var(--navy);border:2px solid var(--navy)}.agent.center .name{color:#fff}.agent.center .role{color:rgba(255,255,255,0.7)}
 .agent.ops{background:#fff;border:1.5px solid #ddd}.agent.ops .name{color:#555}
 .agent.client{background:#FFF9EE;border:1.5px solid #E8D8B0}.agent.client .name{color:var(--amber)}
+.agent.qa{background:#F3EDFE;border:1.5px solid #C5BFF0}.agent.qa .name{color:#7B6DB0}
 
 /* Detail panel */
 .detail-panel{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:16px 24px;box-shadow:0 8px 30px rgba(0,0,0,0.1);max-width:480px;width:90%;opacity:0;pointer-events:none;transition:all .3s;z-index:100}
@@ -68,7 +69,7 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#2C2C2A;display:f
 <body>
 
 <div class="title">Applied Innovation Agent Architecture</div>
-<div class="subtitle">13 agents across 5 tiers, built on Future + Design + Systems Thinking</div>
+<div class="subtitle">14 agents across 6 tiers, built on Future + Design + Systems Thinking</div>
 
 <div class="diagram-container">
   <!-- Venn Circles -->
@@ -149,6 +150,12 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#2C2C2A;display:f
     <div class="name">Publisher</div>
     <div class="role">Deliverables</div>
   </div>
+
+  <!-- Quality Assurance agent -->
+  <div class="agent qa" style="top:-5px;left:310px" onclick="showDetail('Critic','Quality Evaluator','Independent four-criterion review at stage checkpoints: Completeness, Evidence Quality, Writing Standards, Integration Readiness. Issues PASS, REVISE, or FLAG verdicts.','Show me the evidence before this moves forward.')">
+    <div class="name">Critic</div>
+    <div class="role">Quality Assurance</div>
+  </div>
 </div>
 
 <div class="legend">
@@ -157,6 +164,7 @@ body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#2C2C2A;display:f
   <div class="legend-item"><div class="legend-dot" style="background:#fff;border:1px solid #ddd"></div> Operational</div>
   <div class="legend-item"><div class="legend-dot" style="background:#FFF9EE;border:1px solid #E8D8B0"></div> Client Interface</div>
   <div class="legend-item"><div class="legend-dot" style="background:var(--navy)"></div> Orchestrator</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#F3EDFE;border:1px solid #C5BFF0"></div> Quality Assurance</div>
 </div>
 
 <div class="footer-note">Applied Innovation Platform | Click any agent for details</div>

@@ -240,11 +240,15 @@ body{font-family:'DM Sans',sans-serif;color:#2C2C2A;background:#fff;max-width:85
   </div>
   <div class="tip-card skip">
     <h4>When to Skip Agents</h4>
-    <p>Not every engagement needs all 13. Typical Standard engagement: Scout + Empathy + Architect (Stage 2), 1-2 intersection agents (Stage 3), Scorekeeper + 1 ops agent (Stage 4), then Conductor + Publisher.</p>
+    <p>Not every engagement needs all 14. Typical Standard engagement: Scout + Empathy + Architect (Stage 2), 1-2 intersection agents (Stage 3), Scorekeeper + 1 ops agent (Stage 4), then Conductor + Publisher. Critic reviews at checkpoints between stages.</p>
   </div>
   <div class="tip-card" style="background:#F3EDFE;border-color:#534AB7">
     <h4>Stage Gate Verification</h4>
     <p>After each stage, the Conductor verifies: Did agents stay in scope? Does output align with the focal question? Is evidence real or assumed? Any cross-agent contradictions? Actions: PASS, FLAG, or BLOCK.</p>
+  </div>
+  <div class="tip-card" style="background:#FAECE7;border-color:var(--coral)">
+    <h4>Multi-Session Checkpoints</h4>
+    <p>For engagements spanning multiple sessions, save checkpoint files to <code>checkpoints/</code> after each stage. Critic reviews are saved to <code>reviews/</code>. Resume by loading the latest checkpoint.</p>
   </div>
 </div>
 
@@ -274,6 +278,7 @@ body{font-family:'DM Sans',sans-serif;color:#2C2C2A;background:#fff;max-width:85
     <div class="ref-card ops"><span class="name">Scorekeeper</span> - DVFA scoring, maturity metrics</div>
     <div class="ref-card ops"><span class="name">Bridge</span> - Change readiness, resistance mapping</div>
     <div class="ref-card orch"><span class="name">Conductor</span> - Cross-agent synthesis, unified strategy</div>
+    <div class="ref-card ops"><span class="name">Critic</span> - Quality review, PASS/REVISE/FLAG verdicts</div>
     <div class="ref-card" style="border-left:3px solid #ddd"><span class="name" style="color:#555">Tip</span> - Say "review as [codename]" for any agent's perspective</div>
   </div>
 </div>
