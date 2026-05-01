@@ -124,6 +124,45 @@ Three coordination patterns prevent the most common multi-agent failure modes:
 - Banned words: delve, landscape, synergy, leverage (as verb), robust, streamline, cutting-edge, paradigm, holistic, utilize
 - No em dashes. Use commas, periods, or hyphens.
 
+## Verification Standards
+
+The principle: **capability without verification is a liability**. AI output sounds confident regardless of whether it is correct. Confidence is not correctness. Every agent in the platform operates under these standards.
+
+### Stake Level Drives Verification Effort
+
+Every engagement carries a stake level set by Navigator or Conductor at intake:
+
+| Stake Level | Description | Critic Mode |
+|-------------|-------------|-------------|
+| **Not Much** | Internal exploration, draft for review | Quick: red flag scan only |
+| **Embarrassing** | Client-facing, named publication, board update | Standard: web verify all numbers and citations, flag inconclusive items |
+| **Real Damage** | Board decision, regulatory filing, financial commitment | Deep: full verification + second-opinion pass |
+
+If stake level is unspecified, default to Embarrassing and announce the assumption.
+
+### Producer-Side Honesty (Research Agents)
+
+Scout, Empathy, Architect, and Radar each run an Honesty Protocol at output time before producing their handoff blocks. This includes self-scanning for the six red flags (too-clean answers, unfamiliar citations, hedging in confident prose, confident universals, anachronistic data, the "too good" feeling), citation hygiene rules, and explicit anti-fabrication guards. See each agent's SKILL.md for the protocol.
+
+### Critic Fabrication Audit
+
+The Critic agent runs a Fabrication Audit as one of its five evaluation criteria. The audit hunts the three error types (phantom statistics, citations that lead nowhere, reasoning errors in true data), checks the four logic failures, and at Standard or Deep depth performs web verification of all specific numbers and citations. Items that cannot be confirmed are flagged with `[HUMAN-VERIFY]` rather than passed silently. A Fabrication Audit score of 1 or 2 triggers an automatic FLAG verdict.
+
+### Conductor Verification Governance
+
+The Conductor reads all Critic reviews before synthesis, extracts all `[HUMAN-VERIFY]` items, and triages by impact. High-impact unresolved items are flagged in the synthesis output and not allowed to drive the recommendation. At Real Damage stake level, the Conductor runs three stress-test prompts on its own draft synthesis (argue opposite conclusion, identify falsification conditions, surface strongest counterargument). The Conductor classifies each recommendation by autonomy level (Draft / Direct Action / Chained Action) and applies reversibility checks before publishing.
+
+### Cross-Cutting Rules
+
+These apply to every agent and to the Conductor's synthesis:
+
+- **No false precision.** A specific number with weak evidence is worse than a range with honest hedging. Confidence drives precision: H confidence allows 0.5 increments, M confidence whole numbers, L confidence ranges only.
+- **No confident universals.** Replace "always", "never", "all", "every" with calibrated language unless the universal is genuinely true.
+- **No anachronistic data.** When citing a 2024 statistic in a 2026 context, flag the gap and assess whether the underlying condition has changed.
+- **`[NEED: data from X]` not fabrication.** When a specific number, source, or fact is not available, mark the gap explicitly. Never invent.
+- **`[HUMAN-VERIFY]` items must surface.** Items the Critic could not confirm appear in the final deliverable's appendix. They are not quietly dropped.
+- **Confidence inherits the weakest input.** A weighted average score does not launder confidence; the overall score's confidence equals the lowest contributing dimension's confidence.
+
 ## Workspace Structure and Output Routing
 
 All engagement outputs are saved to the `engagements/` folder at the root of this repository. When running an analysis, Claude should create the engagement subfolder and write each agent's output to the correct location automatically.

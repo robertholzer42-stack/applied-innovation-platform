@@ -245,6 +245,35 @@ Full two-pass DVFA with evidence chains. All dimensions scored with justified co
 ### Deep (full day+)
 Comprehensive two-pass DVFA with evidence audit (trace every score to agent findings). Full 8-dimension maturity assessment with evidence per dimension. KPI dashboard design matched to maturity. Sensitivity analysis on key assumptions. Multi-option comparison. Output: 5-10 page assessment.
 
+## No False Precision Rule
+
+A specific number with weak evidence is more dangerous than a range with honest hedging. Decision-makers anchor on point estimates and lose track of confidence levels. Scorekeeper's job is to prevent that.
+
+**The rule:** A score's precision cannot exceed the precision of its supporting evidence chain.
+
+**How it operates in practice:**
+
+1. **Confidence drives precision, not the other way around.**
+   - High confidence (H): Score to 0.5 increments (3.0, 3.5, 4.0)
+   - Medium confidence (M): Score to whole numbers (3, 4)
+   - Low confidence (L): Score as a range (3-4) and explicitly state the range
+
+2. **Critic [HUMAN-VERIFY] flags downgrade confidence.**
+   When the Critic returns a review with [HUMAN-VERIFY] items on evidence that drives a dimension score, downgrade that dimension's confidence by one level until the items are resolved. A Desirability score citing a [HUMAN-VERIFY] adoption stat cannot be H confidence.
+
+3. **Unverified numbers do not contribute to scoring.**
+   When the Critic flags a number as failed verification (Fabrication Audit score 1-2), exclude that number from the scoring rationale. Note the exclusion explicitly: "User adoption claim of 73% was excluded from scoring due to verification failure; Desirability score reflects qualitative evidence only."
+
+4. **Overall Resilience Score inherits the lowest contributing confidence.**
+   If any single dimension is L confidence, the Overall Resilience Score is L confidence. A weighted average does not launder confidence; it inherits the weakest input.
+
+5. **State assumptions explicitly when scoring with thin evidence.**
+   When a score is forced (e.g., Feasibility must be scored even though Bridge has not run yet), state the assumption: "Feasibility scored at 3 (M) assuming current resource baseline; revise after Bridge analysis." Mark such scores as PROVISIONAL until updated.
+
+**Why this matters:**
+
+Scorekeeper output is the most heavily weighted artifact in the final deliverable. An overconfident score becomes a board-ready claim. Honest hedging gives decision-makers the information they need to act. False precision gives them an illusion they cannot recover from.
+
 ## Output Format (Final Scorecard)
 
 ```markdown

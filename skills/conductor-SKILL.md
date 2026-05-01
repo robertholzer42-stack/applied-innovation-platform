@@ -76,14 +76,18 @@
 
 Before routing any challenge, the Conductor runs a quick scoping pass. If the user has already provided this context, skip questions that are already answered.
 
-**Five scoping questions:**
+**Six scoping questions:**
 1. **Time horizon?** (default: 5 years if not specified)
 2. **Primary audience** for deliverables? (board, innovation team, project sponsors, workshop participants)
 3. **Decision context:** What decision does this analysis need to inform?
 4. **Priority dimensions?** (future trends, human experience, system dynamics, competitive positioning, portfolio fit, change readiness - or "all")
 5. **Depth:** Quick scan, standard analysis, or deep dive?
+6. **Stake level:** What happens if this analysis is wrong?
+   - **Not Much** (internal exploration, brainstorming, draft for review)
+   - **Embarrassing** (client-facing deliverable, named publication, board update)
+   - **Real Damage** (board decision, regulatory submission, financial commitment, public commitment)
 
-The answers to these questions shape agent routing, depth tier selection, and session planning.
+The answers to these questions shape agent routing, depth tier selection, session planning, and Critic verification depth. Stake level is the single most important input to the Critic: it determines whether fabrication audit runs as a quick red flag scan or a full web verification with human-flag escalation.
 
 ## Engagement Pipeline
 
@@ -624,6 +628,71 @@ The Conductor enforces these boundaries during stage gate verification. If an ag
 2. The relevant finding is extracted and routed to the correct agent
 3. The offending agent's output is trimmed to its proper scope
 4. The engagement brief is not updated based on out-of-scope findings until the correct agent validates them
+
+## Verification Governance
+
+The Conductor sets verification depth and enforces fact-checking discipline across the pipeline. AI output sounds confident regardless of whether it is correct. Confidence is not correctness, and downstream consumers of agent output (Publisher, Scorekeeper, the human stakeholder reading the final deliverable) cannot tell the difference. Verification is the Conductor's responsibility to design in, not bolt on.
+
+### Setting the Stake Level
+
+The Conductor sets the engagement's stake level at intake (question 6 of auto-intake) using this taxonomy:
+
+| Stake Level | Examples | Critic Mode | Verification Effort |
+|-------------|----------|-------------|--------------------|
+| Not Much | Internal exploration, brainstorming, scenario sketches | Quick Review | Red flag scan only |
+| Embarrassing | Client deliverable, board update, named report | Standard Review | Web verify all numbers and citations, flag inconclusive items |
+| Real Damage | Board decision, regulatory filing, public commitment, financial trigger | Deep Review | Full verification + second-opinion pass + lower threshold for [HUMAN-VERIFY] flags |
+
+If the user does not specify a stake level, the Conductor defaults to Embarrassing and announces the assumption: "I'm running this at Embarrassing stake level. If the output will inform a decision with real financial or reputational consequences, tell me and I'll escalate to Real Damage."
+
+### Verification Triage Before Synthesis
+
+Before the Conductor runs Stage 5 synthesis, it reviews all Critic output files for the engagement and applies a verification triage:
+
+1. **Read every Critic review file** in `engagements/[name]/reviews/`
+2. **Extract all [HUMAN-VERIFY] items** across all reviews
+3. **Assess synthesis impact:** Which unresolved items would change the recommendation if confirmed false? Which are peripheral?
+4. **Triage actions:**
+   - **High-impact unresolved item:** Flag in synthesis output, do not let the affected claim drive the recommendation. Suggest the user verify before acting.
+   - **Low-impact unresolved item:** Note in an appendix, proceed with synthesis.
+   - **Confirmed fabrication (Critic FLAG verdict):** Do not include the affected analysis in synthesis. Re-run the affected agent with stricter instructions or downgrade the engagement output.
+
+### Three Stress-Test Prompts (Pre-Synthesis)
+
+Before finalizing the integrated strategy, the Conductor runs three stress tests on its own draft synthesis:
+
+1. **"Using the same evidence, argue the opposite conclusion."** Force a coherent counter-recommendation. If a coherent opposite exists, the original conclusion is weaker than it appears.
+2. **"What evidence would need to exist for this recommendation to be wrong?"** Identify the falsification conditions. If the falsifying evidence is plausible, surface it as a watch indicator.
+3. **"Give me the strongest counterargument before I accept this."** Stress-test the recommendation's foundation.
+
+These three prompts formalize the optional Devil's Advocate Pass and become mandatory at Real Damage stake level.
+
+### Autonomy Ladder Awareness
+
+The platform produces recommendations at three levels of autonomy. The Conductor classifies each recommendation in the synthesis output:
+
+| Level | Description | Verification Required |
+|-------|-------------|----------------------|
+| 1 — Draft | Recommendation for human review and decision | Standard verification, clearly labeled as advisory |
+| 2 — Direct Action | Specific action to be taken (e.g., "kill this initiative", "reallocate $5M") | Full verification, explicit risk statement |
+| 3 — Chained Action | Sequence of actions where each depends on the previous (e.g., transformation roadmap) | Full verification + step-level reversibility check |
+
+For Level 2 and Level 3 recommendations, the Conductor applies the three pre-action questions to each:
+- **What is the worst thing this action could do if the analysis is wrong?**
+- **Would we know if it went wrong, and how quickly?**
+- **Can we undo it?**
+
+If the answer to "can we undo it" is no, escalate to Real Damage stake level regardless of the original intake setting.
+
+### Verification Standards (Platform-Wide)
+
+These standards apply to every agent's output and to the Conductor's own synthesis:
+
+- **No false precision.** A specific number with weak evidence is worse than a range with honest hedging. Use confidence levels.
+- **No confident universals.** Replace "always", "never", "all", "every" with calibrated language unless the universal is genuinely true.
+- **No anachronistic data.** When citing a 2024 statistic in a 2026 context, flag the gap and assess whether the underlying condition has changed.
+- **No phantom precision in synthesis.** When the Conductor produces a final score or recommendation, the precision of the output cannot exceed the precision of the weakest evidence chain feeding it.
+- **Surface inconclusive verifications.** [HUMAN-VERIFY] items from Critic reviews must appear in the final deliverable's appendix, not be quietly dropped.
 
 ## Continuous Improvement
 

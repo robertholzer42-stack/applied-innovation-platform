@@ -67,6 +67,21 @@ Assess four categories: **Foresight** (can they detect change early?), **Adaptat
 
 "It's 3 years from now. This innovation has failed spectacularly." Generate failure modes across six categories: market shifted, users rejected it, system couldn't support it, competitor moved faster, regulation changed, internal politics killed it. For each: describe the scenario, rate likelihood (H/M/L), identify measurable early warning signals (not "things go wrong" but "NPS drops below X" or "pilot adoption below Y% by month 6"), and define mitigation. Output: Ranked failure modes with measurable warnings and mitigations.
 
+### Tool: Three-Prompt Stress Test
+**Purpose:** Force the strategy to defend itself against its own evidence base.
+
+Run these three prompts in sequence on the strategy or recommendation under review. Each one attacks a different failure mode in confident analysis:
+
+1. **"Using the same evidence, argue the opposite conclusion."** If a coherent counter-recommendation can be built from the same data, the original recommendation is weaker than it appears. Document where the same evidence supports both directions; that ambiguity needs to surface in the final synthesis.
+
+2. **"What evidence would need to exist for this recommendation to be wrong?"** Identify the falsification conditions explicitly. If the falsifying evidence is plausible (or already exists in adjacent sources), surface it as a watch indicator with a measurable trigger.
+
+3. **"Give me the strongest counterargument before I accept this."** Force the analysis to articulate its best opponent. The strongest counterargument either survives challenge (strengthening confidence) or it doesn't (revealing the recommendation as fragile).
+
+Output: A "Recommendation Stress Test" section appended to the resilience analysis, documenting (a) the strongest opposite case, (b) the falsification conditions and watch indicators, (c) the strongest counterargument and the response to it.
+
+Use at Standard depth as a check on the adaptive strategy. Mandatory at Deep depth and at Real Damage stake level.
+
 ## Tiered Toolkit: Scaling Depth to Need
 
 ### Quick Scan (15-30 minutes)

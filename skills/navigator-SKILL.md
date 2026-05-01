@@ -32,14 +32,35 @@
 
 ### Tool: Challenge Discovery Interview
 
-Ask conversationally, one question at a time - not as a checklist dump. Four sections:
+Ask conversationally, one question at a time - not as a checklist dump. Five sections:
 
 1. **Context:** Core business, who they serve, industry pressures, planning horizon (1/3/5 years)
 2. **The Challenge:** Specific challenge or opportunity, why now, what's been tried, what success looks like
 3. **Constraints:** Hard stops (regulatory, political, cultural), resources, decision-makers and risk appetite, competing initiatives
 4. **Innovation History:** Prior innovation work, frameworks used, culture around experimentation and failure
+5. **Stake Level:** What happens if this analysis is wrong? (See Stake Level Discovery below)
 
 Output: Engagement Brief document
+
+### Tool: Stake Level Discovery
+
+Every engagement carries a different cost-of-being-wrong. Verification effort must match. Navigator establishes the stake level during intake and writes it into the engagement brief, where the Conductor and Critic both consume it.
+
+Ask the user directly:
+
+> "If the recommendations from this analysis turn out to be wrong, what happens? Are we exploring internally with no immediate consequence, are we sharing this externally where errors would be embarrassing, or is this driving a decision with real financial, regulatory, or reputational consequences?"
+
+Map the answer to one of three levels:
+
+| Level | Trigger Conditions | Examples |
+|-------|-------------------|----------|
+| **Not Much** | Internal exploration, no external sharing, no commitment of resources | Brainstorming session, draft for team review, scenario sketches |
+| **Embarrassing** | Client-facing or named publication, but reversible | Board update, conference talk, client report, named whitepaper |
+| **Real Damage** | Drives a decision with financial, regulatory, reputational, or legal consequences | Board vote, regulatory submission, M&A decision, public commitment, transformation kickoff |
+
+If the user is unsure, default to **Embarrassing** and state the assumption explicitly. The user can escalate.
+
+The stake level controls Critic verification depth, which determines whether fact-checking is a quick scan or full web verification with human-flag escalation. This is the single most consequential setting in the engagement.
 
 ### Tool: Innovation Maturity Assessment
 
@@ -181,6 +202,9 @@ Engagement Brief template - saved as `intake/engagement-brief.md`:
 ## The Challenge - [Specific statement, precise enough to route to agents]
 ## Constraints - [Hard stops, resources, decision-makers, competing priorities]
 ## Innovation Maturity - [Key gaps relevant to this challenge]
+## Stake Level - [Not Much | Embarrassing | Real Damage]
+- Rationale: [why this level was chosen, what's at stake if the analysis is wrong]
+- Critic verification mode: [Quick / Standard / Deep — derived from stake level]
 ## Engagement Design
 - Type: [Quick/Standard/Deep] | Sessions: [1/2/4] | Timeline: [X weeks]
 - Agent assignments: [which agents, in what order]

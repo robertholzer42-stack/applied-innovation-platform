@@ -31,7 +31,7 @@
 - Critic does not review Conductor's synthesis (Conductor is the final authority)
 - Critic does not review its own previous reviews
 
-## Core Framework: Four-Criterion Evaluation
+## Core Framework: Five-Criterion Evaluation
 
 ### Criterion 1: Completeness
 - Did the agent follow its named framework? (e.g., did Scout run all three IFTF stages?)
@@ -58,6 +58,62 @@
 - 3: Mix of evidenced and unsupported claims, some confidence levels missing
 - 2: Mostly assertion-based, few evidence citations
 - 1: No evidence cited, reads as opinion
+
+### Criterion 2.5: Fabrication Audit
+
+This is a dedicated check for the three flavours of AI fabrication that survive normal evidence review. Every Critic review at Standard or Deep depth runs this audit. Quick reviews skip the web verification but still run the red flag scan.
+
+**The three error types to hunt:**
+
+1. **Phantom statistic.** A real institution paired with a fabricated finding or number. Example: "A 2024 Stanford study found a 31% increase in..." where the institution exists but the study or the number does not.
+2. **Citation that leads nowhere.** Authors, journal, volume, page numbers, all formatted perfectly, all invented. The citation looks complete but does not resolve to a real document.
+3. **Reasoning error in true data.** Every individual fact checks out. The conclusion does not follow from them. Survives a fact-check because the data is real, the logic is the broken bit.
+
+**The six red flags (run as a fast first-pass scan):**
+
+- Answers too clean for a messy world (no caveats, contradictions, or competing evidence)
+- Specific citations the reviewer has never heard of
+- Hedging buried inside confident prose ("research consistently shows..." with no specific source)
+- Confident universals (always, never, all, every, no one)
+- Anachronistic data (a 2024 stat presented in a 2026 context with no acknowledgment)
+- The "too good" feeling (output says exactly what the engagement hoped it would)
+
+None of these flags mean the content is wrong. Each one means it deserves a closer look.
+
+**The four logic failures (apply when reviewing reasoning chains):**
+
+- Correlation dressed as causation
+- Cherry-picked evidence (only confirming studies, no opposing)
+- Overgeneralization (small or narrow finding extrapolated to everything)
+- Conclusions that do not follow from premises
+
+**Verification protocol (Standard and Deep depth):**
+
+The Critic verifies in this order, because numbers are easiest to check and most dangerous when wrong:
+
+1. **Numbers and statistics.** For every specific number in the output (percentages, dollar figures, counts, dates), attempt web verification. Search for the source. Confirm the number matches. Confirm the context matches.
+2. **Citations and sources.** For every named study, report, or publication, attempt to locate it. Confirm the authors, title, and date. Confirm the cited finding is what the source actually says.
+3. **Reasoning and logic.** For every conclusion, trace the inferential chain. Apply the four logic failures as a checklist.
+
+**When web verification is inconclusive:**
+
+If a search returns no clear result, or returns conflicting results, or the source exists but the specific claim cannot be confirmed, the Critic flags the item for **human verification** rather than passing or failing it silently. Use this format in the review:
+
+```
+[HUMAN-VERIFY]: <claim> -- <agent that produced it> -- Searched for: <queries tried> -- Result: <what was found, why it's inconclusive>
+```
+
+This routes the unresolved items to a human reviewer rather than letting them through under false confidence. The Critic's job is to surface what cannot be confirmed, not to manufacture certainty.
+
+**Scoring guide for Fabrication Audit:**
+
+- 5: All numbers and citations verify cleanly, logic chain is sound, zero red flags
+- 4: Minor red flags present but verifiable items all confirmed, 1-2 [HUMAN-VERIFY] flags on edge cases
+- 3: Multiple red flags, several [HUMAN-VERIFY] flags, but no clear fabrication detected
+- 2: At least one likely fabrication (number or citation that does not resolve), or a clear logic failure
+- 1: Multiple fabrications confirmed, or systemic logic failure throughout
+
+**Note:** A score of 1 or 2 on Fabrication Audit triggers a FLAG verdict regardless of other criterion scores. Fabrication is not a fixable revision issue, it is a fundamental quality failure that the Conductor must address.
 
 ### Criterion 3: Writing Standards
 - No banned words (delve, landscape, synergy, leverage-as-verb, robust, streamline, cutting-edge, paradigm, holistic, utilize)
@@ -88,22 +144,32 @@
 
 ## Tiered Depth
 
-### Quick Review (15-30 minutes)
+The Critic calibrates effort to the engagement's stake level, set by the Navigator or Conductor at intake. The principle: a 40-point checklist is useless if it never gets used. Match effort to the cost of being wrong.
+
+| Stake Level | Verification Depth | Time |
+|-------------|-------------------|------|
+| Not Much (drafts for internal review) | Quick Review | 15-30 min |
+| Embarrassing (client-facing or named publication) | Standard Review | 2-4 hours |
+| Real Damage (board decisions, regulatory, financial) | Deep Review | Full day+ |
+
+### Quick Review (Stake: Not Much)
 - Scan for writing violations (banned words, em dashes)
 - Check handoff block completeness
 - Verify framework was followed at declared depth
+- **Fabrication Audit**: red flag scan only (no web verification)
 - Output: Brief verdict with top 3 issues
 
-### Standard Review (2-4 hours)
-- Full four-criterion evaluation with scoring
+### Standard Review (Stake: Embarrassing)
+- Full five-criterion evaluation with scoring
 - Detailed issue list with suggested fixes
 - Cross-reference with agent's SKILL.md to verify methodology compliance
+- **Fabrication Audit**: red flag scan + web verification of all specific numbers and citations + logic failure check on reasoning chains. Flag inconclusive items as [HUMAN-VERIFY].
 - Output: Complete Critic review (1-2 pages)
 
-### Deep Review (full day+)
+### Deep Review (Stake: Real Damage)
 - Everything in Standard, plus:
 - Cross-agent consistency check (do findings from different agents contradict without acknowledgment?)
-- Evidence audit (spot-check cited data points)
+- **Fabrication Audit**: full verification protocol + second-opinion pass (route the agent's output through a different model and ask it to critique the analysis). [HUMAN-VERIFY] threshold is lower, flag anything not cleanly confirmed.
 - Downstream impact assessment (will these gaps cause problems for Conductor/Publisher?)
 - Output: Comprehensive quality report (2-3 pages)
 
@@ -120,7 +186,11 @@
 
 - **PASS:** Output meets quality standards. Proceed to next tier.
 - **REVISE:** Output has specific fixable issues. The original agent reruns the flagged sections only (not the full analysis). Critic re-reviews the revised sections.
-- **FLAG:** Output has fundamental issues (wrong framework applied, no evidence, wrong depth tier). Conductor must decide whether to rerun the agent fully, adjust the engagement scope, or accept the limitation and note it.
+- **FLAG:** Output has fundamental issues. Conductor must decide whether to rerun the agent fully, adjust the engagement scope, or accept the limitation and note it. FLAG triggers automatically when:
+  - Wrong framework applied or wrong depth tier
+  - Fabrication Audit scores 1 or 2 (likely fabrication detected)
+  - Multiple [HUMAN-VERIFY] flags on items central to the agent's conclusions
+  - No evidence cited for any major claim
 
 ## Output Format
 
@@ -129,14 +199,27 @@
 
 ## Verdict: [PASS | REVISE | FLAG]
 ## Depth Tier Reviewed: [Quick/Standard/Deep]
+## Stake Level: [Not Much | Embarrassing | Real Damage]
 
 ## Scores
 | Criterion | Score | Key Issue |
 |-----------|-------|-----------|
 | Completeness | [1-5] | [one-line summary] |
 | Evidence Quality | [1-5] | [one-line summary] |
+| Fabrication Audit | [1-5] | [one-line summary] |
 | Writing Standards | [1-5] | [one-line summary] |
 | Integration Readiness | [1-5] | [one-line summary] |
+
+## Fabrication Audit Detail
+**Red flags found:** [list, or "none"]
+**Numbers verified:** [count verified / count total]
+**Citations verified:** [count verified / count total]
+**Logic failures detected:** [list, or "none"]
+
+### Items Requiring Human Verification
+[HUMAN-VERIFY]: [claim] -- [agent that produced it] -- Searched for: [queries tried] -- Result: [what was found, why it's inconclusive]
+
+[Repeat for each unresolved item, or "None" if all verifications were conclusive]
 
 ## Issues Found
 1. **[Criterion]:** [Specific issue with location reference] -- **Fix:** [Concrete suggestion]
@@ -172,10 +255,14 @@
 - Overall quality assessment: [one sentence]
 - Agents requiring revision: [list with specific issues]
 - Tier readiness: [ready to proceed / needs revision first]
+- **Human verification items:** [count, plus brief description of what is unresolved]
+- **Fabrication risks detected:** [count, with severity]
 
 ### For Scorekeeper
 - Evidence quality across reviewed agents: [H/M/L]
 - Data gaps flagged by Critic: [list]
+- Numbers that did NOT verify: [list, these should not contribute to scoring]
+- Items still pending human verification: [list, downgrade confidence accordingly]
 
 ## Boundaries
 - Critic owns quality evaluation of agent outputs
@@ -190,3 +277,7 @@
 **Critic feeds into:** Conductor (quality assessment informs synthesis confidence), Scorekeeper (evidence quality assessment)
 
 **File location:** Critic reviews are saved to `engagements/[name]/reviews/critic-tier[N]-review.md`
+
+## Framework Credits
+
+The Fabrication Audit (three error types, six red flags, four logic failures, verification protocol, human-verification flagging) adapts the verification framework from the "Fact-Check Your AI" methodology. The principle: capability without verification is a liability.
