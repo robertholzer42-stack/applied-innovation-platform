@@ -81,17 +81,17 @@ Start with: **"Run a full applied innovation analysis on [challenge]. Engagement
 Name your engagement using the convention: `[topic]-[client-or-context]-[version]` (e.g., `ai-healthcare-acme-v1`, `ev-charging-strategy-v2`, `portfolio-review-q1-2026`).
 
 The Conductor will:
-1. Ask Navigator-style intake questions to scope the challenge
+1. Ask Navigator-style intake questions to scope the challenge, including the **stake level** (Not Much / Embarrassing / Real Damage) which determines how much fact-checking effort the Critic applies
 2. Build a shared research foundation (market data, key players, regulatory context)
-3. Route to core agents (Scout, Empathy, Architect) running in parallel on the shared data
-4. Run Critic review on core agent outputs (PASS/REVISE/FLAG)
+3. Route to core agents (Scout, Empathy, Architect) running in parallel on the shared data. Each runs its **Honesty Protocol** at output time, marking unverifiable claims with `[NEED: data from X]` rather than fabricating
+4. Run Critic review on core agent outputs (PASS/REVISE/FLAG) with the **Fabrication Audit** sized to the stake level
 5. Run preliminary DVFA scoring to guide downstream agents
 6. Run intersection agents with full upstream evidence (not summaries)
 7. Run Critic review on intersection outputs
 8. Run operational agents, then final DVFA scoring with delta tracking
 9. Run Critic review on operational outputs
-10. Synthesize findings and surface conflicts (optional Devil's Advocate pass)
-11. Produce board-ready deliverables using the platform's design system
+10. Synthesize findings and surface conflicts. At Real Damage stake level, mandatory three-prompt stress test (argue opposite, identify falsification conditions, surface counterargument). Optional Devil's Advocate pass.
+11. Produce board-ready deliverables using the platform's design system, with `[HUMAN-VERIFY]` items surfaced in an appendix
 
 ### Option B: Single Agent Mode
 
@@ -135,6 +135,41 @@ The Publisher will work with relevant agents to produce:
 - Participant handouts
 - Scoring templates
 
+## Verification Framework
+
+The platform applies fact-checking discipline at every stage. AI output sounds confident regardless of whether it is correct, so the platform builds verification into the workflow rather than bolting it on afterward.
+
+### Setting the Stake Level
+
+When you start an engagement, Navigator (or Conductor) asks: "What happens if this analysis is wrong?" The answer maps to one of three stake levels:
+
+| Stake Level | Description | What Critic Does |
+|-------------|-------------|------------------|
+| **Not Much** | Internal exploration, brainstorming, draft for review | Quick scan: red flag patterns only, no web verification |
+| **Embarrassing** | Client deliverable, board update, named publication | Standard: web verifies all numbers and citations, flags inconclusive items |
+| **Real Damage** | Board decision, regulatory submission, financial commitment | Deep: full verification + cross-model second-opinion pass + lower threshold for human-verification flags |
+
+If you do not specify a stake level, the platform defaults to **Embarrassing** and announces the assumption. You can escalate at any time.
+
+### The Three Verification Layers
+
+1. **Producer-side honesty.** Scout, Empathy, Architect, and Radar each run an Honesty Protocol at output time. They self-scan their drafts for six fabrication risk patterns (too-clean answers, unfamiliar citations, hedging in confident prose, confident universals, anachronistic data, the "too good" feeling) and apply citation hygiene rules. Unverifiable claims get marked `[NEED: data from X]` rather than invented.
+
+2. **Critic Fabrication Audit.** The Critic agent runs a dedicated fifth criterion specifically hunting AI fabrications. It detects three error types: phantom statistics (real institution, fake number), citations that lead nowhere (perfect format, invented source), and reasoning errors in true data (facts check out, logic broken). At Standard or Deep depth, it web-verifies every specific number and citation. Items it cannot conclusively confirm get a `[HUMAN-VERIFY]` flag rather than a silent pass.
+
+3. **Conductor Verification Governance.** Before final synthesis, the Conductor reads all Critic reviews, extracts every `[HUMAN-VERIFY]` item, and triages by impact. High-impact unresolved items cannot drive recommendations. At Real Damage stake level, mandatory three-prompt stress test (argue the opposite, identify falsification conditions, surface the strongest counterargument). The Conductor classifies each recommendation as Draft / Direct Action / Chained Action with reversibility checks.
+
+### What This Means in Practice
+
+- **You will see `[NEED: data from X]` markers in agent outputs.** This is good. The agent identified a gap rather than inventing a number. Fill these in with real data when available.
+- **You will see `[HUMAN-VERIFY]` items in Critic reviews.** These need a human eye before they can drive a decision. They surface in the final deliverable's appendix.
+- **Confidence levels (H/M/L) actually constrain precision.** A Low confidence dimension cannot have a 4.5 score; it must be expressed as a range (3-4) instead. Aggregate scores inherit the lowest contributing confidence.
+- **The Critic can FLAG outputs.** A FLAG verdict means there is a fundamental issue (likely fabrication, multiple unverified central claims, wrong framework applied). The Conductor decides whether to rerun the agent or adjust the engagement.
+
+### When This Pays Off
+
+The verification framework's biggest value is at higher stakes. For a Quick scan exploring ideas, the protocols are light. For a Real Damage decision, the same agent output goes through web verification, second-opinion checks, and stress tests. Match effort to consequence.
+
 ## Running Your First Sample Engagement
 
 Try this to see the full pipeline in action:
@@ -163,8 +198,9 @@ The Conductor builds a shared fact base (market data, key players, recent develo
 - Architect: What are the system dependencies blocking AI at scale?
 
 **Step 2b: Critic Review (Core)**
-- Critic reviews Scout, Empathy, and Architect outputs for Completeness, Evidence Quality, Writing Standards, and Integration Readiness
-- Issues PASS/REVISE/FLAG verdict per agent. REVISE triggers rework before proceeding.
+- Critic reviews Scout, Empathy, and Architect outputs across five criteria: Completeness, Evidence Quality, Fabrication Audit, Writing Standards, and Integration Readiness
+- The Fabrication Audit hunts for phantom statistics, fake citations, and reasoning errors. At Standard or Deep depth, Critic web-verifies every specific number and citation. Inconclusive items get a [HUMAN-VERIFY] flag rather than passing silently.
+- Issues PASS/REVISE/FLAG verdict per agent. REVISE triggers rework before proceeding. A Fabrication Audit score of 1 or 2 triggers an automatic FLAG.
 
 **Step 3: Preliminary DVFA Scoring**
 Scorekeeper produces early scores to guide downstream agents. Flags dimensions with low confidence.
@@ -175,7 +211,7 @@ Scorekeeper produces early scores to guide downstream agents. Flags dimensions w
 - Sentinel: What happens if the competitive window closes?
 
 **Step 4b: Critic Review (Intersection)**
-- Critic reviews Visionary, Integrator, and Sentinel outputs using the same four criteria
+- Critic reviews Visionary, Integrator, and Sentinel outputs using the same five criteria including Fabrication Audit
 
 **Step 5: Operational Context**
 - Radar: What are competitors doing with AI?

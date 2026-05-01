@@ -250,6 +250,18 @@ body{font-family:'DM Sans',sans-serif;color:#2C2C2A;background:#fff;max-width:85
     <h4>Multi-Session Checkpoints</h4>
     <p>For engagements spanning multiple sessions, save checkpoint files to <code>checkpoints/</code> after each stage. Critic reviews are saved to <code>reviews/</code>. Resume by loading the latest checkpoint.</p>
   </div>
+  <div class="tip-card" style="background:#E8F4F8;border-color:#2E86AB">
+    <h4>Stake Level Sets Verification Depth</h4>
+    <p>Navigator asks: "What if this is wrong?" Three levels: <strong>Not Much</strong> (red flag scan only), <strong>Embarrassing</strong> (web verify all numbers and citations), <strong>Real Damage</strong> (full verification + second-opinion pass). Default is Embarrassing. Set higher when the analysis drives a real decision.</p>
+  </div>
+  <div class="tip-card" style="background:#FFF4E5;border-color:#E89B2C">
+    <h4>Fabrication Audit (Critic)</h4>
+    <p>Critic hunts three error types: phantom statistics (real institution + fake number), fake citations (perfect format + invented source), reasoning errors in true data. Items it cannot verify get a <code>[HUMAN-VERIFY]</code> flag rather than a silent pass. A FLAG verdict triggers when fabrication is detected.</p>
+  </div>
+  <div class="tip-card" style="background:#EDF7ED;border-color:#5A8F5A">
+    <h4>Honesty Protocol (Research Agents)</h4>
+    <p>Scout, Empathy, Architect, and Radar each self-scan their drafts before output. Six red flags: too-clean answers, unfamiliar citations, hedging in confident prose, confident universals, anachronistic data, the "too good" feeling. Unverifiable claims marked <code>[NEED: data from X]</code>, never invented.</p>
+  </div>
 </div>
 
 <!-- DVFA -->
@@ -278,7 +290,7 @@ body{font-family:'DM Sans',sans-serif;color:#2C2C2A;background:#fff;max-width:85
     <div class="ref-card ops"><span class="name">Scorekeeper</span> - DVFA scoring, maturity metrics</div>
     <div class="ref-card ops"><span class="name">Bridge</span> - Change readiness, resistance mapping</div>
     <div class="ref-card orch"><span class="name">Conductor</span> - Cross-agent synthesis, unified strategy</div>
-    <div class="ref-card ops"><span class="name">Critic</span> - Quality review, PASS/REVISE/FLAG verdicts</div>
+    <div class="ref-card ops"><span class="name">Critic</span> - Five-criterion review with Fabrication Audit, web verification, [HUMAN-VERIFY] flags</div>
     <div class="ref-card" style="border-left:3px solid #ddd"><span class="name" style="color:#555">Tip</span> - Say "review as [codename]" for any agent's perspective</div>
   </div>
 </div>

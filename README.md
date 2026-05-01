@@ -82,7 +82,7 @@ See the [Setup Guide](skills/setup-guide.md) for detailed instructions, alternat
 ### Tier 4.5: Quality Assurance
 | Codename | Role |
 |----------|------|
-| **Critic** | Independent quality review with four-criterion evaluation (Completeness, Evidence Quality, Writing Standards, Integration Readiness), PASS/REVISE/FLAG verdicts |
+| **Critic** | Independent quality review with five-criterion evaluation (Completeness, Evidence Quality, Fabrication Audit, Writing Standards, Integration Readiness), PASS/REVISE/FLAG verdicts, web verification of numbers and citations, [HUMAN-VERIFY] flags for inconclusive items |
 
 ### Tier 5: Orchestration
 | Codename | Role |
@@ -137,6 +137,35 @@ Every innovation opportunity is scored across four dimensions:
 - **A - Adaptability** (from Future Thinking): Will this survive across multiple futures?
 
 Each dimension scored 1-5 with confidence levels. The result: an Innovation Score that goes beyond the typical desirability-viability-feasibility triangle.
+
+## Verification Framework
+
+The platform applies fact-checking discipline at every stage. AI output sounds confident regardless of whether it is correct. Confidence is not correctness. The platform's principle: capability without verification is a liability.
+
+### Stake Level Drives Verification Effort
+
+Every engagement carries a stake level set by Navigator or Conductor at intake:
+
+| Stake Level | Description | Critic Mode |
+|-------------|-------------|-------------|
+| **Not Much** | Internal exploration, draft for review | Quick: red flag scan only |
+| **Embarrassing** | Client-facing, named publication, board update | Standard: web verify all numbers and citations, flag inconclusive items |
+| **Real Damage** | Board decision, regulatory filing, financial commitment | Deep: full verification + cross-model second-opinion pass |
+
+If stake level is unspecified, the Conductor defaults to Embarrassing and announces the assumption.
+
+### Three Layers of Verification
+
+1. **Producer-side honesty.** Scout, Empathy, Architect, and Radar each run an Honesty Protocol at output time, scanning their own drafts for six fabrication risk patterns and applying citation hygiene rules. The cheapest place to prevent fabrication is at the source.
+2. **Critic Fabrication Audit.** A dedicated fifth evaluation criterion that hunts the three error types (phantom statistics, fake citations, reasoning errors in true data), checks four canonical logic failures, and at Standard or Deep depth performs web verification of every specific number and citation. Items that cannot be confirmed are flagged with `[HUMAN-VERIFY]` rather than passed silently.
+3. **Conductor Verification Governance.** Pre-synthesis triage of all unresolved items, three-prompt stress test on the draft synthesis (argue opposite, identify falsification conditions, surface strongest counterargument), and autonomy-level classification (Draft / Direct Action / Chained Action) with reversibility checks.
+
+### Cross-Cutting Rules
+
+- **No false precision.** Confidence drives precision: H confidence allows 0.5 increments, M confidence whole numbers, L confidence ranges only.
+- **`[NEED: data from X]` not fabrication.** When evidence is unavailable, mark the gap explicitly. Never invent.
+- **`[HUMAN-VERIFY]` items must surface.** Items the Critic could not confirm appear in the final deliverable's appendix, not quietly dropped.
+- **Confidence inherits the weakest input.** Aggregate scores cannot exceed the precision of their underlying evidence chains.
 
 ## Repository Structure
 
