@@ -27,6 +27,7 @@ namespace Pridefall.Player
 
         [Header("Locomotion Providers (priority order)")]
         [SerializeField] private OmniOneLocomotionProvider _omniProvider;
+        [SerializeField] private OmniConnectLocomotionProvider _omniConnectProvider;
         [SerializeField] private SimulatedLocomotionProvider _simulatedProvider;
 
         public Transform PlaySpace => _playSpace;
@@ -47,11 +48,17 @@ namespace Pridefall.Player
         {
             if (_omniProvider != null && _omniProvider.IsActive)
             {
-                Debug.Log("[PlayerRig] Omni One treadmill detected, using hardware locomotion.");
+                Debug.Log("[PlayerRig] Omni One treadmill detected (on-device SDK), using hardware locomotion.");
                 return _omniProvider;
             }
 
-            Debug.Log("[PlayerRig] No Omni One detected, using simulated locomotion (editor/desktop).");
+            if (_omniConnectProvider != null && _omniConnectProvider.IsActive)
+            {
+                Debug.Log("[PlayerRig] Omni One Core detected via Omni Connect (PCVR), using hardware locomotion.");
+                return _omniConnectProvider;
+            }
+
+            Debug.Log("[PlayerRig] No Omni treadmill detected, using simulated locomotion (editor/desktop).");
             return _simulatedProvider;
         }
 

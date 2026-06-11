@@ -3,29 +3,39 @@ using UnityEngine;
 namespace Pridefall.Input
 {
     /// <summary>
-    /// Virtuix Omni One adapter. The Omni One SDK ships an OmniManager-style
-    /// component that exposes ring (body) orientation and gait speed from the
-    /// treadmill, decoupled from the HMD. This class is the single place SDK
-    /// types are touched; everything else in the game consumes
+    /// Virtuix Omni One on-device adapter (standalone headset build).
+    ///
+    /// The Omni One Unity SDK (developers.virtuix.com, imported as the
+    /// OmniSDK .unitypackage) exposes a Movement module that "retrieves
+    /// movement data from the Omni One" and needs no platform
+    /// initialization. Its data model, confirmed across all Virtuix SDK
+    /// generations, is a 2D gait vector plus a body/ring yaw angle that is
+    /// decoupled from the HMD. This adapter converts that into
     /// ILocomotionProvider.
     ///
-    /// Integration: import the Omni One SDK package from the Virtuix
-    /// developer portal (developer.virtuix.com), add the scripting define
-    /// OMNI_ONE_SDK to the Android player settings, and fill in the three
-    /// marked calls below with the SDK's accessor names. The wrapper pattern
-    /// means an SDK update touches one file. See
-    /// docs/omni-one-integration.md for the full walkthrough.
+    /// The Movement API's exact member names are gated behind the Virtuix
+    /// developer portal (the doxygen is not public), so the two SDK
+    /// touchpoints below are isolated in ReadGaitVector/ReadBodyYaw and
+    /// written against the data model rather than guessed names. After
+    /// importing the SDK: add the OMNI_ONE_SDK scripting define for the
+    /// Android build target and fill the two methods from the Movement
+    /// group of the SDK's doxygen, a two-line change. The legacy SDK
+    /// equivalents (OmniMovementComponent.currentOmniYaw, OmniMotionData
+    /// GamePad_X/Y) and the PC-side OmniConnectManager.GetMovementVector /
+    /// GetArmYaw show the expected shape. See docs/omni-one-integration.md.
     /// </summary>
     public class OmniOneLocomotionProvider : MonoBehaviour, ILocomotionProvider
     {
         [Header("Gait Tuning")]
+        [Tooltip("Gait speed in m/s when the treadmill reports a full-magnitude movement vector.")]
+        [SerializeField] private float _maxGaitSpeed = 4.2f;
         [Tooltip("Smoothing time for raw treadmill speed, seconds.")]
         [SerializeField] private float _speedSmoothing = 0.08f;
-        [Tooltip("Speeds below this are treated as standing still (sensor noise floor).")]
-        [SerializeField] private float _deadZone = 0.08f;
+        [Tooltip("Vector magnitudes below this are standing still (sensor noise floor).")]
+        [SerializeField] private float _deadZone = 0.05f;
 
         [Header("Assisted Jump")]
-        [Tooltip("Assisted jump consumes the primary button; impulse scales with gait speed in PlayerLocomotionController.")]
+        [Tooltip("Assisted jump on the right primary button; impulse scales with gait speed in PlayerLocomotionController.")]
         [SerializeField] private bool _assistedJumpEnabled = true;
 
         private float _smoothedSpeed;
@@ -38,7 +48,7 @@ namespace Pridefall.Input
             get
             {
 #if OMNI_ONE_SDK
-                return OmniOne.OmniManager.Instance != null && OmniOne.OmniManager.Instance.IsConnected;
+                return true; // Movement module needs no init; device presence is implied on-device.
 #else
                 return false;
 #endif
@@ -53,26 +63,56 @@ namespace Pridefall.Input
         {
             if (!IsActive) return;
 
-#if OMNI_ONE_SDK
-            // --- SDK touchpoints (verify names against your SDK version) ---
-            var omni = OmniOne.OmniManager.Instance;
-            float rawRingYaw = omni.RingAngle;          // degrees, body/ring orientation
-            float rawSpeed   = omni.GaitSpeed;          // m/s from treadmill
-            bool backpedal   = omni.IsBackpedaling;
-            // ---------------------------------------------------------------
+            Vector2 gait = ReadGaitVector();   // x = strafe, y = forward, in body frame
+            float ringYaw = ReadBodyYaw();     // degrees, decoupled from HMD
 
-            BodyYawDegrees = Mathf.DeltaAngle(0f, rawRingYaw - _calibrationYawOffset);
-            StrideYawDegrees = backpedal ? BodyYawDegrees + 180f : BodyYawDegrees;
+            BodyYawDegrees = Mathf.DeltaAngle(0f, ringYaw - _calibrationYawOffset);
 
-            float target = rawSpeed < _deadZone ? 0f : rawSpeed;
+            float magnitude = gait.magnitude;
+            if (magnitude < _deadZone)
+            {
+                magnitude = 0f;
+                StrideYawDegrees = BodyYawDegrees;
+            }
+            else
+            {
+                // Stride direction = body yaw plus the gait vector's own angle,
+                // so strafing and backpedaling on the disc steer correctly.
+                StrideYawDegrees = BodyYawDegrees + Mathf.Atan2(gait.x, gait.y) * Mathf.Rad2Deg;
+            }
+
+            float target = Mathf.Clamp01(magnitude) * _maxGaitSpeed;
             _smoothedSpeed = Mathf.SmoothDamp(_smoothedSpeed, target, ref _speedVelocity, _speedSmoothing);
 
             if (_assistedJumpEnabled && PollPrimaryButtonDown())
             {
                 _jumpQueued = true;
             }
+        }
+
+        // ----- SDK touchpoints: fill from the Omni One SDK Movement module -----
+
+        private Vector2 ReadGaitVector()
+        {
+#if OMNI_ONE_SDK
+            // e.g. return OmniMovement.GetMovementVector();  // per portal doxygen
+            return Vector2.zero;
+#else
+            return Vector2.zero;
 #endif
         }
+
+        private float ReadBodyYaw()
+        {
+#if OMNI_ONE_SDK
+            // e.g. return OmniMovement.GetBodyYaw();  // ring angle, degrees
+            return 0f;
+#else
+            return 0f;
+#endif
+        }
+
+        // -----------------------------------------------------------------------
 
         public bool ConsumeJump()
         {
@@ -83,10 +123,7 @@ namespace Pridefall.Input
 
         public void Calibrate()
         {
-#if OMNI_ONE_SDK
-            // Zero the ring against the play space's forward axis.
-            _calibrationYawOffset = OmniOne.OmniManager.Instance.RingAngle;
-#endif
+            _calibrationYawOffset = ReadBodyYaw();
             _smoothedSpeed = 0f;
             _speedVelocity = 0f;
         }
