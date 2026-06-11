@@ -1,0 +1,29 @@
+# Unity generated
+PridefallUnity/[Ll]ibrary/
+PridefallUnity/[Tt]emp/
+PridefallUnity/[Oo]bj/
+PridefallUnity/[Bb]uild/
+PridefallUnity/[Bb]uilds/
+PridefallUnity/[Ll]ogs/
+PridefallUnity/[Uu]ser[Ss]ettings/
+PridefallUnity/[Mm]emoryCaptures/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.csproj
+*.sln
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
+
+# Crash reports
+sysinfo.txt
+crashlytics-build.properties
