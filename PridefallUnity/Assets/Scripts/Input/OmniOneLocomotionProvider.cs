@@ -55,6 +55,9 @@ namespace Pridefall.Input
             }
         }
 
+        /// <summary>Real legs drive the treadmill; gait vection is not a concern.</summary>
+        public bool IsArtificial => false;
+
         public float BodyYawDegrees { get; private set; }
         public float StrideYawDegrees { get; private set; }
         public float GaitSpeed => _smoothedSpeed;

@@ -31,33 +31,51 @@ pridefall-vr/
       Audio/        Audio director, adaptive music
 ```
 
-## Why the Omni One specifically
+## Locomotion: Omni One first, Quest 3 today
 
-The whole design leans on the treadmill (see GDD pillar 1 and 2):
+The design leans on the treadmill (see GDD pillar 1 and 2):
 
 - All ground movement comes from real gait via `ILocomotionProvider`. There is
-  no thumbstick locomotion in the core game.
+  no thumbstick locomotion in the treadmill mode.
 - Body (ring) yaw and head yaw are independent; holsters, the wrist HUD, and
   combat encounters are all built around running one way while aiming another.
 - Sprint-scaled jumps, flutter-kick swimming, and the Chapter 5 Colossus chase
-  only work because the player's legs are the input device.
+  are tuned around the player's legs as the input device.
 
-`SimulatedLocomotionProvider` (WASD) lets you develop everything in the editor
-without hardware; `PlayerRig` auto-selects the Omni provider when the
-treadmill is present.
+The Omni One SDK sits behind a paid developer license, so a **Quest 3
+edition** exists to finish and validate the game first: left stick smooth
+locomotion (head-relative), right stick 45 degree snap turn, A to jump,
+stick-click to sprint. Everything above the locomotion provider, climbing,
+swimming, combat, enemies, crafting, is identical on both platforms. See GDD
+section 8 and `docs/quest3-port.md`.
+
+`PlayerRig` picks the first active provider at boot: Omni One (on-device SDK)
+-> Omni Connect (PCVR) -> Quest controllers -> `SimulatedLocomotionProvider`
+(editor WASD). The Omni adapters stay in every build, dormant behind the
+`OMNI_ONE_SDK` / `OMNI_CONNECT_SDK` defines, with zero impact on Quest
+builds.
 
 ## Getting started
 
 1. Open `PridefallUnity/` in Unity 2022.3 LTS.
-2. Import the Omni One SDK from the Virtuix developer portal and follow
-   `docs/omni-one-integration.md` to enable the `OMNI_ONE_SDK` define.
-3. Assemble the test scene per `Assets/Scripts/README-scene-setup.md`.
-4. Editor playtest: WASD to walk/turn the simulated ring, Shift to run,
-   Space to jump.
-5. Device build: Android, IL2CPP, ARM64, OpenXR; sideload to the Omni One dev
-   kit headset per the integration doc.
+2. Assemble the test scene per `Assets/Scripts/README-scene-setup.md`, plus
+   the Quest wiring delta in `docs/quest3-port.md` (Quest provider on the
+   rig, ground-motion vignette on).
+3. Editor playtest: WASD to walk/turn the simulated ring, Shift to run,
+   Space to jump. No hardware needed.
+4. Quest 3 build: one-time OpenXR settings per `docs/quest3-port.md`, then
+   `scripts/build-quest.sh` and `scripts/deploy-quest.sh` (VR Forge harness
+   scripts) to a developer-mode headset.
+5. Omni One build (later): import the SDK from the Virtuix developer portal
+   and follow `docs/omni-one-integration.md` to enable the `OMNI_ONE_SDK`
+   define; the rig then prefers the treadmill automatically.
 
 ## Status
 
-Vertical-slice systems code: complete and engine-ready (this repo).
-Art, audio assets, levels: placeholder/blockout stage, not in repo.
+- Vertical-slice systems code: complete and engine-ready (this repo).
+- Quest 3 edition: wired. Controller locomotion provider, ground-motion
+  comfort vignette, and the VR Forge build/deploy path (`docs/quest3-port.md`,
+  comfort audit in `docs/quest3-comfort-audit.md`).
+- Omni One: pending SDK license. Two methods to fill in
+  `OmniOneLocomotionProvider` once access lands.
+- Art, audio assets, levels: placeholder/blockout stage, not in repo.

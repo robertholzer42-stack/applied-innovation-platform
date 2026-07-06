@@ -47,6 +47,30 @@ namespace Pridefall.Core
             }
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadComfortSettings();
+        }
+
+        /// <summary>
+        /// Persist comfort choices across sessions. Call after any settings
+        /// menu change; loaded automatically on boot.
+        /// </summary>
+        public void SaveComfortSettings()
+        {
+            PlayerPrefs.SetInt("pf.comfort.vignette", (int)Comfort.Vignette);
+            PlayerPrefs.SetInt("pf.comfort.thumbstick", Comfort.ThumbstickLocomotionFallback ? 1 : 0);
+            PlayerPrefs.SetInt("pf.comfort.snapturn", Comfort.SnapTurnFallback ? 1 : 0);
+            PlayerPrefs.SetFloat("pf.comfort.gain", Comfort.MovementGain);
+            PlayerPrefs.Save();
+        }
+
+        private void LoadComfortSettings()
+        {
+            if (!PlayerPrefs.HasKey("pf.comfort.vignette")) return; // first run keeps inspector defaults
+
+            Comfort.Vignette = (VignetteStrength)PlayerPrefs.GetInt("pf.comfort.vignette", (int)Comfort.Vignette);
+            Comfort.ThumbstickLocomotionFallback = PlayerPrefs.GetInt("pf.comfort.thumbstick", 0) == 1;
+            Comfort.SnapTurnFallback = PlayerPrefs.GetInt("pf.comfort.snapturn", 0) == 1;
+            Comfort.MovementGain = PlayerPrefs.GetFloat("pf.comfort.gain", Comfort.MovementGain);
         }
 
         private void OnEnable()

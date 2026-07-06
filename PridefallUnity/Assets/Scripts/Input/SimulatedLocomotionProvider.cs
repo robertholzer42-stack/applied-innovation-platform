@@ -20,6 +20,7 @@ namespace Pridefall.Input
         private bool _jumpQueued;
 
         public bool IsActive => true;
+        public bool IsArtificial => true;
         public float BodyYawDegrees => _bodyYaw;
         public float StrideYawDegrees => _backpedal ? _bodyYaw + 180f : _bodyYaw;
         public float GaitSpeed => _speed;
