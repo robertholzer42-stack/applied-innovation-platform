@@ -23,6 +23,12 @@ namespace Pridefall.UI
         [Header("Rig")]
         [SerializeField] private PlayerLocomotionController _locomotion;
 
+        [Header("Artificial Locomotion (Quest 3 edition)")]
+        [Tooltip("Enable when thumbstick locomotion is primary (no treadmill): the tunnel also engages during smooth ground movement, the main vection source on Quest.")]
+        [SerializeField] private bool _vignetteOnGroundMotion;
+        [Tooltip("Planar speed (m/s) above which ground motion forces the strong tunnel.")]
+        [SerializeField] private float _groundMotionThreshold = 0.5f;
+
         [Header("Overlay")]
         [Tooltip("Fullscreen Image using an inverted radial sprite: opaque edges, transparent center.")]
         [SerializeField] private Image _overlay;
@@ -61,6 +67,16 @@ namespace Pridefall.UI
                 (_locomotion.State == MovementState.Airborne || _locomotion.State == MovementState.Swimming))
             {
                 strength = VignetteStrength.Strong;
+            }
+            else if (_vignetteOnGroundMotion && _locomotion != null &&
+                     _locomotion.State == MovementState.Grounded && strength != VignetteStrength.Off)
+            {
+                Vector3 velocity = _locomotion.Velocity;
+                velocity.y = 0f;
+                if (velocity.sqrMagnitude > _groundMotionThreshold * _groundMotionThreshold)
+                {
+                    strength = VignetteStrength.Strong;
+                }
             }
 
             float targetAlpha;
