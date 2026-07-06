@@ -28,6 +28,7 @@ namespace Pridefall.Player
         [Header("Locomotion Providers (priority order)")]
         [SerializeField] private OmniOneLocomotionProvider _omniProvider;
         [SerializeField] private OmniConnectLocomotionProvider _omniConnectProvider;
+        [SerializeField] private QuestControllerLocomotionProvider _questProvider;
         [SerializeField] private SimulatedLocomotionProvider _simulatedProvider;
 
         public Transform PlaySpace => _playSpace;
@@ -58,7 +59,13 @@ namespace Pridefall.Player
                 return _omniConnectProvider;
             }
 
-            Debug.Log("[PlayerRig] No Omni treadmill detected, using simulated locomotion (editor/desktop).");
+            if (_questProvider != null && _questProvider.IsActive)
+            {
+                Debug.Log("[PlayerRig] XR controllers detected, using Quest thumbstick locomotion (smooth + snap turn).");
+                return _questProvider;
+            }
+
+            Debug.Log("[PlayerRig] No treadmill or XR controllers detected, using simulated locomotion (editor/desktop).");
             return _simulatedProvider;
         }
 
