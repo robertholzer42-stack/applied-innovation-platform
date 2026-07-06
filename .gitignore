@@ -7,7 +7,8 @@
 node_modules/
 __pycache__/
 *.pyc
-.claude/
+# Session-local Claude state at repo root only; vr-forge/.claude is shipped product
+/.claude/
 ~$*
 PRIVATE-business-notes.md
 engagements/*/
