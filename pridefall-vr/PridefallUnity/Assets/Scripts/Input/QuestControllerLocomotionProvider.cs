@@ -65,6 +65,8 @@ namespace Pridefall.Input
             }
         }
 
+        public bool IsArtificial => true;
+
         public float BodyYawDegrees
         {
             get

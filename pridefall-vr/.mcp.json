@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "blender": {
+      "command": "uvx",
+      "args": ["blender-mcp"]
+    },
+    "elevenlabs": {
+      "command": "uvx",
+      "args": ["elevenlabs-mcp"],
+      "env": {
+        "ELEVENLABS_API_KEY": "${ELEVENLABS_API_KEY}"
+      }
+    },
+    "unity": {
+      "_comment": "Placeholder. Install the Unity MCP bridge (github.com/CoplayDev/unity-mcp) into the Unity project, then replace command/args with the launch line from that repo's README for your installed version.",
+      "command": "uv",
+      "args": ["run", "--directory", "REPLACE_WITH_UNITY_MCP_SERVER_PATH", "server.py"]
+    },
+    "meshy": {
+      "_comment": "Placeholder. Confirm the launch command against github.com/meshy-dev/meshy-mcp-server on install day.",
+      "command": "npx",
+      "args": ["-y", "meshy-mcp-server"],
+      "env": {
+        "MESHY_API_KEY": "${MESHY_API_KEY}"
+      }
+    }
+  }
+}

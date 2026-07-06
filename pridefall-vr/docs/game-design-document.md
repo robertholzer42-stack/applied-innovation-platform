@@ -156,3 +156,88 @@ jump/vault, sidearm + carbine with pooled projectiles, three enemy archetypes
 (Skimmer, Shardback, Warden), fabricator, hazards (geyser, dust storm, low-g),
 health/checkpoint loop, and wrist HUD. Art, audio assets, and levels are
 placeholder-blocked; all systems are engine-ready C#.
+
+## 8. Quest 3 Edition
+
+### 8.1 Why this exists
+
+The Omni One SDK sits behind a paid developer license, and the only code
+that needs it is the two treadmill read methods in
+`OmniOneLocomotionProvider`. Everything else in the game runs on any OpenXR
+headset. The Quest 3 edition exists so we can finish the game and validate
+every system on hardware we already own before spending on Omni One SDK
+access. It is not a fork: it is the same build with a different locomotion
+provider selected at boot. `PlayerRig` prefers the treadmill providers and
+falls through to `QuestControllerLocomotionProvider` when only XR
+controllers are present, so the day the Omni SDK lands, the Quest mapping
+simply stops being picked on that hardware.
+
+### 8.2 Control scheme
+
+| Action | Quest 3 input | Notes |
+|--------|---------------|-------|
+| Move | Left thumbstick | Smooth locomotion, steered head-relative. 2.2 m/s at full deflection, 2.75 m/s effective after the 1.25x movement gain. |
+| Sprint | Left thumbstick click | 4.0 m/s at the stick, capped at 5 m/s by the locomotion controller. |
+| Turn | Right thumbstick left/right | 45 degree snap turn. Re-arms when the stick returns below half the trigger threshold, so holding the stick over does not spin you. |
+| Jump | A button | Same assisted jump as before; impulse still scales with current gait speed, so sprint-then-jump is still a long jump. |
+| Grip / climb / swim strokes | Grip buttons + physical hand sweep | Unchanged. `HandController` polls generic XR devices; it never knew about the treadmill. |
+| Fire / trigger | Trigger | Unchanged. |
+| Reload, holsters, medgel | Physical motions, unchanged | Holsters hang off `BodyRoot`, which follows head yaw on Quest (see pillar 2 note below). |
+
+Flutter kick survives the port for free: `SwimmingSystem` reads `GaitSpeed`
+from whatever provider is active, so pushing the left stick while submerged
+adds the 30% kick along the gaze, exactly as walking the treadmill would.
+
+### 8.3 Which pillars flex
+
+- **Pillar 1, "your legs are the controller,"** becomes a treadmill-mode
+  rule, not a game rule. On Quest the thumbstick is the legs. What survives
+  is the level design discipline that pillar bought us: honest distances, no
+  teleport shortcuts baked into geometry, chases tuned around a real top
+  speed.
+- **Pillar 2, body decoupled from gaze,** is approximated rather than lost.
+  There is no ring, so body yaw is taken from head yaw, and the stride
+  direction is head yaw plus the stick deflection angle. That means you can
+  still run one way and aim another, because the hands aim independently and
+  the stick steers off-axis from the gaze. What changes: holsters and the
+  wrist HUD follow the gaze yaw instead of an independent hip direction,
+  which matches what Quest players already expect from smooth-locomotion
+  games.
+- **Pillars 3 and 4 do not flex.** Traversal is still the verb, and the
+  comfort machinery gets stricter, not looser (next section).
+
+### 8.4 Comfort deltas
+
+Treadmill locomotion removed most vection; thumbstick locomotion brings it
+back, so the Quest edition tightens two things:
+
+- **Ground-motion vignette is on in the Quest rig.** `ComfortVignette` gains
+  a `_vignetteOnGroundMotion` option: when enabled, the strong tunnel
+  engages any time planar speed exceeds 0.5 m/s during smooth movement, on
+  top of the existing forced-strong behavior for falls and swims. The Quest
+  scene ships with it enabled; the Omni scene leaves it off because legs are
+  doing the moving.
+- **Snap turn is the primary turning mode.** Section 5's "no snap turn
+  anywhere in the UX" is an Omni-mode rule and stays true there. On Quest,
+  45 degree snap turn is the default and only artificial turn; there is no
+  smooth turn option at all. Players can still physically rotate any time,
+  and snap rotates the play space around the head so they pivot in place.
+
+### 8.5 Unchanged systems
+
+These work identically on Quest because they never depended on the
+treadmill, only on the `ILocomotionProvider` interface or on hand tracking:
+
+- Climbing: grip-driven, treadmill input already ignored during two-handed
+  climbs. Hand-over-hand, stamina, crumbling holds, dyno release all intact.
+- Swimming: strokes come from controller sweep velocity, kick from
+  `GaitSpeed`. Air meter, buoyancy, bubble vents intact.
+- Combat: all three weapons, pooled projectiles, physical reload, holsters,
+  locational damage.
+- Enemies: Skimmers, Shardbacks, Wardens, Maw Eels, spawners. None of them
+  read locomotion input.
+- Fabricator and crafting, scrap and bio-resin economy.
+- Health segments, medgel wrist application, drowning.
+- Checkpoints: auto every 4 minutes, on holster, on climb-hold checkpoints.
+- Hazards: geysers, dust storms, low-g zones, kill volumes.
+- Wrist HUD and comfort vignette plumbing.

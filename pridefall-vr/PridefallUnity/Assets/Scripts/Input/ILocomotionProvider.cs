@@ -17,6 +17,14 @@ namespace Pridefall.Input
         bool IsActive { get; }
 
         /// <summary>
+        /// True when ground motion is artificial (thumbstick/simulated) and
+        /// therefore vection-inducing; false when the player's real legs
+        /// drive it (treadmill). Comfort systems escalate on artificial
+        /// motion automatically.
+        /// </summary>
+        bool IsArtificial { get; }
+
+        /// <summary>
         /// Direction the player's body (Omni ring) faces, independent of the
         /// headset. Weapons holster to this; the HMD never re-aims the hips.
         /// </summary>

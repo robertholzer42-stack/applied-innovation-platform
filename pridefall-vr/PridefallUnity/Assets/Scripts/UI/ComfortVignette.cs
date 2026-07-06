@@ -22,11 +22,10 @@ namespace Pridefall.UI
     {
         [Header("Rig")]
         [SerializeField] private PlayerLocomotionController _locomotion;
+        [SerializeField] private PlayerRig _rig;
 
-        [Header("Artificial Locomotion (Quest 3 edition)")]
-        [Tooltip("Enable when thumbstick locomotion is primary (no treadmill): the tunnel also engages during smooth ground movement, the main vection source on Quest.")]
-        [SerializeField] private bool _vignetteOnGroundMotion;
-        [Tooltip("Planar speed (m/s) above which ground motion forces the strong tunnel.")]
+        [Header("Artificial Locomotion")]
+        [Tooltip("Planar speed (m/s) above which artificial ground motion (thumbstick, per the provider's IsArtificial flag) forces the strong tunnel. Treadmill gait never triggers this.")]
         [SerializeField] private float _groundMotionThreshold = 0.5f;
 
         [Header("Overlay")]
@@ -52,6 +51,7 @@ namespace Pridefall.UI
         private void Awake()
         {
             if (_locomotion == null) _locomotion = GetComponentInParent<PlayerLocomotionController>();
+            if (_rig == null) _rig = GetComponentInParent<PlayerRig>();
             _scale = _lightScale;
             ApplyToOverlay();
         }
@@ -63,19 +63,22 @@ namespace Pridefall.UI
                 ? GameManager.Instance.Comfort.Vignette
                 : VignetteStrength.Light;
 
-            if (_locomotion != null &&
-                (_locomotion.State == MovementState.Airborne || _locomotion.State == MovementState.Swimming))
+            // Off is a player choice; never override it (comfort checklist:
+            // settings the player made are respected everywhere).
+            if (strength != VignetteStrength.Off && _locomotion != null)
             {
-                strength = VignetteStrength.Strong;
-            }
-            else if (_vignetteOnGroundMotion && _locomotion != null &&
-                     _locomotion.State == MovementState.Grounded && strength != VignetteStrength.Off)
-            {
-                Vector3 velocity = _locomotion.Velocity;
-                velocity.y = 0f;
-                if (velocity.sqrMagnitude > _groundMotionThreshold * _groundMotionThreshold)
+                if (_locomotion.State == MovementState.Airborne || _locomotion.State == MovementState.Swimming)
                 {
                     strength = VignetteStrength.Strong;
+                }
+                else if (_locomotion.State == MovementState.Grounded && IsArtificialLocomotion())
+                {
+                    Vector3 velocity = _locomotion.Velocity;
+                    velocity.y = 0f;
+                    if (velocity.sqrMagnitude > _groundMotionThreshold * _groundMotionThreshold)
+                    {
+                        strength = VignetteStrength.Strong;
+                    }
                 }
             }
 
@@ -100,6 +103,13 @@ namespace Pridefall.UI
             _alpha = Mathf.MoveTowards(_alpha, targetAlpha, _animateSpeed * Time.deltaTime);
             _scale = Mathf.MoveTowards(_scale, targetScale, _animateSpeed * Time.deltaTime);
             ApplyToOverlay();
+        }
+
+        private bool IsArtificialLocomotion()
+        {
+            return _rig != null &&
+                   _rig.ActiveLocomotionProvider != null &&
+                   _rig.ActiveLocomotionProvider.IsArtificial;
         }
 
         private void ApplyToOverlay()
